@@ -1,0 +1,19 @@
+package:
+    name: cantera
+    version: "2.3.0a1"
+source:
+    git_url: https://github.com/Cantera/cantera.git
+    git_tag: master
+build:
+    number: 1
+requirements:
+    build:
+      - python
+      - numpy
+      - cython
+    run:
+      - python
+      - numpy
+test:
+    imports:
+      - cantera
