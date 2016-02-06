@@ -1,11 +1,11 @@
 package:
     name: cantera
-    version: "2.3.0a1"
+    version: "2.3.0a2"
 source:
     git_url: https://github.com/Cantera/cantera.git
     git_tag: master
 build:
-    number: 1
+    number: 0
 requirements:
     build:
       - python
