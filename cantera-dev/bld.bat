@@ -10,7 +10,7 @@ conda env remove -y -n cantera-build
 :: the conda repositories is 2.3.0. Unfortunately, using VS 2015 requires SCons
 :: 2.4.1. This version is available from my channel on anaconda.org, so we add
 :: -c bryanwweber to pick up SCons from that channel.
-conda create -y -n cantera-build -c bryanwweber python=2.7 cython numpy pywin32 scons
+conda create -y -n cantera-build -c bryanwweber python=2 cython numpy pywin32 scons 3to2
 
 :: The major version of the Python that will be used for the installer, not the
 :: version used for building
@@ -18,9 +18,6 @@ SET PY_MAJ_VER=%PY_VER:~0,1%
 
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
-
-:: If we're installing for Python 2, we need 3to2 to convert the examples
-IF %PY_MAJ_VER% EQU 2 pip install 3to2
 
 :: Using the activate script didn't seems to work, so set the PATH manually
 SET OLD_PATH=%PATH%
