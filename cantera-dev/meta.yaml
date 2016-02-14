@@ -17,3 +17,6 @@ requirements:
 test:
     imports:
       - cantera
+about:
+    home: http://www.cantera.org
+    summary: "Chemical kinetics, thermodynamics, and transport tool suite"
