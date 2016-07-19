@@ -5,15 +5,17 @@ source:
     git_url: https://github.com/Cantera/cantera.git
     git_tag: master
 build:
-    number: 0
+    number: 1
 requirements:
     build:
       - python
-      - numpy
+      - numpy x.x
       - cython
+      - mkl
     run:
       - python
-      - numpy
+      - numpy x.x
+      - mkl
 test:
     imports:
       - cantera

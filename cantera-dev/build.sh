@@ -1,21 +1,19 @@
 #!/bin/bash
 
 # Remove the old builder environement, if it exists
-conda env remove -y -n cantera-builder
+conda env remove -yq -n cantera-builder
 
 # Create a conda environment to build Cantera. It has to be Python 2, for
 # SCons compatibility. When SCons is available for Python 3, these machinations
 # can be removed
-conda create -y -n cantera-builder python=2 numpy scons cython 3to2
+conda create -yq -n cantera-builder python=2 numpy=$NPY_VER scons cython 3to2 mkl
 
 # The major version of the Python that will be used for the installer, not the
 # version used for building
 PY_MAJ_VER=${PY_VER:0:1}
 
-# Using activate to activate the build environement didn't seem to work, so set
-# the path manually
-OLD_PATH=$PATH
-export PATH=${PREFIX%_build}cantera-builder/bin:$PATH
+set +x
+source activate cantera-builder
 
 scons clean
 
@@ -23,6 +21,8 @@ scons clean
 echo "matlab_toolbox='n'" >> cantera.conf
 echo "f90_interface='n'" >> cantera.conf
 echo "system_sundials='n'" >> cantera.conf
+echo "blas_lapack_libs = 'm,dl,mkl_rt,mkl_intel_lp64,mkl_core,mkl_intel_thread,iomp5'" >> cantera.conf
+echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
 
 # Run SCons to build the proper Python interface
 if [ "${PY_MAJ_VER}" == "2" ]; then
@@ -31,11 +31,13 @@ else
     scons build -j$((CPU_COUNT/2)) python3_package='y' python3_cmd=$PYTHON python_package='none'
 fi
 
-# Remove the builder environment
-conda env remove -y -n cantera-builder
+scons test-python3
 
-# Reset the PATH
-export PATH=$OLD_PATH
+# Remove the builder environment
+set +x
+source deactivate
+set -x
+conda env remove -yq -n cantera-builder
 
 # Change to the Python interface directory and run the installer using the
 # proper version of Python.
