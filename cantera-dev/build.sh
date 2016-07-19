@@ -6,7 +6,7 @@ conda env remove -yq -n cantera-builder
 # Create a conda environment to build Cantera. It has to be Python 2, for
 # SCons compatibility. When SCons is available for Python 3, these machinations
 # can be removed
-conda create -yq -n cantera-builder python=2 numpy=$NPY_VER scons cython 3to2 mkl
+conda create -yq -n cantera-builder python=2 numpy=$NPY_VER scons cython mkl
 
 # The major version of the Python that will be used for the installer, not the
 # version used for building
@@ -28,6 +28,7 @@ set -x
 
 # Run SCons to build the proper Python interface
 if [ "${PY_MAJ_VER}" == "2" ]; then
+    conda install -yq -c bryanwweber 3to2
     scons build -j$((CPU_COUNT/2)) python3_package='n' python_cmd=$PYTHON python_package='full'
 else
     scons build -j$((CPU_COUNT/2)) python3_package='y' python3_cmd=$PYTHON python_package='none'
