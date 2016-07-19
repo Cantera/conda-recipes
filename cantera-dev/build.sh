@@ -24,14 +24,14 @@ echo "system_sundials='n'" >> cantera.conf
 echo "blas_lapack_libs = 'm,dl,mkl_rt,mkl_intel_lp64,mkl_core,mkl_intel_thread,iomp5'" >> cantera.conf
 echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
 
+set -x
+
 # Run SCons to build the proper Python interface
 if [ "${PY_MAJ_VER}" == "2" ]; then
     scons build -j$((CPU_COUNT/2)) python3_package='n' python_cmd=$PYTHON python_package='full'
 else
     scons build -j$((CPU_COUNT/2)) python3_package='y' python3_cmd=$PYTHON python_package='none'
 fi
-
-scons test-python3
 
 # Remove the builder environment
 set +x
