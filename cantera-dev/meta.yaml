@@ -6,15 +6,16 @@ source:
     git_tag: master
 build:
     number: 1
+    string: np{{CONDA_NPY}}py{{CONDA_PY}}_{{PKG_BUILDNUM}}_g{{GIT_FULL_HASH[:7]}}
 requirements:
     build:
-      - python
-      - numpy x.x
-      - cython
+      - python >=2.7,<3|>=3.3,{{PY_VER}}*
+      - numpy >=1.8,{{NPY_VER}}*
+      - cython >=0.19*
       - mkl
     run:
-      - python
-      - numpy x.x
+      - python {{PY_VER}}*
+      - numpy {{NPY_VER}}*
       - mkl
 test:
     imports:
