@@ -1,7 +1,7 @@
 @ECHO off
 
 :: Remove the old builder environment, if it exists
-conda env remove -y -n cantera-builder
+CALL conda env remove -y -n cantera-builder
 
 :: Create a conda environment to build Cantera. It has to be Python 2, for
 :: Scons compatibility. When SCons is available for Python 3, these machinations
@@ -10,7 +10,7 @@ conda env remove -y -n cantera-builder
 :: the conda repositories is 2.3.0. Unfortunately, using VS 2015 requires SCons
 :: 2.4.1. This version is available from my channel on anaconda.org, so we add
 :: -c bryanwweber to pick up SCons from that channel.
-conda create -y -n cantera-builder -c bryanwweber python=2 cython numpy pywin32 scons 3to2
+CALL conda create -y -n cantera-builder -c bryanwweber python=2 cython numpy pywin32 scons 3to2
 
 :: The major version of the Python that will be used for the installer, not the
 :: version used for building
@@ -50,7 +50,7 @@ GOTO BUILD_SUCCESS
 
 :BUILD_SUCCESS
 :: Remove the builder environment and reset the path
-conda env remove -y -n cantera-builder
+CALL conda env remove -y -n cantera-builder
 SET PATH=%OLD_PATH%
 
 :: Change to the Python interface directory and run the installer using the
