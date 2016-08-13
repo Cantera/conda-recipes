@@ -7,6 +7,11 @@ matrix:
     os: linux
   - env: CONDA_ARCH=linux_x86
     os: linux
+    addons:
+      apt:
+        packages:
+          - libc6:i386
+          - zlib1g:i386
   - env: CONDA_ARCH=osx_x64
     os: osx
 install:
