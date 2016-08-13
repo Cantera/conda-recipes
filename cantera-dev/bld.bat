@@ -1,5 +1,11 @@
 @ECHO off
 
+IF %ARCH% EQU 64 (
+	CALL "%VS140COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
+) ELSE (
+	CALL "%VS140COMNTOOLS%"\..\..\VC\bin\vcvars32.bat
+)
+
 :: Remove the old builder environment, if it exists
 CALL conda env remove -y -n cantera-builder
 
