@@ -28,6 +28,9 @@ install:
   - conda update -q conda
   - conda info -a
   - conda install -y anaconda-client conda-build
+  - if [[ "$CONDA_ARCH" == "linux_x86" ]]; then
+      conda install -y gcc;
+    fi
 
 script:
   - conda build cantera-dev --python=2.7 --python=3.4 --python=3.5 --numpy=1.11
