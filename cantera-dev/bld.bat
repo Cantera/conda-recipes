@@ -16,7 +16,7 @@ CALL conda env remove -y -n cantera-builder
 :: the conda repositories is 2.3.0. Unfortunately, using VS 2015 requires SCons
 :: 2.4.1. This version is available from my channel on anaconda.org, so we add
 :: -c bryanwweber to pick up SCons from that channel.
-CALL conda create -y -n cantera-builder -c bryanwweber python=2 cython numpy pywin32 scons 3to2
+CALL conda create -y -n cantera-builder -c cantera/label/builddeps python=2 cython numpy pywin32 scons 3to2
 
 :: The major version of the Python that will be used for the installer, not the
 :: version used for building
