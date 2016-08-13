@@ -1,0 +1,29 @@
+language: cpp
+sudo: false
+secure:  "lipzTB4mywydfk2wz+4AygG8tO5W6n+PvtFTSE9GBTSEmBjja2dIqc7DUjJuIqrve2X1Hon6AfiwsaHTYhO/ev+mACnZ/aKkkemSPRh/SlWUnGKzc/zXc8rNOmOdhKVTHUkJyXJZF0ZZvPC+xj3JGZdOKWXFLgiszwqQO/HLddWtl7+HoJnLLDKLHf80dEpmOMF9uaWezN3HzZtGLeJX5x1G8sqx6umUlcu7EiYbeBoF3HJVLiAkMCit5eJwk7nP6SpWd9xyYWPmn4Fu+4jMa29ItlXgL3G0i9yDwkpD7jaXTxJNOMQ7OxM9wBPI5Ef5ZasG6xBJeqap6vFSszu6VuignxVA4nDkvLDJohuSeRWlhZOAn2FZbI6DQIkOY3MfZcac1ImPhuoq86VnWeuLVZeb9qXKTUDQjamumywnYSRA9ZUbY6uq1CaChknXIOSb2kxJuF+WWsyZjyGp27OvGAev8Nm+IO/It/ZfID3WWB4cJFGoS1vyPFIfWKZhjhNYIrxXBD786McWkGlNcz8u9ukSTaa+cSCFIZgO9QCXJEsPtUHeJZx84MuUtqsIOQTRIVNIvQkzEctBNm8AaJ3eRugbYQFHEdk1lsvHpzgdU3aIj6OgV1dWaUUZzdbWxzL1lyGR8v/pZ+UrBaWuVFU8Y9h9jLF4uPhP7hp+xkR2V3A="
+matrix:
+  include:
+  - env: CONDA_ARCH=linux_x64
+    os: linux
+  - env: CONDA_ARCH=linux_x86
+    os: linux
+  - env: CONDA_ARCH=osx_x64
+    os: osx
+install:
+  - if [[ "$CONDA_ARCH" == "linux_x64" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+    elif [[ "$CONDA_ARCH" == "linux_x86" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86.sh -O miniconda.sh;
+    elif [[ "$CONDA_ARCH" == "osx_x64" ]]; then
+      curl https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh -o miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda install -y anaconda-client conda-build
+
+script:
+  - conda build cantera-dev --python=2.7 --python=3.4 --python=3.5 --numpy=1.11
+  - anaconda -t $ANACONDA_TOKEN upload -l dev $HOME/miniconda/conda-bld/*/cantera*.tar.bz2
