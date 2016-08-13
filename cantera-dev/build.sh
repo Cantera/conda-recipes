@@ -24,6 +24,11 @@ echo "system_sundials='n'" >> cantera.conf
 echo "blas_lapack_libs = 'm,dl,mkl_rt,mkl_intel_lp64,mkl_core,mkl_intel_thread,iomp5'" >> cantera.conf
 echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
 
+if [[ "$CONDA_ARCH" == "linux_x86" ]]; then
+  echo "cc_flags='-m32'" >> cantera.conf
+  echo "no_debug_linker_flags='-m32'" >> cantera.conf
+fi
+
 set -x
 
 # Run SCons to build the proper Python interface
