@@ -22,6 +22,7 @@ echo "matlab_toolbox='n'" >> cantera.conf
 echo "f90_interface='n'" >> cantera.conf
 echo "system_sundials='n'" >> cantera.conf
 echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
+echo "debug='n'" >> cantera.conf
 echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
 
 if [[ "$CONDA_ARCH" == "linux_x86" ]]; then

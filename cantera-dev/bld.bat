@@ -37,6 +37,7 @@ CALL scons clean
 ECHO msvc_version='14.0' >> cantera.conf
 ECHO env_vars='all' >> cantera.conf
 ECHO matlab_toolbox='n' >> cantera.conf
+ECHO debug='n' >> cantera.conf
 ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
 
