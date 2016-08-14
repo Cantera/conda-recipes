@@ -11,7 +11,6 @@ conda create -yq -n cantera-builder -c cantera/label/builddeps python=2 numpy=$N
 # The major version of the Python that will be used for the installer, not the
 # version used for building
 PY_MAJ_VER=${PY_VER:0:1}
-echo CONDA ARCH: $CONDA_ARCH
 
 set +x
 source activate cantera-builder
@@ -25,7 +24,6 @@ echo "system_sundials='n'" >> cantera.conf
 echo "debug='n'" >> cantera.conf
 echo "blas_lapack_libs = 'm,dl,mkl_rt,mkl_intel_lp64,mkl_core,mkl_intel_thread,iomp5'" >> cantera.conf
 echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
-echo CONDA ARCH: $CONDA_ARCH
 
 if [[ "$CONDA_ARCH" == "linux_x86" ]]; then
   echo "cc_flags='-m32'" >> cantera.conf
