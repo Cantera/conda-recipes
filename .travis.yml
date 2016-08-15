@@ -35,5 +35,5 @@ install:
   - conda install -y anaconda-client conda-build
 
 script:
-  - conda build cantera-dev --python=2.7 --python=3.4 --python=3.5 --numpy=1.11
+  - conda build cantera --python=2.7 --python=3.4 --python=3.5 --numpy=1.11
   - anaconda -t $ANACONDA_TOKEN upload --force -l dev $HOME/miniconda/conda-bld/*/cantera*.tar.bz2
