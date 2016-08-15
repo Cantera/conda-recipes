@@ -19,6 +19,7 @@ requirements:
       - python {{PY_VER}}*
       - numpy {{NPY_VER}}*
       - mkl
+      - vs2015_runtime # [win]
 test:
     imports:
       - cantera
