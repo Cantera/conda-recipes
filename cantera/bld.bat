@@ -25,8 +25,9 @@ SET PY_MAJ_VER=%PY_VER:~0,1%
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
 
-:: Set up to use the cantera-builder environment
-CALL activate.bat cantera-builder
+:: Using the activate script didn't seems to work, so set the PATH manually
+SET OLD_PATH=%PATH%
+SET PATH=%PREFIX:~0,-6%cantera-builder\bin;%PREFIX:~0,-6%cantera-builder\Scripts;%PATH%
 
 :: Have to use CALL to prevent the script from exiting after calling SCons
 CALL scons clean
@@ -55,9 +56,9 @@ CALL scons build -j%CPU_COUNT% python3_package=y python3_cmd="%PYTHON%" python_p
 GOTO BUILD_SUCCESS
 
 :BUILD_SUCCESS
-:: Reset the environment and remove the builder environment
-CALL deactivate.bat
+:: Remove the builder environment and reset the path
 CALL conda env remove -yq -n cantera-builder
+SET PATH=%OLD_PATH%
 
 :: Change to the Python interface directory and run the installer using the
 :: proper version of Python.
