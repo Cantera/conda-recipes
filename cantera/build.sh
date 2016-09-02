@@ -24,6 +24,7 @@ echo "system_sundials='n'" >> cantera.conf
 echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
 echo "debug='n'" >> cantera.conf
 echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
+echo "cantera_version = '$PKG_VERSION'" >> cantera.conf
 
 if [[ "$CONDA_ARCH" == "linux_x86" ]]; then
   echo "cc_flags='-m32'" >> cantera.conf

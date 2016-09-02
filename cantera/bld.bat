@@ -40,6 +40,7 @@ ECHO matlab_toolbox='n' >> cantera.conf
 ECHO debug='n' >> cantera.conf
 ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
+ECHO cantera_version='%PKG_VERSION%' >> cantera.conf
 
 :: Select which version of the interface should be built
 IF %PY_MAJ_VER% EQU 2 GOTO PYTHON2
