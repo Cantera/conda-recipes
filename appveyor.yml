@@ -4,24 +4,27 @@ environment:
     secure: 3ZFhc2nXAfGp3E1OJ6jnXHmjWcEPwRJcpanlvQAJMigQQ7oi/Q4OOM07ip3Nv8lz
 
 install:
-  - set ORIGPATH=%PATH%
-  - set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
-  - conda install -y anaconda-client conda-build
-  - set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
-  - conda install -y anaconda-client conda-build
+  - cmd: |
+      set ORIGPATH=%PATH%
+      set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
+      call conda install -y anaconda-client conda-build
+      set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
+      call conda install -y anaconda-client conda-build
 
 build_script:
-  - set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
-  - conda build cantera --python=2.7 --numpy=1.11
-  - conda build cantera --python=3.4 --numpy=1.11
-  - conda build cantera --python=3.5 --numpy=1.11
-  - set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
-  - conda build cantera --python=2.7 --numpy=1.11
-  - conda build cantera --python=3.4 --numpy=1.11
-  - conda build cantera --python=3.5 --numpy=1.11
+  - cmd: |
+      set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
+      call conda build cantera --python=2.7 --numpy=1.11
+      call conda build cantera --python=3.4 --numpy=1.11
+      call conda build cantera --python=3.5 --numpy=1.11
+      set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
+      call conda build cantera --python=2.7 --numpy=1.11
+      call conda build cantera --python=3.4 --numpy=1.11
+      call conda build cantera --python=3.5 --numpy=1.11
 
 deploy_script:
-  - set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
-  - anaconda -t %ANACONDA_KEY% upload --force -l dev C:\Miniconda\conda-bld\win-32\cantera*.tar.bz2
-  - set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
-  - anaconda -t %ANACONDA_KEY% upload --force -l dev C:\Miniconda-x64\conda-bld\win-64\cantera*.tar.bz2
+  - cmd: |
+      set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
+      call anaconda -t %ANACONDA_KEY% upload --force -l dev C:\Miniconda\conda-bld\win-32\cantera*.tar.bz2
+      set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
+      call anaconda -t %ANACONDA_KEY% upload --force -l dev C:\Miniconda-x64\conda-bld\win-64\cantera*.tar.bz2
