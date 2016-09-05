@@ -7,7 +7,7 @@ IF %ARCH% EQU 64 (
 )
 
 :: Remove the old builder environment, if it exists
-CALL conda env remove -yq -n cantera-builder
+CALL conda env remove -yq -p %PREFIX:~0,-6%cantera-builder
 
 :: Create a conda environment to build Cantera. It has to be Python 2, for
 :: Scons compatibility. When SCons is available for Python 3, these machinations
@@ -16,7 +16,7 @@ CALL conda env remove -yq -n cantera-builder
 :: the conda repositories is 2.3.0. Unfortunately, using VS 2015 requires SCons
 :: 2.4.1. This version is available from the cantera channel on anaconda.org, so we add
 :: -c cantera/label/builddeps to pick up SCons from that channel.
-CALL conda create -yq -n cantera-builder -c cantera/label/builddeps python=2 cython numpy pywin32 scons 3to2
+CALL conda create -yq -p %PREFIX:~0,-6%cantera-builder -c cantera/label/builddeps python=2 cython numpy pywin32 scons 3to2
 
 :: The major version of the Python that will be used for the installer, not the
 :: version used for building
@@ -25,7 +25,8 @@ SET PY_MAJ_VER=%PY_VER:~0,1%
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
 
-:: Using the activate script didn't seem to work, so set the PATH manually
+:: Using the activate script doesn't work in PowerShell, and in cmd.exe it gives an
+:: "Input line too long" error, so set the PATH manually.
 SET OLD_PATH=%PATH%
 SET PATH=%PREFIX:~0,-6%cantera-builder\bin;%PREFIX:~0,-6%cantera-builder\Scripts;%PATH%
 
@@ -57,7 +58,7 @@ GOTO BUILD_SUCCESS
 
 :BUILD_SUCCESS
 :: Remove the builder environment and reset the path
-CALL conda env remove -yq -n cantera-builder
+CALL conda env remove -yq -p %PREFIX:~0,-6%cantera-builder
 SET PATH=%OLD_PATH%
 
 :: Change to the Python interface directory and run the installer using the
