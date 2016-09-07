@@ -1,7 +1,7 @@
 version: 1.0.{build}
 environment:
   ANACONDA_KEY:
-    secure: 3ZFhc2nXAfGp3E1OJ6jnXHmjWcEPwRJcpanlvQAJMigQQ7oi/Q4OOM07ip3Nv8lz
+    secure: kiAnoYuLn2aWvx3eXzTZ+qv4sgRiAQIGv54SxfBeket2lYj9VBDyGjYxZ/K2X5Wf
 
 install:
   - cmd: |
