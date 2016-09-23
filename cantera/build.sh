@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Remove the old builder environement, if it exists
-conda env remove -yq -n cantera-builder
+if [[ $(conda env list) == *cantera-builder* ]]; then
+    conda env remove -yq -n cantera-builder
+fi
 
 # Create a conda environment to build Cantera. It has to be Python 2, for
 # SCons compatibility. When SCons is available for Python 3, these machinations
