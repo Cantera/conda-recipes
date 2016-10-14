@@ -24,6 +24,7 @@ SET PY_MAJ_VER=%PY_VER:~0,1%
 
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
+IF "%CPU_USE%" EQU "0" SET CPU_USE=1
 
 :: Using the activate script doesn't work in PowerShell, and in cmd.exe it gives an
 :: "Input line too long" error, so set the PATH manually.
@@ -43,17 +44,17 @@ ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
 
 :: Select which version of the interface should be built
-IF %PY_MAJ_VER% EQU 2 GOTO PYTHON2
-IF %PY_MAJ_VER% EQU 3 GOTO PYTHON3
+IF "%PY_MAJ_VER%" EQU "2" GOTO PYTHON2
+IF "%PY_MAJ_VER%" EQU "3" GOTO PYTHON3
 
 :PYTHON2
 ECHO Building for Python 2
-CALL scons build -j%CPU_COUNT% python3_package=n python_cmd="%PYTHON%" python_package=full
+CALL scons build -j%CPU_USE% python3_package=n python_cmd="%PYTHON%" python_package=full
 GOTO BUILD_SUCCESS
 
 :PYTHON3
 ECHO Building for Python 3
-CALL scons build -j%CPU_COUNT% python3_package=y python3_cmd="%PYTHON%" python_package=none
+CALL scons build -j%CPU_USE% python3_package=y python3_cmd="%PYTHON%" python_package=none
 GOTO BUILD_SUCCESS
 
 :BUILD_SUCCESS
