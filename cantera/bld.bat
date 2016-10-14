@@ -37,7 +37,6 @@ CALL scons clean
 :: Put important settings into cantera.conf for the build. Use VS 2015 to
 :: compile the interface.
 ECHO msvc_version='14.0' >> cantera.conf
-ECHO env_vars='all' >> cantera.conf
 ECHO matlab_toolbox='n' >> cantera.conf
 ECHO debug='n' >> cantera.conf
 ECHO f90_interface='n' >> cantera.conf
