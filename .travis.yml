@@ -31,9 +31,9 @@ install:
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
+  - conda install -q anaconda-client conda-build=2.0.6 conda=4.2.9
   - conda info -a
-  - conda install -y anaconda-client conda-build
+  - conda list
 
 script:
   - conda build cantera --python=2.7 --numpy=1.11
