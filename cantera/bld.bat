@@ -7,12 +7,12 @@ IF %ARCH% EQU 64 (
 )
 
 :: Remove the old builder environment, if it exists
-CALL conda env remove -yq -p %PREFIX:~0,-6%cantera-builder
+CALL conda env remove -yq -p "%PREFIX%\..\cantera-builder"
 
 :: Create a conda environment to build Cantera. It has to be Python 2, for
 :: Scons compatibility. When SCons is available for Python 3, these machinations
 :: can be removed
-CALL conda create -yq -p %PREFIX:~0,-6%cantera-builder -c cantera/label/builddeps python=2 cython numpy=%NPY_VER% pywin32 scons 3to2
+CALL conda create -yq -p "%PREFIX%\..\cantera-builder" -c cantera/label/builddeps python=2 cython numpy="%NPY_VER%" pywin32 scons 3to2
 
 :: The major version of the Python that will be used for the installer, not the
 :: version used for building
@@ -20,12 +20,10 @@ SET PY_MAJ_VER=%PY_VER:~0,1%
 
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
-IF "%CPU_USE%" EQU "0" SET CPU_USE=1
+IF %CPU_USE% EQU 0 SET CPU_USE=1
 
-:: Using the activate script doesn't work in PowerShell, and in cmd.exe it gives an
-:: "Input line too long" error, so set the PATH manually.
-SET OLD_PATH=%PATH%
-SET PATH=%PREFIX:~0,-6%cantera-builder\bin;%PREFIX:~0,-6%cantera-builder\Scripts;%PATH%
+SET OLD_CONDA_ENV="%CONDA_DEFAULT_ENV%"
+CALL "%ROOT%\Scripts\activate.bat" "%PREFIX%\..\cantera-builder"
 
 :: Have to use CALL to prevent the script from exiting after calling SCons
 CALL scons clean
@@ -54,8 +52,9 @@ GOTO BUILD_SUCCESS
 
 :BUILD_SUCCESS
 :: Remove the builder environment and reset the path
-CALL conda env remove -yq -p %PREFIX:~0,-6%cantera-builder
-SET PATH=%OLD_PATH%
+CALL "%ROOT%\Scripts\activate.bat" "%OLD_CONDA_ENV%"
+CALL conda env remove -yq -p "%PREFIX%"\..\cantera-builder
+:: SET PATH=%OLD_PATH%
 
 :: Change to the Python interface directory and run the installer using the
 :: proper version of Python.
