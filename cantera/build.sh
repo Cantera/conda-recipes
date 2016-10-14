@@ -1,21 +1,22 @@
 #!/bin/bash
 
 # Remove the old builder environement, if it exists
-if [[ $(conda env list) == *cantera-builder* ]]; then
-    conda env remove -yq -n cantera-builder
+if [[ -d "$PREFIX/../cantera-builder" ]]; then
+    conda env remove -yq -p "$PREFIX/../cantera-builder"
 fi
 
 # Create a conda environment to build Cantera. It has to be Python 2, for
 # SCons compatibility. When SCons is available for Python 3, these machinations
 # can be removed
-conda create -yq -n cantera-builder -c cantera/label/builddeps python=2 numpy=$NPY_VER scons cython mkl 3to2
+conda create -yq -p "$PREFIX/../cantera-builder" -c cantera/label/builddeps python=2 numpy=$NPY_VER scons cython mkl 3to2
 
 # The major version of the Python that will be used for the installer, not the
 # version used for building
 PY_MAJ_VER=${PY_VER:0:1}
 
+OLD_CONDA_ENV="$CONDA_DEFAULT_ENV"
 set +x
-source activate cantera-builder
+source activate "$PREFIX/../cantera-builder"
 
 scons clean
 
@@ -43,9 +44,9 @@ fi
 
 # Remove the builder environment
 set +x
-source deactivate
+source activate "$OLD_CONDA_ENV"
 set -x
-conda env remove -yq -n cantera-builder
+conda env remove -yq -p "$PREFIX/../cantera-builder"
 
 # Change to the Python interface directory and run the installer using the
 # proper version of Python.
