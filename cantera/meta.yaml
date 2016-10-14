@@ -23,6 +23,8 @@ requirements:
 test:
     imports:
       - cantera
+    commands:
+      - python -m unittest -v cantera.test.test_transport cantera.test.test_purefluid cantera.test.test_mixture
 about:
     home: http://www.cantera.org
     summary: "Chemical kinetics, thermodynamics, and transport tool suite"
