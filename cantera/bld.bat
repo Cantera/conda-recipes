@@ -12,10 +12,6 @@ CALL conda env remove -yq -p %PREFIX:~0,-6%cantera-builder
 :: Create a conda environment to build Cantera. It has to be Python 2, for
 :: Scons compatibility. When SCons is available for Python 3, these machinations
 :: can be removed
-:: Important: As of 24-Dec-2015, the most recent version of SCons available in
-:: the conda repositories is 2.3.0. Unfortunately, using VS 2015 requires SCons
-:: 2.4.1. This version is available from the cantera channel on anaconda.org, so we add
-:: -c cantera/label/builddeps to pick up SCons from that channel.
 CALL conda create -yq -p %PREFIX:~0,-6%cantera-builder -c cantera/label/builddeps python=2 cython numpy pywin32 scons 3to2
 
 :: The major version of the Python that will be used for the installer, not the
