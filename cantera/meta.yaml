@@ -14,11 +14,11 @@ requirements:
       - python >=2.7,<3|>=3.3,{{PY_VER}}*
       - numpy >=1.8,{{NPY_VER}}*
       - cython >=0.19*
-      - mkl
+      - mkl # [not win]
     run:
       - python {{PY_VER}}*
       - numpy {{NPY_VER}}*
-      - mkl
+      - mkl # [not win]
       - vs2015_runtime # [win]
 test:
     imports:
