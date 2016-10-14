@@ -3,28 +3,42 @@ environment:
   ANACONDA_KEY:
     secure: kiAnoYuLn2aWvx3eXzTZ+qv4sgRiAQIGv54SxfBeket2lYj9VBDyGjYxZ/K2X5Wf
 
+  matrix:
+    - PYTHON_LOC: "C:\\Miniconda"
+      PYTHON_VERSION: "2.7"
+      BUILD_ARCH: "32"
+
+    - PYTHON_LOC: "C:\\Miniconda"
+      PYTHON_VERSION: "3.4"
+      BUILD_ARCH: "32"
+
+    - PYTHON_LOC: "C:\\Miniconda"
+      PYTHON_VERSION: "3.5"
+      BUILD_ARCH: "32"
+
+    - PYTHON_LOC: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "2.7"
+      BUILD_ARCH: "64"
+
+    - PYTHON_LOC: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.4"
+      BUILD_ARCH: "64"
+
+    - PYTHON_LOC: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.5"
+      BUILD_ARCH: "64"
+
 install:
   - cmd: |
-      set ORIGPATH=%PATH%
-      set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
-      call conda install -y anaconda-client conda-build
-      set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
-      call conda install -y anaconda-client conda-build
+      set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
+      call conda install -yq anaconda-client conda=4.2.9 conda-build=2.0.6
 
 build_script:
   - cmd: |
-      set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
-      call conda build cantera --python=2.7 --numpy=1.11
-      call conda build cantera --python=3.4 --numpy=1.11
-      call conda build cantera --python=3.5 --numpy=1.11
-      set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
-      call conda build cantera --python=2.7 --numpy=1.11
-      call conda build cantera --python=3.4 --numpy=1.11
-      call conda build cantera --python=3.5 --numpy=1.11
+      set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
+      call conda build cantera --python=%PYTHON_VERSION% --numpy=1.11
 
 deploy_script:
   - cmd: |
-      set PATH=C:\Miniconda;C:\Miniconda\Scripts;%ORIGPATH%
-      call anaconda -t %ANACONDA_KEY% upload --force -l dev C:\Miniconda\conda-bld\win-32\cantera*.tar.bz2
-      set PATH=C:\Miniconda-x64;C:\Miniconda-x64\Scripts;%ORIGPATH%
-      call anaconda -t %ANACONDA_KEY% upload --force -l dev C:\Miniconda-x64\conda-bld\win-64\cantera*.tar.bz2
+      set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
+      call anaconda -t %ANACONDA_KEY% upload --force -l dev %PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2
