@@ -43,7 +43,7 @@ build_script:
 deploy_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - ps: >-
-      if($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:APPVEYOR_PULL_REQUEST_NUMBER -eq "")
+      if($env:APPVEYOR_REPO_BRANCH -eq "master" -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
       {
         anaconda -t %ANACONDA_KEY% upload --force -l dev %PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2
       }
