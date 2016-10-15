@@ -31,8 +31,8 @@ environment:
 install:
   - cmd: |
       set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-      call conda info -a
       call conda install -yq anaconda-client conda=4.2.9 conda-build=2.0.6
+      call conda info -a
       call conda list
 
 build_script:
@@ -42,5 +42,9 @@ build_script:
 
 deploy_script:
   - cmd: |
-      set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-      call anaconda -t %ANACONDA_KEY% upload --force -l dev %PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2
+      if "%APPVEYOR_REPO_BRANCH%" == "master" (
+        if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" (
+          set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
+          call anaconda -t %ANACONDA_KEY% upload --force -l dev %PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2
+        )
+      )
