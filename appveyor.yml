@@ -46,5 +46,9 @@ deploy_script:
         if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" (
           set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
           call anaconda -t %ANACONDA_KEY% upload --force -l dev %PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2
+        ) else (
+          echo "Not uploading because this is a pull request"
         )
+      ) else (
+        echo "Not uploading because the branch isn't master"
       )
