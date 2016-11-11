@@ -18,7 +18,7 @@ CALL conda env remove -yq -p "%PREFIX%\..\cantera-builder"
 :: so we add `-c cantera/label/builddeps` to pick up SCons from that channel.
 :: In addition, `3to2` is only available as a conda package from the
 :: `cantera/label/builddeps` channel.
-CALL conda create -yq -p "%PREFIX%\..\cantera-builder" -c cantera/label/builddeps python=2 cython numpy="%NPY_VER%" pywin32 scons 3to2
+CALL conda create -yq -p "%PREFIX%\..\cantera-builder" -c cantera/label/builddeps python=2 cython pywin32 scons 3to2
 
 :: The major version of the Python that will be used for the installer, not the
 :: version used for building
