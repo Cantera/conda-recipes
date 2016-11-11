@@ -11,6 +11,10 @@ build:
     string: np{{CONDA_NPY}}py{{CONDA_PY}}_{{PKG_BUILDNUM}}_g{{GIT_FULL_HASH[:7]}}
     script_env:
       - CONDA_ARCH
+    entry_points:
+      - ck2cti = cantera.ck2cti:script_entry_point
+      - ctml_writer = cantera.ctml_writer:main
+      - mixmaster = cantera.mixmaster.__main__:main
 requirements:
     build:
       - python >=2.7,<3|>=3.3,{{PY_VER}}*
