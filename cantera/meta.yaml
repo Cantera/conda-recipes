@@ -16,6 +16,7 @@ requirements:
       - python >=2.7,<3|>=3.3,{{PY_VER}}*
       - numpy >=1.8,{{NPY_VER}}*
       - cython >=0.23*
+      - boost
       - mkl # [not win]
     run:
       - python {{PY_VER}}*
