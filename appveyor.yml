@@ -16,6 +16,10 @@ environment:
       PYTHON_VERSION: "3.5"
       BUILD_ARCH: "32"
 
+    - PYTHON_LOC: "C:\\Miniconda"
+      PYTHON_VERSION: "3.6"
+      BUILD_ARCH: "32"
+
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "2.7"
       BUILD_ARCH: "64"
@@ -26,6 +30,10 @@ environment:
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.5"
+      BUILD_ARCH: "64"
+
+    - PYTHON_LOC: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.6"
       BUILD_ARCH: "64"
 
 install:
