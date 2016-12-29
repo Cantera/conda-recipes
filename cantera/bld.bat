@@ -18,7 +18,7 @@ CALL conda env remove -yq -p "%PREFIX%\..\cantera-builder"
 :: so we add `-c cantera/label/builddeps` to pick up SCons from that channel.
 :: In addition, `3to2` is only available as a conda package from the
 :: `cantera/label/builddeps` channel.
-CALL conda create -yq -p "%PREFIX%\..\cantera-builder" -c cantera/label/builddeps python=2 cython pywin32 scons 3to2
+CALL conda create -yq -p "%PREFIX%\..\cantera-builder" -c cantera/label/builddeps python=2 cython pywin32 scons 3to2 boost
 
 :: The major version of the Python that will be used for the installer, not the
 :: version used for building
@@ -43,7 +43,7 @@ ECHO f90_interface='n' >> cantera.conf
 ECHO system_sundials='n' >> cantera.conf
 
 SET "ESC_PREFIX=%PREFIX:\=/%"
-ECHO boost_inc_dir="%ESC_PREFIX%/Library/include" >> cantera.conf
+ECHO boost_inc_dir="%ESC_PREFIX%/../cantera-builder/Library/include" >> cantera.conf
 
 :: Select which version of the interface should be built
 IF "%PY_MAJ_VER%" EQU "2" GOTO PYTHON2

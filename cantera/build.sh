@@ -8,7 +8,7 @@ fi
 # Create a conda environment to build Cantera. It has to be Python 2, for
 # SCons compatibility. When SCons is available for Python 3, these machinations
 # can be removed
-conda create -yq -p "$PREFIX/../cantera-builder" -c cantera/label/builddeps python=2 scons cython 3to2
+conda create -yq -p "$PREFIX/../cantera-builder" -c cantera/label/builddeps python=2 scons cython 3to2 boost
 
 # The major version of the Python that will be used for the installer, not the
 # version used for building
@@ -27,7 +27,7 @@ echo "system_sundials='n'" >> cantera.conf
 echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
 echo "debug='n'" >> cantera.conf
 echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
-echo "boost_inc_dir = '$PREFIX/include'" >> cantera.conf
+echo "boost_inc_dir = '$PREFIX/../cantera-builder/include'" >> cantera.conf
 
 if [[ "$CONDA_ARCH" == "linux_x86" ]]; then
   echo "cc_flags='-m32'" >> cantera.conf
