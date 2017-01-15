@@ -51,12 +51,12 @@ build_script:
 deploy_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - ps: >-
-      if($env:APPVEYOR_REPO_BRANCH -eq "master" -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
+      if($env:APPVEYOR_REPO_BRANCH -eq "2.3" -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
       {
         $env:conda_upload = 'true'
       }
       else
       {
-        Write-Host "Nothing was uploaded because this isn't the master branch or it's a pull request."
+        Write-Host "Nothing was uploaded because this isn't the release branch or it's a pull request."
       }
-  - cmd: IF "%conda_upload%"=="true" anaconda -t %ANACONDA_KEY% upload --force -l dev "%PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2"
+  - cmd: IF "%conda_upload%"=="true" anaconda -t %ANACONDA_KEY% upload --force "%PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2"
