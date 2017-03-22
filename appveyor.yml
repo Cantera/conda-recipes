@@ -7,34 +7,42 @@ environment:
     - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "2.7"
       BUILD_ARCH: "32"
+      BUILD_NPY: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "3.4"
       BUILD_ARCH: "32"
+      BUILD_NPY: "1.11"
 
     - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "3.5"
       BUILD_ARCH: "32"
+      BUILD_NPY: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "3.6"
       BUILD_ARCH: "32"
+      BUILD_NPY: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "2.7"
       BUILD_ARCH: "64"
+      BUILD_NPY: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.4"
       BUILD_ARCH: "64"
+      BUILD_NPY: "1.11"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.5"
       BUILD_ARCH: "64"
+      BUILD_NPY: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.6"
       BUILD_ARCH: "64"
+      BUILD_NPY: "1.12"
 
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
@@ -46,7 +54,7 @@ install:
 
 build_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - cmd: conda build cantera --python=%PYTHON_VERSION% --numpy=1.11
+  - cmd: conda build cantera --python=%PYTHON_VERSION% --numpy=%BUILD_NPY%
 
 deploy_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
