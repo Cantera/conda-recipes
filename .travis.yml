@@ -16,40 +16,40 @@ addons:
 matrix:
   include:
     - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="3.4" BUILD_ARCH="x86" NPY_VER="1.11"
 
     - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64" NPY_VER="1.11"
 
     - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: osx
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: osx
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64" NPY_VER="1.11"
 
     - os: osx
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: osx
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" NPY_VER="1.12"
 
 install:
   - export CONDA_ARCH="${TRAVIS_OS_NAME}_${BUILD_ARCH}"
@@ -69,7 +69,7 @@ install:
   - conda list
 
 script:
-  - conda build cantera --python=${BUILD_PYTHON} --numpy=1.11
+  - conda build cantera --python=${BUILD_PYTHON} --numpy=${NPY_VER}
   - if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
       anaconda -t $ANACONDA_TOKEN upload --force -l dev $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
     else
