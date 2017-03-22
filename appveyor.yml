@@ -10,11 +10,6 @@ environment:
       NPY_VER: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.4"
-      BUILD_ARCH: "32"
-      NPY_VER: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "3.5"
       BUILD_ARCH: "32"
       NPY_VER: "1.12"
@@ -28,11 +23,6 @@ environment:
       PYTHON_VERSION: "2.7"
       BUILD_ARCH: "64"
       NPY_VER: "1.12"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.4"
-      BUILD_ARCH: "64"
-      NPY_VER: "1.11"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.5"
