@@ -19,11 +19,11 @@ requirements:
     build:
       - python >=2.7,<3|>=3.3,{{PY_VER}}*
       - numpy >=1.8,{{NPY_VER}}*
-      - mkl # [not win]
+      - mkl # [linux]
     run:
       - python {{PY_VER}}*
       - numpy {{NPY_VER}}*
-      - mkl # [not win]
+      - mkl # [linux]
       - vs2015_runtime # [win]
 test:
     imports:
