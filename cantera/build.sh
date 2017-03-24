@@ -24,14 +24,17 @@ scons clean
 echo "matlab_toolbox='n'" >> cantera.conf
 echo "f90_interface='n'" >> cantera.conf
 echo "system_sundials='n'" >> cantera.conf
-echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
 echo "debug='n'" >> cantera.conf
-echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
 echo "boost_inc_dir = '$PREFIX/../cantera-builder/include'" >> cantera.conf
 
 if [[ "$CONDA_ARCH" == "linux_x86" ]]; then
   echo "cc_flags='-m32'" >> cantera.conf
   echo "no_debug_linker_flags='-m32'" >> cantera.conf
+fi
+
+if [[ "$CONDA_ARCH" != "osx_x64" ]]; then
+    echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
+    echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
 fi
 
 set -x
