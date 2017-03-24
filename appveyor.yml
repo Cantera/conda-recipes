@@ -7,38 +7,36 @@ environment:
     - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "2.7"
       BUILD_ARCH: "32"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.4"
-      BUILD_ARCH: "32"
+      NPY_VER: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "3.5"
       BUILD_ARCH: "32"
+      NPY_VER: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda"
       PYTHON_VERSION: "3.6"
       BUILD_ARCH: "32"
+      NPY_VER: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "2.7"
       BUILD_ARCH: "64"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.4"
-      BUILD_ARCH: "64"
+      NPY_VER: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.5"
       BUILD_ARCH: "64"
+      NPY_VER: "1.12"
 
     - PYTHON_LOC: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.6"
       BUILD_ARCH: "64"
+      NPY_VER: "1.12"
 
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - cmd: conda install -yq anaconda-client conda=4.2.13 conda-build=2.0.12
+  - cmd: conda install -yq anaconda-client conda=4.3.14 conda-build=2.1.7
   - cmd: conda info -a
   - cmd: conda list
   - ps: Write-Host $env:APPVEYOR_REPO_BRANCH
@@ -46,7 +44,7 @@ install:
 
 build_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - cmd: conda build cantera --python=%PYTHON_VERSION% --numpy=1.11
+  - cmd: conda build cantera --python=%PYTHON_VERSION% --numpy=%NPY_VER%
 
 deploy_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%

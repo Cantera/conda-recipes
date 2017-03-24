@@ -16,40 +16,31 @@ addons:
 matrix:
   include:
     - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86"
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: linux
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64"
-
-    - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64"
-
-    - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: osx
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: osx
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" NPY_VER="1.12"
 
     - os: osx
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64"
-
-    - os: osx
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64"
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" NPY_VER="1.12"
 
 install:
   - export CONDA_ARCH="${TRAVIS_OS_NAME}_${BUILD_ARCH}"
@@ -64,12 +55,12 @@ install:
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - conda config --set always_yes yes --set changeps1 no
-  - conda install -q anaconda-client conda-build=2.0.12 conda=4.2.13
+  - conda install -q anaconda-client conda-build=2.1.7 conda=4.3.14
   - conda info -a
   - conda list
 
 script:
-  - conda build cantera --python=${BUILD_PYTHON} --numpy=1.11
+  - conda build cantera --python=${BUILD_PYTHON} --numpy=${NPY_VER}
   - if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
       anaconda -t $ANACONDA_TOKEN upload --force -l dev $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
     else

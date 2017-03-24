@@ -7,7 +7,7 @@ source:
     git_url: https://github.com/Cantera/cantera.git
     git_tag: master
 build:
-    number: 2
+    number: 0
     string: np{{CONDA_NPY}}py{{CONDA_PY}}_{{PKG_BUILDNUM}}_g{{GIT_FULL_HASH[:7]}}
     script_env:
       - CONDA_ARCH
@@ -19,11 +19,11 @@ requirements:
     build:
       - python >=2.7,<3|>=3.3,{{PY_VER}}*
       - numpy >=1.8,{{NPY_VER}}*
-      - mkl # [not win]
+      - mkl # [linux]
     run:
       - python {{PY_VER}}*
       - numpy {{NPY_VER}}*
-      - mkl # [not win]
+      - mkl # [linux]
       - vs2015_runtime # [win]
 test:
     imports:
