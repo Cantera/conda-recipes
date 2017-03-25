@@ -98,7 +98,7 @@ install:
 script:
   - conda build cantera --python=${BUILD_PYTHON} --numpy=${BUILD_NPY}
   - if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "2.3" ]; then
-      anaconda -t $ANACONDA_TOKEN upload --force $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
+      anaconda -t $ANACONDA_TOKEN upload $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
     else
       echo "Nothing was uploaded because this isn't the release branch or it's a pull request.";
     fi
