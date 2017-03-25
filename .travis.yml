@@ -51,6 +51,33 @@ matrix:
     - os: osx
       env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.12"
 
+    - os: linux
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.11"
+
+    - os: linux
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.11"
+
+    - os: linux
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.11"
+
+    - os: linux
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.11"
+
+    - os: linux
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.11"
+
+    - os: linux
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.11"
+
+    - os: osx
+      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.11"
+
+    - os: osx
+      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.11"
+
+    - os: osx
+      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.11"
+
 install:
   - export CONDA_ARCH="${TRAVIS_OS_NAME}_${BUILD_ARCH}"
   # Using Miniconda 2 saves having to download Python 2 for the cantera-builder environment

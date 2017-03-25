@@ -44,6 +44,36 @@ environment:
       BUILD_ARCH: "64"
       BUILD_NPY: "1.12"
 
+    - PYTHON_LOC: "C:\\Miniconda"
+      PYTHON_VERSION: "2.7"
+      BUILD_ARCH: "32"
+      BUILD_NPY: "1.11"
+
+    - PYTHON_LOC: "C:\\Miniconda"
+      PYTHON_VERSION: "3.5"
+      BUILD_ARCH: "32"
+      BUILD_NPY: "1.11"
+
+    - PYTHON_LOC: "C:\\Miniconda"
+      PYTHON_VERSION: "3.6"
+      BUILD_ARCH: "32"
+      BUILD_NPY: "1.11"
+
+    - PYTHON_LOC: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "2.7"
+      BUILD_ARCH: "64"
+      BUILD_NPY: "1.11"
+
+    - PYTHON_LOC: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.5"
+      BUILD_ARCH: "64"
+      BUILD_NPY: "1.11"
+
+    - PYTHON_LOC: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.6"
+      BUILD_ARCH: "64"
+      BUILD_NPY: "1.11"
+
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - cmd: conda install -yq anaconda-client conda=4.3.14 conda-build=2.1.7
