@@ -36,7 +36,7 @@ environment:
 
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - cmd: conda install -yq anaconda-client conda=4.3.14 conda-build=2.1.7
+  - cmd: conda install -yq anaconda-client conda=4.3.21 conda-build=2.1.15
   - cmd: conda info -a
   - cmd: conda list
   - ps: Write-Host $env:APPVEYOR_REPO_BRANCH

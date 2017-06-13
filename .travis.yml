@@ -56,7 +56,7 @@ install:
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - conda config --set always_yes yes --set changeps1 no
-  - conda install -q anaconda-client conda-build=2.1.7 conda=4.3.14
+  - conda install -q anaconda-client conda-build=2.1.15 conda=4.3.21
   - conda info -a
   - conda list
 
