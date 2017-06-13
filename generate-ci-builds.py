@@ -1,5 +1,9 @@
-from ruamel.yaml import YAML
+from ruamel.yaml import YAML, __version__ as ryvers
 from itertools import product
+from distutils.version import StrictVersion
+
+if StrictVersion(ryvers) < StrictVersion('0.15.0'):
+    raise ImportError('ruamel.yaml must be at least version 0.15.0')
 
 yaml = YAML()
 yaml.default_flow_style = False
