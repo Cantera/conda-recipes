@@ -1,109 +1,89 @@
 version: 1.0.{build}
 environment:
-  ANACONDA_KEY:
-    secure: kiAnoYuLn2aWvx3eXzTZ+qv4sgRiAQIGv54SxfBeket2lYj9VBDyGjYxZ/K2X5Wf
+    ANACONDA_KEY:
+        secure: kiAnoYuLn2aWvx3eXzTZ+qv4sgRiAQIGv54SxfBeket2lYj9VBDyGjYxZ/K2X5Wf
 
-  matrix:
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "2.7"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "2.7"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.12"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "2.7"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.13"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.4"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.5"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.5"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.12"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.5"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.13"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.6"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.6"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.12"
-
-    - PYTHON_LOC: "C:\\Miniconda"
-      PYTHON_VERSION: "3.6"
-      BUILD_ARCH: "32"
-      BUILD_NPY: "1.13"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "2.7"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "2.7"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.12"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "2.7"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.13"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.4"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.5"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.5"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.12"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.5"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.13"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.6"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.11"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.6"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.12"
-
-    - PYTHON_LOC: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.6"
-      BUILD_ARCH: "64"
-      BUILD_NPY: "1.13"
-
+    matrix:
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '2.7'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '2.7'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.12'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '2.7'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.13'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '3.4'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.12'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.13'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.12'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.13'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '2.7'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '2.7'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.12'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '2.7'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.13'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '3.4'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.12'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.13'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.11'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.12'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.13'
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - cmd: conda install -yq anaconda-client conda=4.3.21 conda-build=2.1.15
@@ -118,13 +98,13 @@ build_script:
 
 deploy_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - ps: >-
-      if($env:APPVEYOR_REPO_BRANCH -eq "2.3" -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
-      {
-        $env:conda_upload = 'true'
-      }
-      else
-      {
-        Write-Host "Nothing was uploaded because this isn't the release branch or it's a pull request."
-      }
+  - ps: |
+        if($env:APPVEYOR_REPO_BRANCH -eq "2.3" -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
+        {
+          $env:conda_upload = 'true'
+        }
+        else
+        {
+          Write-Host "Nothing was uploaded because this isn't the release branch or it's a pull request."
+        }
   - cmd: IF "%conda_upload%"=="true" anaconda -t %ANACONDA_KEY% upload "%PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2"

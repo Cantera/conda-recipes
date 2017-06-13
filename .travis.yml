@@ -1,116 +1,86 @@
 language: cpp
 sudo: false
 env:
-  global:
-    secure: "lipzTB4mywydfk2wz+4AygG8tO5W6n+PvtFTSE9GBTSEmBjja2dIqc7DUjJuIqrve2X1Hon6AfiwsaHTYhO/ev+mACnZ/aKkkemSPRh/SlWUnGKzc/zXc8rNOmOdhKVTHUkJyXJZF0ZZvPC+xj3JGZdOKWXFLgiszwqQO/HLddWtl7+HoJnLLDKLHf80dEpmOMF9uaWezN3HzZtGLeJX5x1G8sqx6umUlcu7EiYbeBoF3HJVLiAkMCit5eJwk7nP6SpWd9xyYWPmn4Fu+4jMa29ItlXgL3G0i9yDwkpD7jaXTxJNOMQ7OxM9wBPI5Ef5ZasG6xBJeqap6vFSszu6VuignxVA4nDkvLDJohuSeRWlhZOAn2FZbI6DQIkOY3MfZcac1ImPhuoq86VnWeuLVZeb9qXKTUDQjamumywnYSRA9ZUbY6uq1CaChknXIOSb2kxJuF+WWsyZjyGp27OvGAev8Nm+IO/It/ZfID3WWB4cJFGoS1vyPFIfWKZhjhNYIrxXBD786McWkGlNcz8u9ukSTaa+cSCFIZgO9QCXJEsPtUHeJZx84MuUtqsIOQTRIVNIvQkzEctBNm8AaJ3eRugbYQFHEdk1lsvHpzgdU3aIj6OgV1dWaUUZzdbWxzL1lyGR8v/pZ+UrBaWuVFU8Y9h9jLF4uPhP7hp+xkR2V3A="
+    global:
+        secure: "lipzTB4mywydfk2wz+4AygG8tO5W6n+PvtFTSE9GBTSEmBjja2dIqc7DUjJuIqrve2X1Hon6AfiwsaHTYhO/ev+mACnZ/aKkkemSPRh/SlWUnGKzc/zXc8rNOmOdhKVTHUkJyXJZF0ZZvPC+xj3JGZdOKWXFLgiszwqQO/HLddWtl7+HoJnLLDKLHf80dEpmOMF9uaWezN3HzZtGLeJX5x1G8sqx6umUlcu7EiYbeBoF3HJVLiAkMCit5eJwk7nP6SpWd9xyYWPmn4Fu+4jMa29ItlXgL3G0i9yDwkpD7jaXTxJNOMQ7OxM9wBPI5Ef5ZasG6xBJeqap6vFSszu6VuignxVA4nDkvLDJohuSeRWlhZOAn2FZbI6DQIkOY3MfZcac1ImPhuoq86VnWeuLVZeb9qXKTUDQjamumywnYSRA9ZUbY6uq1CaChknXIOSb2kxJuF+WWsyZjyGp27OvGAev8Nm+IO/It/ZfID3WWB4cJFGoS1vyPFIfWKZhjhNYIrxXBD786McWkGlNcz8u9ukSTaa+cSCFIZgO9QCXJEsPtUHeJZx84MuUtqsIOQTRIVNIvQkzEctBNm8AaJ3eRugbYQFHEdk1lsvHpzgdU3aIj6OgV1dWaUUZzdbWxzL1lyGR8v/pZ+UrBaWuVFU8Y9h9jLF4uPhP7hp+xkR2V3A="
 
 addons:
-  apt:
-    packages:
-      - libc6:i386
-      - libc6-dev:i386
-      - zlib1g:i386
-      - gcc-multilib
-      - g++-multilib
+    apt:
+        packages:
+          - libc6:i386
+          - libc6-dev:i386
+          - zlib1g:i386
+          - gcc-multilib
+          - g++-multilib
 
 matrix:
-  include:
-    - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.12"
-
-    - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.13"
-
-    - os: linux
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x86" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.12"
-
-    - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.13"
-
-    - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.12"
-
-    - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.13"
-
-    - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.12"
-
-    - os: linux
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.13"
-
-    - os: linux
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.12"
-
-    - os: linux
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.13"
-
-    - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.12"
-
-    - os: linux
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.13"
-
-    - os: osx
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: osx
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.12"
-
-    - os: osx
-      env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.13"
-
-    - os: osx
-      env: BUILD_PYTHON="3.4" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: osx
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: osx
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.12"
-
-    - os: osx
-      env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.13"
-
-    - os: osx
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.11"
-
-    - os: osx
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.12"
-
-    - os: osx
-      env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.13"
-
-
+    include:
+      - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.12"
+      - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="3.4" BUILD_ARCH="x86" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.12"
+      - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.12"
+      - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.12"
+      - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="3.4" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.12"
+      - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.12"
+      - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: osx
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: osx
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.12"
+      - os: osx
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: osx
+        env: BUILD_PYTHON="3.4" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: osx
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: osx
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.12"
+      - os: osx
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: osx
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.11"
+      - os: osx
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.12"
+      - os: osx
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.13"
 install:
   - export CONDA_ARCH="${TRAVIS_OS_NAME}_${BUILD_ARCH}"
   # Using Miniconda 2 saves having to download Python 2 for the cantera-builder environment
 
-  - if [[ "$CONDA_ARCH" == "linux_x64" ]]; then
+  - |
+    if [[ "$CONDA_ARCH" == "linux_x64" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
     elif [[ "$CONDA_ARCH" == "linux_x86" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86.sh -O miniconda.sh;
@@ -126,7 +96,8 @@ install:
 
 script:
   - conda build cantera --python=${BUILD_PYTHON} --numpy=${BUILD_NPY}
-  - if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "2.3" ]; then
+  - |
+    if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "2.3" ]; then
       anaconda -t $ANACONDA_TOKEN upload $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
     else
       echo "Nothing was uploaded because this isn't the release branch or it's a pull request.";
