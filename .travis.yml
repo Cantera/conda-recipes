@@ -45,7 +45,8 @@ matrix:
 install:
   - export CONDA_ARCH="${TRAVIS_OS_NAME}_${BUILD_ARCH}"
   # Using Miniconda 2 saves having to download Python 2 for the cantera-builder environment
-  - if [[ "$CONDA_ARCH" == "linux_x64" ]]; then
+  - |
+    if [[ "$CONDA_ARCH" == "linux_x64" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
     elif [[ "$CONDA_ARCH" == "linux_x86" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86.sh -O miniconda.sh;
@@ -61,7 +62,8 @@ install:
 
 script:
   - conda build cantera --python=${BUILD_PYTHON} --numpy=${BUILD_NPY}
-  - if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
+  - |
+    if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
       anaconda -t $ANACONDA_TOKEN upload --force -l dev $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
     else
       echo "Nothing was uploaded because this isn't the master branch or it's a pull request.";

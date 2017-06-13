@@ -48,7 +48,7 @@ build_script:
 
 deploy_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - ps: >-
+  - ps: |
       if($env:APPVEYOR_REPO_BRANCH -eq "master" -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
       {
         $env:conda_upload = 'true'
