@@ -1,3 +1,22 @@
+"""
+This script is used to generate the build matrix portions of the
+``.travis.yml`` and ``appveyor.yml`` files. The intended use is for a
+maintainer of the project to edit the ``numpy_versions`` list and
+``pythons`` dictionary to include the relevant versions, then run
+the script to modify the two configuration files. The maintainer
+then commits the changes to the files and pushes to GitHub to
+trigger the CI builds.
+
+The only requirement for this script is ruamel.yaml version
+greater than 0.15.0. This can be installed from pip
+
+    pip install ruamel.yaml
+
+or conda-forge
+
+    conda install -c conda-forge ruamel.yaml
+"""
+
 from ruamel.yaml import YAML, __version__ as ryvers
 from itertools import product
 from distutils.version import StrictVersion
