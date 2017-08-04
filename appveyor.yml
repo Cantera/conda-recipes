@@ -2,7 +2,7 @@ version: 1.0.{build}
 
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
-  - cmd: conda install -yq anaconda-client conda-build=3.0.6 conda=4.3.22
+  - cmd: conda install -yq anaconda-client conda=4.3.21 conda-build=2.1.15
   - cmd: conda info -a
   - cmd: conda list
   - ps: Write-Host $env:APPVEYOR_REPO_BRANCH
