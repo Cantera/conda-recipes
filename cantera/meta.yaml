@@ -32,6 +32,7 @@ test:
       - cantera
     commands:
       - python -m unittest -v cantera.test
+      - ck2cti --help
 about:
   home: https://cantera.org
   summary: "Chemical kinetics, thermodynamics, and transport tool suite"
