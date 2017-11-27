@@ -1,38 +1,74 @@
 {% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\['cantera_version'\\] = .([\d.abrc]+).") %}
 
 package:
-    name: cantera
-    version: {{ data.group(1) }}
+  name: cantera-recipe
+  version: {{ data.group(1) }}
+
 source:
-    git_url: https://github.com/Cantera/cantera.git
-    git_tag: master
-build:
-    number: 0
-    string: np{{CONDA_NPY}}py{{CONDA_PY}}_{{PKG_BUILDNUM}}
-    script_env:
-      - CONDA_ARCH
-    entry_points:
-      - ck2cti = cantera.ck2cti:script_entry_point
-      - ctml_writer = cantera.ctml_writer:main
+  git_url: https://github.com/Cantera/cantera.git
+  git_tag: master
+
 requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - scons >=3.0
+  host:
+    - libboost
+    - mkl  # [linux]
+
+build:
+  number: 0
+  include_recipe: True
+
+outputs:
+  - name: libcantera
+    script: build_lib.sh  # [not win]
+    script: build_lib.bat  # [win]
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=3.0
+      host:
+        - libboost
+        - mkl  # [linux]
+      run:
+        - mkl  # [linux]
     build:
-      - python >=2.7,<3|>=3.3,{{PY_VER}}*
-      - numpy >=1.8.1,{{NPY_VER}}*
-      - boost
-      - mkl # [linux]
-      - cython >=0.23
-      - pywin32 # [win]
-    run:
-      - python {{PY_VER}}*
-      - numpy {{NPY_VER}}*
-      - mkl # [linux]
-      - vs2015_runtime # [win]
-test:
-    imports:
-      - cantera
-    commands:
-      - python -m unittest -v cantera.test
-      - ck2cti --help
+      include_recipe: True
+
+  - name: cantera
+    script: build_py.sh  # [not win]
+    script: build_py.bat  # [win]
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=3.0
+      host:
+        - python
+        - libboost
+        - mkl  # [linux]
+        - numpy
+        - cython
+      run:
+        - python
+        - {{ pin_compatible('numpy') }}
+        - mkl  # [linux]
+        - vs2015_runtime  # [win]
+    build:
+      entry_points:
+        - ck2cti = cantera.ck2cti:script_entry_point
+        - ctml_writer = cantera.ctml_writer:main
+      include_recipe: True
+    test:
+      imports:
+        - cantera
+      commands:
+        - python -m unittest -v cantera.test
+        - ck2cti --help
+
 about:
   home: https://cantera.org
   summary: "Chemical kinetics, thermodynamics, and transport tool suite"
