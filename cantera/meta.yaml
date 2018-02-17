@@ -14,12 +14,13 @@ build:
     entry_points:
       - ck2cti = cantera.ck2cti:script_entry_point
       - ctml_writer = cantera.ctml_writer:main
-      - mixmaster = cantera.mixmaster.__main__:main
 requirements:
     build:
       - python >=2.7,<3|>=3.3,{{PY_VER}}*
       - numpy >=1.8.1,{{NPY_VER}}*
       - mkl # [linux]
+      - cython >=0.23
+      - pywin32 # [win]
     run:
       - python {{PY_VER}}*
       - numpy {{NPY_VER}}*
