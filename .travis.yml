@@ -49,34 +49,52 @@ matrix:
       - os: linux
         env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.13"
       - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x86" BUILD_NPY="1.14"
+      - os: linux
         env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.12"
       - os: linux
         env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x86" BUILD_NPY="1.14"
       - os: linux
         env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.12"
       - os: linux
         env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.13"
       - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x86" BUILD_NPY="1.14"
+      - os: linux
         env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.12"
       - os: linux
         env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.14"
       - os: linux
         env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.12"
       - os: linux
         env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.13"
       - os: linux
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.14"
+      - os: linux
         env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.12"
       - os: linux
         env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: linux
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.14"
       - os: osx
         env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.12"
       - os: osx
         env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.13"
       - os: osx
+        env: BUILD_PYTHON="2.7" BUILD_ARCH="x64" BUILD_NPY="1.14"
+      - os: osx
         env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.12"
       - os: osx
         env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.13"
       - os: osx
+        env: BUILD_PYTHON="3.5" BUILD_ARCH="x64" BUILD_NPY="1.14"
+      - os: osx
         env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.12"
       - os: osx
         env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.13"
+      - os: osx
+        env: BUILD_PYTHON="3.6" BUILD_ARCH="x64" BUILD_NPY="1.14"
