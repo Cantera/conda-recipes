@@ -31,7 +31,7 @@ yaml.block_seq_indent = 2
 yaml.indent = 4
 yaml.width = 200
 
-numpy_versions = ['1.12', '1.13']
+numpy_versions = ['1.12', '1.13', '1.14']
 pythons = {
     '2.7': numpy_versions,
     '3.5': numpy_versions,
