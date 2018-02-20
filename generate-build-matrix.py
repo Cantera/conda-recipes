@@ -17,7 +17,7 @@ or conda-forge
     conda install -c conda-forge ruamel.yaml
 """
 
-from ruamel.yaml import YAML, __version__ as ryvers
+from ruamel_yaml import YAML, __version__ as ryvers
 from itertools import product
 from distutils.version import StrictVersion
 
@@ -61,9 +61,11 @@ with open('.travis.yml', 'w') as travis_file:
 
 appveyor_matrix = []
 for arch, python in product(['32', '64'], pythons.keys()):
+    py_suffix = '' if python == '2.7' else python.replace('.', '')
+    arch_suffix = '-x64' if arch == '64' else ''
     for numpy in pythons[python]:
         env = {
-            'PYTHON_LOC': "C:\\Miniconda" if arch == '32' else "C:\\Miniconda-x64",
+            'PYTHON_LOC': "C:\\Miniconda" + py_suffix + arch_suffix,
             'PYTHON_VERSION': "{}".format(python),
             'BUILD_ARCH': "{}".format(arch),
             'BUILD_NPY': "{}".format(numpy),
