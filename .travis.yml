@@ -15,17 +15,17 @@ addons:
 
 install:
   - export CONDA_ARCH="${TRAVIS_OS_NAME}_${BUILD_ARCH}"
-  # Using Miniconda 2 saves having to download Python 2 for the cantera-builder environment
+  - export PY_MAJ_VER=${BUILD_PYTHON:0:1}
   - |
     if [[ "$CONDA_ARCH" == "linux_x64" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+      wget https://repo.continuum.io/miniconda/Miniconda${PY_MAJ_VER}-latest-Linux-x86_64.sh -O miniconda.sh;
     elif [[ "$CONDA_ARCH" == "linux_x86" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86.sh -O miniconda.sh;
+      wget https://repo.continuum.io/miniconda/Miniconda${PY_MAJ_VER}-latest-Linux-x86.sh -O miniconda.sh;
     elif [[ "$CONDA_ARCH" == "osx_x64" ]]; then
-      curl https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh -o miniconda.sh;
+      curl https://repo.continuum.io/miniconda/Miniconda${PY_MAJ_VER}-latest-MacOSX-x86_64.sh -o miniconda.sh;
     fi
   - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
+  - source $HOME/miniconda/etc/profile.d/conda.sh && conda activate
   - conda config --set always_yes yes --set changeps1 no
   - conda install -q anaconda-client conda-build\<4.0 conda\<5.0
   - conda info -a
