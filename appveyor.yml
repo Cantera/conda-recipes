@@ -35,43 +35,51 @@ environment:
       - PYTHON_LOC: C:\Miniconda
         PYTHON_VERSION: '2.7'
         BUILD_ARCH: '32'
-        BUILD_NPY: '1.12'
-      - PYTHON_LOC: C:\Miniconda
-        PYTHON_VERSION: '2.7'
-        BUILD_ARCH: '32'
         BUILD_NPY: '1.13'
       - PYTHON_LOC: C:\Miniconda
         PYTHON_VERSION: '2.7'
         BUILD_ARCH: '32'
         BUILD_NPY: '1.14'
-      - PYTHON_LOC: C:\Miniconda35
-        PYTHON_VERSION: '3.5'
+      - PYTHON_LOC: C:\Miniconda
+        PYTHON_VERSION: '2.7'
         BUILD_ARCH: '32'
-        BUILD_NPY: '1.12'
+        BUILD_NPY: '1.15'
       - PYTHON_LOC: C:\Miniconda35
         PYTHON_VERSION: '3.5'
         BUILD_ARCH: '32'
         BUILD_NPY: '1.13'
       - PYTHON_LOC: C:\Miniconda35
         PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.14'
+      - PYTHON_LOC: C:\Miniconda35
+        PYTHON_VERSION: '3.5'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.15'
+      - PYTHON_LOC: C:\Miniconda36
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.13'
+      - PYTHON_LOC: C:\Miniconda36
+        PYTHON_VERSION: '3.6'
         BUILD_ARCH: '32'
         BUILD_NPY: '1.14'
       - PYTHON_LOC: C:\Miniconda36
         PYTHON_VERSION: '3.6'
         BUILD_ARCH: '32'
-        BUILD_NPY: '1.12'
+        BUILD_NPY: '1.15'
       - PYTHON_LOC: C:\Miniconda36
-        PYTHON_VERSION: '3.6'
+        PYTHON_VERSION: '3.7'
         BUILD_ARCH: '32'
         BUILD_NPY: '1.13'
       - PYTHON_LOC: C:\Miniconda36
-        PYTHON_VERSION: '3.6'
+        PYTHON_VERSION: '3.7'
         BUILD_ARCH: '32'
         BUILD_NPY: '1.14'
-      - PYTHON_LOC: C:\Miniconda-x64
-        PYTHON_VERSION: '2.7'
-        BUILD_ARCH: '64'
-        BUILD_NPY: '1.12'
+      - PYTHON_LOC: C:\Miniconda36
+        PYTHON_VERSION: '3.7'
+        BUILD_ARCH: '32'
+        BUILD_NPY: '1.15'
       - PYTHON_LOC: C:\Miniconda-x64
         PYTHON_VERSION: '2.7'
         BUILD_ARCH: '64'
@@ -80,10 +88,10 @@ environment:
         PYTHON_VERSION: '2.7'
         BUILD_ARCH: '64'
         BUILD_NPY: '1.14'
-      - PYTHON_LOC: C:\Miniconda35-x64
-        PYTHON_VERSION: '3.5'
+      - PYTHON_LOC: C:\Miniconda-x64
+        PYTHON_VERSION: '2.7'
         BUILD_ARCH: '64'
-        BUILD_NPY: '1.12'
+        BUILD_NPY: '1.15'
       - PYTHON_LOC: C:\Miniconda35-x64
         PYTHON_VERSION: '3.5'
         BUILD_ARCH: '64'
@@ -92,10 +100,10 @@ environment:
         PYTHON_VERSION: '3.5'
         BUILD_ARCH: '64'
         BUILD_NPY: '1.14'
-      - PYTHON_LOC: C:\Miniconda36-x64
-        PYTHON_VERSION: '3.6'
+      - PYTHON_LOC: C:\Miniconda35-x64
+        PYTHON_VERSION: '3.5'
         BUILD_ARCH: '64'
-        BUILD_NPY: '1.12'
+        BUILD_NPY: '1.15'
       - PYTHON_LOC: C:\Miniconda36-x64
         PYTHON_VERSION: '3.6'
         BUILD_ARCH: '64'
@@ -104,3 +112,19 @@ environment:
         PYTHON_VERSION: '3.6'
         BUILD_ARCH: '64'
         BUILD_NPY: '1.14'
+      - PYTHON_LOC: C:\Miniconda36-x64
+        PYTHON_VERSION: '3.6'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.15'
+      - PYTHON_LOC: C:\Miniconda36-x64
+        PYTHON_VERSION: '3.7'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.13'
+      - PYTHON_LOC: C:\Miniconda36-x64
+        PYTHON_VERSION: '3.7'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.14'
+      - PYTHON_LOC: C:\Miniconda36-x64
+        PYTHON_VERSION: '3.7'
+        BUILD_ARCH: '64'
+        BUILD_NPY: '1.15'
