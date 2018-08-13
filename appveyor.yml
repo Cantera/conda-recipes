@@ -71,10 +71,6 @@ environment:
       - PYTHON_LOC: C:\Miniconda36
         PYTHON_VERSION: '3.7'
         BUILD_ARCH: '32'
-        BUILD_NPY: '1.13'
-      - PYTHON_LOC: C:\Miniconda36
-        PYTHON_VERSION: '3.7'
-        BUILD_ARCH: '32'
         BUILD_NPY: '1.14'
       - PYTHON_LOC: C:\Miniconda36
         PYTHON_VERSION: '3.7'
@@ -116,10 +112,6 @@ environment:
         PYTHON_VERSION: '3.6'
         BUILD_ARCH: '64'
         BUILD_NPY: '1.15'
-      - PYTHON_LOC: C:\Miniconda36-x64
-        PYTHON_VERSION: '3.7'
-        BUILD_ARCH: '64'
-        BUILD_NPY: '1.13'
       - PYTHON_LOC: C:\Miniconda36-x64
         PYTHON_VERSION: '3.7'
         BUILD_ARCH: '64'
