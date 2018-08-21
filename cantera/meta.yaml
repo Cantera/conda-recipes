@@ -33,5 +33,12 @@ test:
     commands:
       - python -m unittest -v cantera.test
 about:
-    home: http://www.cantera.org
+    home: https://cantera.org
     summary: "Chemical kinetics, thermodynamics, and transport tool suite"
+    description: Cantera is an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes
+    doc_url: https://cantera.org/documentation
+    dev_url: https://github.com/Cantera/cantera
+
+    license: BSD 3-Clause
+    license_file: License.txt
+    license_family: BSD
