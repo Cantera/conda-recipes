@@ -5,7 +5,6 @@ PY_MAJ_VER=${PY_VER:0:1}
 if [ "${PY_MAJ_VER}" == "2" ]; then
     conda install -y -c cantera/label/builddeps 3to2
 fi
-conda install -y -c conda-forge scons
 
 scons clean
 
