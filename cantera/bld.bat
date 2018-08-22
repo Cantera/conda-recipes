@@ -13,8 +13,6 @@ IF %PY_MAJ_VER% EQU 2 (
     CALL conda install -y -c cantera/label/builddeps 3to2
 )
 
-CALL conda install -y -c conda-forge scons
-
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
 IF %CPU_USE% EQU 0 SET CPU_USE=1
