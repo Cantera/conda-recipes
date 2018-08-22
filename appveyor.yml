@@ -11,6 +11,11 @@ install:
 build_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - cmd: conda build cantera --python=%PYTHON_VERSION% --numpy=%BUILD_NPY%
+  - cmd: copy %PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2 C:\projects\conda-recipes
+
+artifacts:
+  - path: '*.tar.bz2'
+    type: File
 
 deploy_script:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
