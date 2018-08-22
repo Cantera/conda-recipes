@@ -21,7 +21,9 @@ if [[ "$CONDA_ARCH" == "linux_x86" ]]; then
   echo "no_debug_linker_flags='-m32'" >> cantera.conf
 fi
 
-if [[ "$CONDA_ARCH" != "osx_x64" ]]; then
+if [[ "$CONDA_ARCH" == "osx_x64" ]]; then
+    echo "no_debug_linker_flags='-Wl,-headerpad_max_install_names'" >> cantera.conf
+else
     echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
     echo "blas_lapack_dir = '$PREFIX/lib'" >> cantera.conf
 fi
