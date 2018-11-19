@@ -5,7 +5,7 @@ echo "****************************"
 set -e
 # Remove the python_cmd configuration because Python is not
 # a host dependency of the libcantera package
-sed -i '.bak' '/python_cmd/d' cantera.conf
+sed -i.bak '/python_cmd/d' cantera.conf
 scons install python_package='none'
 set +e
 
