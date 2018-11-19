@@ -28,7 +28,7 @@ install:
   - source $HOME/miniconda/etc/profile.d/conda.sh && conda activate
   - conda config --set always_yes yes --set changeps1 no
   - conda config --append channels conda-forge
-  - conda install -q anaconda-client conda-build\<4.0 conda\<5.0
+  - conda install -q anaconda-client conda-build\<4.0 conda\<5.0 conda-verify\<4.0
   - conda info -a
   - conda list
 
