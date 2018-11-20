@@ -36,7 +36,7 @@ fi
 
 set -xe
 
-scons build -j${CPU_COUNT}
+scons build -j2
 
 set +xe
 
