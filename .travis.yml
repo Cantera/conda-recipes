@@ -3,6 +3,7 @@ sudo: false
 env:
   global:
     secure: "Sj1uxuWdvXbdIxoNVf5OjrDR7EZS9M6mr1dQbEk5wxqvmncsGTh9BAVqvdcPloZZcU/ScrqhfeWBw4vW2UfkYFjlHgRrbEO8/KK29Rk+XW7GtYcoC39fxbX9R7oCljbWajclfm183xLY5TH9JaAR8xmSlWMURJYachoYoY76XVyLD/wCy9YjKIIJ5sndptSFwn7R2tgS7XJDjj6po/PNNukIh6Rl/7AZOWkdtr+F/FhINJkZtn96siqNa6GdOQcxAFnoNRIa5yMeZqNjZtTQoxYDRTlq6dJVffQnRR0xZ5JlDt0mWwt1JSldxwxv6uLbJoBhA76tCLgBhx/nigVFgrS1XJtXEvV6PVr8iLX6Dn4JOvqnmjZgQLkTSFKQT0a5EGzKjWLi3y/tYD91eGcbRnuU7gompsEtatrix8T0xSTuzPzloVgxkNdU9pOoqD/lvGHBGuYqLX3PgnThE38BD4GKwemtD6UF/s0XuYQWQsdqmAAk0Rgoiux7wy1oPwhtOA5/z5Iu82urthAWC05hi+U1+aE+wUCWq/VW4OGfZ5IqKUZhjqlPe9USrCfljCg01/kgh8WwwDVy9Nkrh+k1u6ncdcNKKOCrqOCKlDW8NnHf9HClLYC2IToeOYyK7FhRUPx60/ZW8WwJWHIk9SfwIIJf8imyT2kc5xQKvFVsk7s="
+    secure: "RzvO6FC2BAw8lyyMFVCzTjnvC7Bc7Unp/Hl+K3qY76+2l1CgTeNHpL9tkJtgidljA6x2pplgK1+fWyHnFcG6Zq9l3CW++kPy5G/I/DulyCIlMn4CR7CZhcexPlD4ySqSxH/ay4cClIWnqY+evBxC26VlJy2yQiLGPhWLyHPsGY3JOBrJWXs7+zjYPPBussSCSkCLvYq5ICzQFrKIL1AFVu3mp2lslAeLET8cpJIxWUY+fVRZAj5aTA/SGGyH7zikizVSW9vV0yEZVSpdYsf9wsVCpx5tt+eA6iFhXXTKGi+EcKp1Zy6Zq5OsEdnQM/NcSFR7cOtOow6xk451hLg31Mxlts6M/Ck/0IU7HGeDPsdlvLHHaNmt6cVKvX3oy8zhyrf6FeZSpluxYe9vGHl1FMcaDywnm4d5TqKWooinzWnoCizUiUZGqN0VRwvcC/O5yJYLwBzM2XPTUIMML5cAYdTGIJrnheF1D8xBvIEAi0xiNoWy/5eFgoSiV2x+TsEBaB/76ptoq66+u2IkEq47TqYxKduVOIyWjGBKfk2eHkcOlUqbyBwa+PHMWM59XxF9mRmhDN7QBrQFLNZmy68JRl+hM0YH3m1q+E5vVOGjV0crPy2qylOItldSfcZMOPjk/ZXveN238tlZKlTKT88bGvaI6Lmo1SsMkxGgsovD4nc="
 
 addons:
   apt:
@@ -45,9 +46,17 @@ install:
   - conda install -q anaconda-client conda-build\<4.0 conda\<5.0 conda-verify\<4.0 ripgrep
   - conda info -a
   - conda list
+  - export MW_HEADERS_DIR=$(pwd)/mw_headers
+  - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
+  - echo $MW_HEADERS_DIR
 
 script:
-  - conda build cantera
+  - |
+    if [ -z "${MATLAB_BUILD}" ]; then
+      conda build cantera;
+    else
+      conda build cantera-matlab;
+    fi
   - |
     if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
       anaconda -t $ANACONDA_TOKEN upload --force -l dev $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
