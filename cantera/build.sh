@@ -2,7 +2,7 @@ set +x
 
 echo "****************************"
 echo "LIBRARY BUILD STARTED"
-echo "PYTHON IS $PYTHON"
+echo "CONDA_BUILD_SYSROOT IS $CONDA_BUILD_SYSROOT"
 echo "****************************"
 
 scons clean
