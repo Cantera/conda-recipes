@@ -1,0 +1,38 @@
+{% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\['cantera_version'\\] = .([\d.abrc]+).") %}
+
+package:
+  name: cantera-matlab
+  version: {{ data.group(1) }}
+
+source:
+  git_url: https://github.com/Cantera/cantera.git
+  git_tag: master
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - scons >=3.0
+  host:
+    - libboost
+  # run:
+  #   - cantera {{ data.group(1)[:3] }}.*
+
+build:
+  number: 0
+  include_recipe: True
+  script_env:
+    - MW_HEADERS_DIR
+
+about:
+  home: https://cantera.org
+  summary: "Chemical kinetics, thermodynamics, and transport tool suite"
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: License.txt
+  dev_url: https://github.com/cantera/cantera
+  description: Cantera is an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes
+  doc_url: https://cantera.org/documentation
+
+# Need to have activation script to set PYTHON_CMD, set the MATLAB path
+# Need to make sure libcantera isn't installed
