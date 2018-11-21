@@ -49,10 +49,11 @@ install:
   # - echo $MW_HEADERS_DIR
 
 script:
-  - if [ -z "${MATLAB_BUILD}" ]; then
-      conda build cantera
+  - |
+    if [ -z "${MATLAB_BUILD}" ]; then
+      conda build cantera;
     else
-      echo "conda build cantera-matlab"
+      echo "conda build cantera-matlab";
     fi
   - |
     if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
