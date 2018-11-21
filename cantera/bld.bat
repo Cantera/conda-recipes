@@ -27,8 +27,8 @@ ECHO system_sundials='n' >> cantera.conf
 ECHO python_package='none' >> cantera.conf
 
 SET "ESC_PREFIX=%PREFIX:\=/%"
-ECHO prefix="%ESC_PREFIX" >> cantera.conf
-ECHO boost_inc_dir="%ESC_PREFIX%/include" >> cantera.conf
+ECHO prefix="%ESC_PREFIX%" >> cantera.conf
+ECHO boost_inc_dir="%ESC_PREFIX%/Library/include" >> cantera.conf
 
 CALL scons build -j%CPU_USE%
 
