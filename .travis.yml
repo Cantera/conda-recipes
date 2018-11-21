@@ -26,7 +26,9 @@ install:
       # Use this line from conda-forge to appropriately set the SDK for clang builds
       # https://github.com/conda-forge/conda-forge-ci-setup-feedstock/blob/53c72da/recipe/run_conda_forge_build_setup_osx#L22
       export MACOSX_DEPLOYMENT_TARGET="10.9"
-      export CONDA_BUILD_SYSROOT="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk"
+      curl -L https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz -o MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz
+      tar -xzf MacOSX10.9.sdk.tar.xz
+      export CONDA_BUILD_SYSROOT="$(pwd)/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk"
       if [ -d "${CONDA_BUILD_SYSROOT}" ]; then
           echo "Found CONDA_BUILD_SYSROOT: ${CONDA_BUILD_SYSROOT}"
       else
@@ -67,11 +69,9 @@ matrix:
       env: BUILD_ARCH="x64"
     - os: osx
       env: BUILD_ARCH="x64"
-      osx_image: xcode6.4
     - os: linux
       env: BUILD_ARCH="x86" MATLAB_BUILD=1
     - os: linux
       env: BUILD_ARCH="x64" MATLAB_BUILD=1
     - os: osx
       env: BUILD_ARCH="x64" MATLAB_BUILD=1
-      osx_image: xcode6.4
