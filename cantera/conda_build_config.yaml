@@ -1,6 +1,11 @@
 python:
-  - 3.6
+  # - 3.6
   - 3.7
 numpy:
-  - 1.9.3  # [unix]
-  - 1.11.3  # [win]
+  - 1.11
+macos_min_version:             # [osx]
+  - 10.9                       # [osx]
+macos_machine:                 # [osx]
+  - x86_64-apple-darwin13.4.0  # [osx]
+MACOSX_DEPLOYMENT_TARGET:      # [osx]
+  - 10.9                       # [osx]
