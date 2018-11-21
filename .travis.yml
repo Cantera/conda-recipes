@@ -36,15 +36,15 @@ install:
   - conda install -q anaconda-client conda-build\<4.0 conda\<5.0 conda-verify\<4.0
   - conda info -a
   - conda list
-  - MW_HEADERS_DIR=$(pwd)/mw_headers
-  - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
-  - echo $MW_HEADERS_DIR
+  # - MW_HEADERS_DIR=$(pwd)/mw_headers
+  # - git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
+  # - echo $MW_HEADERS_DIR
 
 script:
   - if [ -z "${MATLAB_BUILD}" ]; then
       conda build cantera
     else
-      conda build cantera-matlab
+      echo conda build cantera-matlab
     fi
   - |
     if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
