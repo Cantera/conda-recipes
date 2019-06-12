@@ -7,6 +7,7 @@ package:
 source:
   git_url: https://github.com/Cantera/cantera.git
   git_tag: master
+  # path: ../../cantera
 
 requirements:
   build:
@@ -22,9 +23,9 @@ build:
   include_recipe: True
 
 outputs:
-  - name: libcantera
-    script: build_lib.sh  # [not win]
-    script: build_lib.bat  # [win]
+  - name: libcantera-devel
+    script: build_devel.sh  # [not win]
+    script: build_devel.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -34,9 +35,16 @@ outputs:
         - libboost
         - mkl  # [linux]
       run:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - libboost
         - mkl  # [linux]
     build:
       include_recipe: True
+      ignore_run_exports:
+        - libboost
+    test:
+      script: run_test.sh
 
   - name: cantera
     script: build_py.sh  # [not win]
@@ -56,7 +64,7 @@ outputs:
         - python
         - {{ pin_compatible('numpy') }}
         - mkl  # [linux]
-        - vs2015_runtime  # [win]
+        # - vs2015_runtime  # [win]
     build:
       entry_points:
         - ck2cti = cantera.ck2cti:script_entry_point
@@ -78,4 +86,3 @@ about:
   dev_url: https://github.com/cantera/cantera
   description: Cantera is an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes
   doc_url: https://cantera.org/documentation
-  dev_url: https://github.com/Cantera/cantera
