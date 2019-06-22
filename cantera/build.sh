@@ -33,11 +33,6 @@ echo "debug = 'n'" >> cantera.conf
 echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 echo "python_package = 'none'" >> cantera.conf
 
-if [[ "${ARCH}" == "32" ]]; then
-  echo "cc_flags='-m32'" >> cantera.conf
-  echo "no_debug_linker_flags='-m32'" >> cantera.conf
-fi
-
 set -xe
 
 scons build -j${CPU_COUNT}
