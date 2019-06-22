@@ -4,15 +4,23 @@ echo "****************************"
 echo "MATLAB BUILD STARTED"
 echo "****************************"
 
-scons clean
+if [[ "$DIRTY" != "1" ]]; then
+    scons clean
+fi
 
 rm -f cantera.conf
 
 # Use the compilers from the Conda environment
-echo "CC = '$CC'" >> cantera.conf
-echo "CXX = '$CXX'" >> cantera.conf
+if [[ "${OSX_ARCH}" == "" ]]; then
+    echo "CC = '${CC}'" >> cantera.conf
+    echo "CXX = '${CXX}'" >> cantera.conf
+else
+    echo "CC = '${CLANG}'" >> cantera.conf
+    echo "CXX = '${CLANGXX}'" >> cantera.conf
+    echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}'" >> cantera.conf
+fi
 
-echo "prefix = '$PREFIX'" >> cantera.conf
+echo "prefix = '${PREFIX}'" >> cantera.conf
 echo "use_pch = False" >> cantera.conf
 
 # We want the MATLAB interface but not the Fortran or Python interfaces
@@ -26,7 +34,7 @@ echo "python_package = 'none'" >> cantera.conf
 
 set -xe
 
-scons build -j2
+scons build -j${CPU_COUNT}
 scons install
 
 set +xe
