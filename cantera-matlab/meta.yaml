@@ -13,6 +13,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - scons >=3.0
+    - numpy
+    - ruamel_yaml
   host:
     - libboost
   # run:

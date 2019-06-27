@@ -14,6 +14,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - scons >=3.0
+    - numpy
+    - ruamel_yaml
   host:
     - libboost
     - mkl  # [linux]
@@ -31,6 +33,8 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - scons >=3.0
+        - numpy
+        - ruamel_yaml
       host:
         - libboost
         - mkl  # [linux]
@@ -60,6 +64,8 @@ outputs:
         - mkl  # [linux]
         - numpy
         - cython
+        - numpy
+        - ruamel_yaml
       run:
         - python
         - {{ pin_compatible('numpy') }}
