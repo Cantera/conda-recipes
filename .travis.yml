@@ -20,6 +20,10 @@ install:
 
       if [ -d "${CONDA_BUILD_SYSROOT}" ]; then
           echo "Found CONDA_BUILD_SYSROOT: ${CONDA_BUILD_SYSROOT}"
+          echo "" >> ./.ci_support/conda_build_config.yaml
+          echo "CONDA_BUILD_SYSROOT:" >> ./.ci_support/conda_build_config.yaml
+          echo "- ${CONDA_BUILD_SYSROOT}" >> ./.ci_support/conda_build_config.yaml
+          echo "" >> ./.ci_support/conda_build_config.yaml
       else
           echo "Missing CONDA_BUILD_SYSROOT: ${CONDA_BUILD_SYSROOT}"
           exit 1
@@ -44,9 +48,9 @@ install:
 script:
   - |
     if [ -z "${MATLAB_BUILD}" ]; then
-      conda build cantera;
+      conda build ./cantera -m ./.ci_support/conda_build_config.yaml;
     else
-      conda build cantera-matlab;
+      conda build ./cantera-matlab -m ./.ci_support/conda_build_config.yaml;
     fi
   - |
     if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
