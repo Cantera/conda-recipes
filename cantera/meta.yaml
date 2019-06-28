@@ -43,6 +43,7 @@ outputs:
         - {{ compiler('cxx') }}
         - libboost
         - mkl  # [linux]
+        - vs2015_runtime  # [win]
     build:
       include_recipe: True
       ignore_run_exports:
@@ -69,8 +70,9 @@ outputs:
       run:
         - python
         - {{ pin_compatible('numpy') }}
+        - ruamel_yaml
         - mkl  # [linux]
-        # - vs2015_runtime  # [win]
+        - vs2015_runtime  # [win]
     build:
       entry_points:
         - ck2cti = cantera.ck2cti:script_entry_point

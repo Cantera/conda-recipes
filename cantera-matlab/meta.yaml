@@ -17,6 +17,8 @@ requirements:
     - ruamel_yaml
   host:
     - libboost
+  run:
+    - vs2015_runtime  # [win]
   # run:
   #   - cantera {{ data.group(1)[:3] }}.*
 
