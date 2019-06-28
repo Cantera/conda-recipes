@@ -1,14 +1,16 @@
 @ECHO off
 
-echo "\n\n****************************"
-echo "MATLAB BUILD STARTED"
-echo "****************************\n\n"
+echo ****************************
+echo MATLAB BUILD STARTED
+echo ****************************
 
-IF %ARCH% EQU 64 (
-	CALL "%VS140COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
-) ELSE (
-	CALL "%VS140COMNTOOLS%"\..\..\VC\bin\vcvars32.bat
-)
+REM IF %ARCH% EQU 64 (
+REM 	CALL "%VS140COMNTOOLS%"\..\..\VC\bin\amd64\vcvars64.bat
+REM ) ELSE (
+REM 	CALL "%VS140COMNTOOLS%"\..\..\VC\bin\vcvars32.bat
+REM )
+
+DEL /F cantera.conf
 
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
@@ -33,6 +35,6 @@ ECHO boost_inc_dir="%ESC_PREFIX%/Library/include" >> cantera.conf
 
 CALL scons build -j%CPU_USE%
 
-echo "\n\n****************************"
-echo "BUILD COMPLETED SUCCESSFULLY"
-echo "****************************\n\n"
+echo ****************************
+echo BUILD COMPLETED SUCCESSFULLY
+echo ****************************
