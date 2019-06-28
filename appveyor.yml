@@ -1,4 +1,5 @@
 version: 1.0.{build}
+image: Visual Studio 2017
 
 install:
   - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
