@@ -2,7 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2017
 
 install:
-  - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
+  - cmd: CALL %PYTHON_LOC%\Scripts\activate.bat
   - cmd: conda install -yq anaconda-client conda^<5.0 conda-build^<4.0 conda-verify^<4.0
   - cmd: conda info -a
   - cmd: conda list
@@ -12,12 +12,10 @@ install:
   - ps: Write-Host $env:APPVEYOR_PULL_REQUEST_NUMBER
 
 build_script:
-  - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - cmd: IF "%MATLAB_BUILD%"=="0" conda build cantera -m .\.ci_support\conda_build_config.yaml
   - cmd: IF "%MATLAB_BUILD%"=="1" conda build cantera-matlab -m .\.ci_support\conda_build_config.yaml
 
 deploy_script:
-  - cmd: set PATH=%PYTHON_LOC%;%PYTHON_LOC%\Scripts;%PATH%
   - ps: |
         if($env:APPVEYOR_REPO_BRANCH -eq "master" -and !$env:APPVEYOR_PULL_REQUEST_NUMBER)
         {
