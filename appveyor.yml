@@ -6,8 +6,8 @@ install:
   - cmd: conda install -yq anaconda-client conda^<5.0 conda-build^<4.0 conda-verify^<4.0
   - cmd: conda info -a
   - cmd: conda list
-  - cmd: IF "%MATLAB_BUILD%"=="1" git clone https://cantera:%GIT_PW%@cantera.org/mw_headers.git
-  - cmd: ECHO %CD%
+  - cmd: IF "%MATLAB_BUILD%"=="1" SET "MW_HEADERS_DIR=%CD%\..\mw_headers"
+  - cmd: IF "%MATLAB_BUILD%"=="1" git clone https://cantera:%GIT_PW%@cantera.org/mw_headers.git "%MW_HEADERS_DIR%"
   - ps: Write-Host $env:APPVEYOR_REPO_BRANCH
   - ps: Write-Host $env:APPVEYOR_PULL_REQUEST_NUMBER
 
