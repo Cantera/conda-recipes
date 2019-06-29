@@ -10,7 +10,11 @@ fi
 
 rm -f cantera.conf
 
-# Use the compilers from the Conda environment
+cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
+
+echo "prefix = '${PREFIX}'" >> cantera.conf
+echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
+
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CC = '${CC}'" >> cantera.conf
     echo "CXX = '${CXX}'" >> cantera.conf
@@ -21,17 +25,6 @@ else
     echo "CXX = '${CLANGXX}'" >> cantera.conf
     echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}'" >> cantera.conf
 fi
-
-echo "prefix = '${PREFIX}'" >> cantera.conf
-echo "use_pch = False" >> cantera.conf
-
-# We want neither the MATLAB interface nor the Fortran interface
-echo "matlab_toolbox = 'n'" >> cantera.conf
-echo "f90_interface = 'n'" >> cantera.conf
-echo "system_sundials = 'n'" >> cantera.conf
-echo "debug = 'n'" >> cantera.conf
-echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
-echo "python_package = 'none'" >> cantera.conf
 
 set -xe
 
