@@ -23,12 +23,13 @@ ECHO msvc_version='14.1' >> cantera.conf
 SET /A CPU_USE=%CPU_COUNT% / 2
 IF %CPU_USE% EQU 0 SET CPU_USE=1
 
-ECHO matlab_toolbox='y' >> cantera.conf
-ECHO matlab_path='%CD%/../mw_headers' >> cantera.conf
-
 SET "ESC_PREFIX=%PREFIX:\=/%"
 ECHO prefix="%ESC_PREFIX%" >> cantera.conf
 ECHO boost_inc_dir="%ESC_PREFIX%/Library/include" >> cantera.conf
+
+ECHO matlab_toolbox='y' >> cantera.conf
+SET "ESC_MW_HDR_DIR=%MW_HEADERS_DIR:\=/%"
+ECHO matlab_path="%ESC_MW_HDR_DIR%" >> cantera.conf
 
 CALL scons build -j%CPU_USE%
 IF ERRORLEVEL 1 EXIT 1
