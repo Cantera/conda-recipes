@@ -5,8 +5,9 @@ package:
   version: {{ data.group(1) }}
 
 source:
-  git_url: https://github.com/Cantera/cantera.git
-  git_tag: master
+  git_url: https://github.com/bryanwweber/cantera.git
+  git_tag: fix_yaml_cython_tests
+  # path: ../../cantera
 
 requirements:
   build:
