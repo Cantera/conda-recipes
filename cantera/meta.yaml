@@ -48,8 +48,6 @@ outputs:
       include_recipe: True
       ignore_run_exports:
         - libboost
-    test:
-      script: run_test.sh
 
   - name: cantera
     script: build_py.sh  # [not win]
