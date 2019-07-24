@@ -54,7 +54,7 @@ script:
     fi
   - |
     if [ "${TRAVIS_PULL_REQUEST}" == "false" ] && [ "${TRAVIS_BRANCH}" == "master" ]; then
-      anaconda --token $ANACONDA_TOKEN upload --force --label dev $HOME/miniconda/conda-bld/*/cantera*.tar.bz2;
+      anaconda --token $ANACONDA_TOKEN upload --force --label dev $HOME/miniconda/conda-bld/*/*cantera*.tar.bz2;
     else
       echo "Nothing was uploaded because this isn't the master branch or it's a pull request.";
     fi

@@ -25,7 +25,7 @@ deploy_script:
         {
           Write-Host "Nothing was uploaded because this isn't the master branch or it's a pull request."
         }
-  - cmd: IF "%conda_upload%"=="true" anaconda --token %ANACONDA_KEY% upload --force --label dev "%PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\cantera*.tar.bz2"
+  - cmd: IF "%conda_upload%"=="true" anaconda --token %ANACONDA_KEY% upload --force --label dev "%PYTHON_LOC%\conda-bld\win-%BUILD_ARCH%\*cantera*.tar.bz2"
 
 environment:
   ANACONDA_KEY:
