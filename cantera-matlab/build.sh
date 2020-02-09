@@ -16,7 +16,7 @@ echo "prefix = ''" >> cantera.conf
 echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 
 # Stage the files to make copying easier later
-STAGE_DIR="stage"
+STAGE_DIR="../stage"
 echo "stage_dir = '${STAGE_DIR}'" >> cantera.conf
 
 if [[ "${OSX_ARCH}" == "" ]]; then
