@@ -12,9 +12,7 @@ rm -f cantera.conf
 
 cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
 
-# This should not be the Conda PREFIX variable, that is handled below
-PREFIX_DIR=".."
-echo "prefix = '${PREFIX_DIR}'" >> cantera.conf
+echo "prefix = ''" >> cantera.conf
 echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 
 # Stage the files to make copying easier later
