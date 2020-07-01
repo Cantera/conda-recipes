@@ -11,12 +11,13 @@ source:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - scons >=3.0
+    - {{ compiler('c') }}  # [not win]
+    - {{ compiler('cxx') }}  # [not win]
+    - vs2017_win-64 ==19.15.*  # [win]
+    - scons >=3.1
     - python >=3.5
     - numpy
-    - ruamel_yaml
+    - pywin32  # [win]
   host:
     - libboost
     - mkl  # [linux]
@@ -31,18 +32,21 @@ outputs:
     script: build_devel.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - scons >=3.0
+        - {{ compiler('c') }}  # [not win]
+        - {{ compiler('cxx') }}  # [not win]
+        - vs2017_win-64 ==19.15.*  # [win64]
+        - vs2017_win-32 ==19.15.*  # [win32]
+        - scons >=3.1
         - python >=3.5
         - numpy
-        - ruamel_yaml
+        - pywin32  # [win]
       host:
         - libboost
         - mkl  # [linux]
       run:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler('c') }}  # [win]
+        - {{ compiler('cxx') }}  # [win]
+        - vs2017_win-64 ==19.15.*  # [win]
         - libboost
         - mkl  # [linux]
         - vs2015_runtime  # [win]
@@ -56,21 +60,24 @@ outputs:
     script: build_py.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - scons >=3.0
+        - {{ compiler('c') }}  # [not win]
+        - {{ compiler('cxx') }}  # [not win]
+        - vs2017_win-64 ==19.15.*  # [win64]
+        - vs2017_win-32 ==19.15.*  # [win32]
+        - scons >=3.1
         - python >=3.5
+        - pywin32  # [win]
       host:
-        - python >=3.5
+        - python {{ python }}
         - libboost
         - mkl  # [linux]
         - numpy
         - cython
         - numpy
-        - ruamel_yaml
       run:
-        - python >=3.5
+        - python
         - {{ pin_compatible('numpy') }}
+        - h5py
         - ruamel_yaml
         - mkl  # [linux]
         - vs2015_runtime  # [win]

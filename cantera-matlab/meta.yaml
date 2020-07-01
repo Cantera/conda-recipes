@@ -10,18 +10,17 @@ source:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - scons >=3.0
+    - {{ compiler('c') }}  # [not win]
+    - {{ compiler('cxx') }}  # [not win]
+    - vs2017_win-64 ==19.15.*  # [win64]
+    - vs2017_win-32 ==19.15.*  # [win32]
+    - scons >=3.1
     - python >=3.5
     - numpy
-    - ruamel_yaml
   host:
     - libboost
   run:
     - vs2015_runtime  # [win]
-  # run:
-  #   - cantera {{ data.group(1)[:3] }}.*
 
 build:
   number: 0
