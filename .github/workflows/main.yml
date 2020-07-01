@@ -1,0 +1,129 @@
+name: CI
+
+on:
+  push:
+    # Build on tags that look like releases
+    tags:
+      - v*
+    # Build when master is pushed to
+    branches:
+      - master
+  pull_request:
+    # Build when a pull request targets master
+    branches:
+      - master
+env:
+  MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
+  MACOSX_DEPLOYMENT_TARGET: "10.9"
+
+jobs:
+  build-x64:
+    name: ${{ matrix.os }}-x64 with MATLAB=${{ matrix.MATLAB }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        MATLAB: [0, 1]
+        os: [windows-2016, ubuntu-latest, macos-latest]
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set Up macOS
+      if: runner.os == 'macOS'
+      run: echo "::set-env name=CONDA_BUILD_SYSROOT::$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk"
+    - name: Install macOS SDK
+      if: runner.os == 'macOS'
+      run: |
+        curl -L -O https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz
+        tar -xf MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz -C "$(dirname "$CONDA_BUILD_SYSROOT")"
+        # set minimum sdk version to our target
+        plutil -replace MinimumSDKVersion -string ${MACOSX_DEPLOYMENT_TARGET} $(xcode-select -p)/Platforms/MacOSX.platform/Info.plist
+        plutil -replace DTSDKName -string macosx${MACOSX_DEPLOYMENT_TARGET}internal $(xcode-select -p)/Platforms/MacOSX.platform/Info.plist
+    - name: Append to conda build config
+      if: runner.os == 'macOS'
+      run: |
+        echo "
+        CONDA_BUILD_SYSROOT:
+        - ${CONDA_BUILD_SYSROOT}
+        " >> ./.ci_support/conda_build_config.yaml;
+        echo "
+        numpy:
+        - 1.11
+        " >> ${HOME}/conda_build_config.yaml;
+    - uses: goanpeca/setup-miniconda@v1
+      with:
+        auto-update-conda: true
+        conda-build-version: '3.18'
+        activate-environment: ''
+        auto-activate-base: true
+      name: Set Up Conda
+    - name: Install Conda dependencies
+      shell: bash -l {0}
+      run: conda install -q anaconda-client conda-verify\<4.0 ripgrep
+    - name: Build the Python and libcantera recipe
+      shell: bash -l {0}
+      run: conda build ./cantera -m ./.ci_support/conda_build_config.yaml
+      if: matrix.MATLAB == 0
+    - name: Get the MATLAB headers
+      if: matrix.MATLAB == 1
+      run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
+      env:
+        GIT_PW: ${{ secrets.GIT_PW }}
+      shell: bash -l {0}
+    - name: Build the MATLAB recipe
+      shell: bash -l {0}
+      run: conda build ./cantera-matlab -m ./.ci_support/conda_build_config.yaml
+      if: matrix.MATLAB == 1
+    - name: Upload package to anaconda.org
+      run: |
+        anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
+      shell: bash -l {0}
+      # if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
+
+  # The 'architecture' option for setup-miniconda doesn't work right now,
+  # but it seems like it would be really easy to add it. Leaving this code
+  # here in case that can be added.
+  # The other problem seems to be that Conda installs the vs2017_win-64 compiler
+  # setup package, which sets the x64 environment variables, no matter what value
+  # ARCH has or whether conda itself is 32-bit. SCons says that it's building for
+  # x86, but I don't believe it. We have ~300 x86 Windows Conda package downloads
+  # compared to ~10k x64 Windows Conda package downloads. So we're not going to
+  # distributed x86 Windows conda packages anymore, unless there is demand for them.
+  # build-x86:
+  #   name: windows-2016-x86 with MATLAB=${{ matrix.MATLAB }}
+  #   runs-on: windows-2016
+  #   strategy:
+  #     matrix:
+  #       MATLAB: [0, 1]
+  #     fail-fast: false
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: goanpeca/setup-miniconda@v1
+  #     with:
+  #       auto-update-conda: true
+  #       conda-build-version: '3.18'
+  #       activate-environment: ''
+  #       auto-activate-base: true
+  #       architecture: 'x86'
+  #       miniconda-version: 'latest'
+  #     name: Set Up Conda
+  #   - name: Install Conda dependencies
+  #     shell: bash -l {0}
+  #     run: conda install -q anaconda-client conda-verify\<4.0 ripgrep
+  #   - name: Build the Python and libcantera recipe
+  #     shell: bash -l {0}
+  #     run: conda build ./cantera -m ./.ci_support/conda_build_config.yaml
+  #     if: matrix.MATLAB == 0
+  #     env:
+  #       ARCH: 32
+  #   - name: Get the MATLAB headers
+  #     if: matrix.MATLAB == 1
+  #     run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
+  #     env:
+  #       GIT_PW: ${{ secrets.GIT_PW }}
+  #     shell: bash -l {0}
+  #   - name: Build the MATLAB recipe
+  #     shell: bash -l {0}
+  #     run: conda build ./cantera-matlab -m ./.ci_support/conda_build_config.yaml
+  #     if: matrix.MATLAB == 1
+  #     env:
+  #       ARCH: 32
