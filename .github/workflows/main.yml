@@ -2,16 +2,10 @@ name: CI
 
 on:
   push:
-    # Build on tags that look like releases
-    tags:
-      - v*
     # Build when main is pushed to
     branches:
-      - main
-  pull_request:
-    # Build when a pull request targets main
-    branches:
-      - main
+      - 2.5
+
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
   MACOSX_DEPLOYMENT_TARGET: "10.9"
@@ -77,4 +71,4 @@ jobs:
       run: |
         anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
       shell: bash -l {0}
-      if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
+      if: github.event_name == 'push' && github.event.ref == 'refs/heads/2.5'
