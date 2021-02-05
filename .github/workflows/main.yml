@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    # Build when main is pushed to
+    # Build when 2.5 branch is pushed to
     branches:
       - 2.5
 
