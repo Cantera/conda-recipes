@@ -18,3 +18,4 @@ REM Add Cantera lines to the startup.m script
 ECHO. >> "%MATLAB_STARTUP%"
 ECHO setenv('CANTERA_DATA', '%PREFIX%\Library\cantera\data') %% added by Cantera Conda Installer for %CONDA_ENV% environment>> "%MATLAB_STARTUP%"
 ECHO addpath(genpath('%PREFIX%\Library\lib\cantera\matlab')) %% added by Cantera Conda Installer for %CONDA_ENV% environment>> "%MATLAB_STARTUP%"
+ECHO setenv('PYTHON_CMD', '%PREFIX%\python.exe') %% added by Cantera Conda Installer for %CONDA_ENV% environment>>"%MATLAB_STARTUP%"

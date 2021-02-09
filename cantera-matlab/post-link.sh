@@ -15,3 +15,4 @@ fi
 echo "
 addpath(genpath('${PREFIX}/lib/cantera/matlab')) % added by Cantera ${PKG_VERSION} Conda installer for ${CONDA_ENV} environment
 setenv('CANTERA_DATA', '${PREFIX}/share/cantera/data') % added by Cantera ${PKG_VERSION} Conda installer for ${CONDA_ENV} environment" >> ${MATLAB_STARTUP}
+setenv('PYTHON_CMD', '${PREFIX}/bin/python') % added by Cantera ${PKG_VERSION} Conda installer for ${CONDA_ENV} environment" >> ${MATLAB_STARTUP}

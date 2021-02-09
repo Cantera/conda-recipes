@@ -20,7 +20,8 @@ jobs:
         os: [windows-2016, ubuntu-latest, macos-latest]
       fail-fast: false
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout this repository
+      uses: actions/checkout@v2
     - name: Set Up macOS
       if: runner.os == 'macOS'
       run: echo "CONDA_BUILD_SYSROOT=$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk" >> $GITHUB_ENV
@@ -69,6 +70,6 @@ jobs:
       if: matrix.MATLAB == 1
     - name: Upload package to anaconda.org
       run: |
-        anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
+        anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload $CONDA/conda-bld/*/*cantera*.tar.bz2
       shell: bash -l {0}
       if: github.event_name == 'push' && github.event.ref == 'refs/heads/2.5'
