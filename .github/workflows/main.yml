@@ -12,6 +12,8 @@ on:
     # Build when a pull request targets main
     branches:
       - main
+  workflow_dispatch:
+
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
   MACOSX_DEPLOYMENT_TARGET: "10.9"
