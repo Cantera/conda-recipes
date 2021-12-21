@@ -65,9 +65,18 @@ jobs:
       shell: bash -l {0}
       run: conda build ./cantera -m ./.ci_support/conda_build_config.yaml
       if: matrix.MATLAB == 0
+    # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
+    # machine that has previously logged in to cantera.org and trusts
+    # that it logged in to the right machine
+    - name: Set up SSH key and host for deploy
+      if: matrix.MATLAB == 0
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.CTDEPLOY_SSH_KEY }}
+        known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1
-      run: git clone https://cantera:${GIT_PW}@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
+      run: git clone ssh://ctdeploy@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
       env:
         GIT_PW: ${{ secrets.GIT_PW }}
       shell: bash -l {0}
