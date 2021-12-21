@@ -77,7 +77,7 @@ outputs:
         - python
         - {{ pin_compatible('numpy') }}
         - h5py
-        - ruamel_yaml
+        - ruamel.yaml
         - mkl  # [linux]
         - vs2015_runtime  # [win]
     build:
