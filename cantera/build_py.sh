@@ -19,4 +19,4 @@ echo "PYTHON ${PY_VER} BUILD COMPLETED SUCCESSFULLY"
 echo "****************************"
 
 cd interfaces/cython
-$PYTHON setup.py build --build-lib=../../build/python install
+$PYTHON setup.py build --build-lib=../../build/python install --single-version-externally-managed --record=record.txt
