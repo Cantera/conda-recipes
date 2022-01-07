@@ -7,9 +7,9 @@ if [ -d "build/python" ]; then
     rm -r build/python
     rm -r build/temp-py
     rm interfaces/cython/setup.py
-    rm -r interfaces/cython/build
-    rm -r interfaces/cython/dist
-    rm -r interfaces/cython/Cantera.egg-info
+    rm -rf interfaces/cython/build
+    rm -rf interfaces/cython/dist
+    rm -rf interfaces/cython/Cantera.egg-info
 fi
 
 scons build python_package='y' python_cmd="${PYTHON}"
