@@ -1,12 +1,7 @@
 set +x
-
 echo "****************************"
 echo "LIBRARY BUILD STARTED"
 echo "****************************"
-
-if [[ "$DIRTY" != "1" ]]; then
-    scons clean
-fi
 
 rm -f cantera.conf
 
@@ -21,9 +16,17 @@ if [[ "${OSX_ARCH}" == "" ]]; then
     echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
     echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
 else
+    # Well, this all seems to work and then there's an error with NumPy
+    # Seems to be NumPy's fault, not ours. Dang. Will try again with Linux,
+    # but it might need to be an x86 machine.
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
-    echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}'" >> cantera.conf
+    echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
+    echo "cxx_flags = '${CXXFLAGS}'" >> cantera.conf
+    echo "optimize_flags = ''" >> cantera.conf
+    echo "debug = False" >> cantera.conf
+    echo "no_debug_linker_flags = '${LDFLAGS} -L${CONDA_BUILD_SYSROOT}/usr/lib'" >> cantera.conf
+    echo "VERBOSE = True" >> cantera.conf
 fi
 
 set -xe
