@@ -3,6 +3,9 @@ echo "DEVEL LIBRARY INSTALL STARTED"
 echo "****************************"
 
 set -e
+if [ -f "cantera.conf.pre-py" ]; then
+  cp cantera.conf.pre-py cantera.conf
+fi
 scons install
 set +e
 

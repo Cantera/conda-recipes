@@ -15,6 +15,12 @@ if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CXX = '${CXX}'" >> cantera.conf
     echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
     echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
+    echo "cc_flags = '${CFLAGS}'" >> cantera.conf
+    echo "cxx_flags = '${CXXFLAGS}'" >> cantera.conf
+    echo "optimize_flags = ''" >> cantera.conf
+    echo "debug = False" >> cantera.conf
+    echo "no_debug_linker_flags = '${LDFLAGS}'" >> cantera.conf
+    echo "VERBOSE = True" >> cantera.conf
 else
     # Well, this all seems to work and then there's an error with NumPy
     # Seems to be NumPy's fault, not ours. Dang. Will try again with Linux,

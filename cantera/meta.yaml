@@ -5,9 +5,9 @@ package:
   version: {{ data.group(1) }}
 
 source:
-  # git_url: https://github.com/Cantera/cantera.git
-  # git_tag: main
-  path: ../../cantera
+  git_url: https://github.com/Cantera/cantera.git
+  git_tag: add-package-workflow
+  # path: ../../cantera
 
 requirements:
   build:
@@ -30,6 +30,13 @@ outputs:
   - name: libcantera-devel
     script: build_devel.sh  # [not win]
     script: build_devel.bat  # [win]
+
+    build:
+      ignore_run_exports_from:
+        # only the header part of these libraries are used
+        - boost-cpp
+        - fmt
+        - python
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
@@ -57,6 +64,11 @@ outputs:
 
   - name: cantera
     script: build_py.sh  # [not win]
+    build:
+      ignore_run_exports_from:
+        # only the header part of these libraries are used
+        - libboost
+        - fmt
     script: build_py.bat  # [win]
     requirements:
       build:
