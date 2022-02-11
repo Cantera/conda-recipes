@@ -6,7 +6,7 @@ package:
 
 source:
   git_url: https://github.com/Cantera/cantera.git
-  git_tag: main
+  git_tag: add-package-workflow
 
 requirements:
   build:
@@ -15,7 +15,7 @@ requirements:
     - vs2017_win-64 ==19.15.*  # [win64]
     - vs2017_win-32 ==19.15.*  # [win32]
     - scons >=3.1
-    - python >=3.5
+    - python >=3.7
     - numpy
   host:
     - libboost
