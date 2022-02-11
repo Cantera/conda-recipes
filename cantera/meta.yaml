@@ -59,9 +59,7 @@ outputs:
         - libboost
         - mkl  # [linux]
         - vs2015_runtime  # [win]
-        - libblas * *openblas  # [osx]
-        - openblas  # osx
-        - libblas * *mkl  # [linux]
+        - openblas  # [osx]
         - mkl  # [linux]
         - vs2015_runtime  # [win]
     build:
@@ -99,9 +97,7 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - h5py
         - ruamel.yaml
-        - libblas * *openblas  # [osx]
-        - openblas  # osx
-        - libblas * *mkl  # [linux]
+        - openblas  # [osx]
         - mkl  # [linux]
         - vs2015_runtime  # [win]
     build:
