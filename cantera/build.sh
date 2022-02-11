@@ -22,9 +22,6 @@ if [[ "${OSX_ARCH}" == "" ]]; then
     echo "no_debug_linker_flags = '${LDFLAGS}'" >> cantera.conf
     echo "VERBOSE = True" >> cantera.conf
 else
-    # Well, this all seems to work and then there's an error with NumPy
-    # Seems to be NumPy's fault, not ours. Dang. Will try again with Linux,
-    # but it might need to be an x86 machine.
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
     echo "blas_lapack_libs = 'openblas'" >> cantera.conf
@@ -33,14 +30,15 @@ else
     echo "cxx_flags = '${CXXFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
-    echo "no_debug_linker_flags = '${LDFLAGS} -L${CONDA_BUILD_SYSROOT}/usr/lib'" >> cantera.conf
+    echo "no_debug_linker_flags = '${LDFLAGS_LD} -L${CONDA_BUILD_SYSROOT}/usr/lib'" >> cantera.conf
+    echo "env_vars = 'LD'" >> cantera.conf
     echo "VERBOSE = True" >> cantera.conf
 fi
 
 set -xe
 
 scons build -j${CPU_COUNT}
-
+copy cantera.conf cantera.conf.pre-py
 set +xe
 
 echo "****************************"
