@@ -90,6 +90,6 @@ jobs:
       shell: bash -l {0}
       if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
 
-    - name: Debugging with tmate
-      uses: mxschmitt/action-tmate@v3.9
-      if: failure()
+    - name: Setup upterm session
+      uses: lhotari/action-upterm@v1
+      if: failure() && matrix.os == "ubunbut-latest"

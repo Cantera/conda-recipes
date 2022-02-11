@@ -30,7 +30,7 @@ else
     echo "cxx_flags = '${CXXFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
-    echo "no_debug_linker_flags = '${LDFLAGS_LD} -L${CONDA_BUILD_SYSROOT}/usr/lib'" >> cantera.conf
+    echo "no_debug_linker_flags = '-L${CONDA_BUILD_SYSROOT}/usr/lib'" >> cantera.conf
     echo "env_vars = 'LD'" >> cantera.conf
     echo "VERBOSE = True" >> cantera.conf
 fi
@@ -38,7 +38,7 @@ fi
 set -xe
 
 scons build -j${CPU_COUNT}
-copy cantera.conf cantera.conf.pre-py
+cp cantera.conf cantera.conf.pre-py
 set +xe
 
 echo "****************************"
