@@ -16,9 +16,10 @@ if [[ "${OSX_ARCH}" == "" ]]; then
     echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
     echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '${CFLAGS}'" >> cantera.conf
-    echo "cxx_flags = '${CXXFLAGS}'" >> cantera.conf
+    echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
+    echo "use_rpath_linkage = False" >> cantera.conf
     echo "no_debug_linker_flags = '${LDFLAGS}'" >> cantera.conf
     echo "VERBOSE = True" >> cantera.conf
 else
@@ -27,12 +28,13 @@ else
     echo "blas_lapack_libs = 'openblas'" >> cantera.conf
     echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
-    echo "cxx_flags = '${CXXFLAGS}'" >> cantera.conf
+    echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
-    echo "no_debug_linker_flags = '-L${CONDA_BUILD_SYSROOT}/usr/lib'" >> cantera.conf
+    echo "no_debug_linker_flags = '${LDFLAGS} -L${CONDA_BUILD_SYSROOT}/usr/lib'" >> cantera.conf
     echo "env_vars = 'LD'" >> cantera.conf
     echo "VERBOSE = True" >> cantera.conf
+    echo "use_rpath_linkage = False" >> cantera.conf
 fi
 
 set -xe
