@@ -17,4 +17,4 @@ echo "****************************"
 echo "PYTHON ${PY_VER} BUILD COMPLETED SUCCESSFULLY"
 echo "****************************"
 
-$PYTHON -m pip install --no-deps build/python/dist/*.whl
+$PYTHON -m pip install --no-deps "build/python/dist/*.whl"
