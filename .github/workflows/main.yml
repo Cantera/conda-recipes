@@ -92,4 +92,4 @@ jobs:
 
     - name: Setup upterm session
       uses: lhotari/action-upterm@v1
-      if: failure() && matrix.os == "ubuntu-latest"
+      if: failure() && matrix.os == ubuntu-latest
