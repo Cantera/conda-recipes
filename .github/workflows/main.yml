@@ -74,6 +74,9 @@ jobs:
       with:
         key: ${{ secrets.CTDEPLOY_SSH_KEY }}
         known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
+    - name: Debugging with tmate
+      uses: mxschmitt/action-tmate@v3.9
+      if: matrix.MATLAB == 1 && failure()
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1
       run: git clone ssh://ctdeploy@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
