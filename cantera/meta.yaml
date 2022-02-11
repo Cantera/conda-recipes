@@ -15,11 +15,12 @@ requirements:
     - {{ compiler('cxx') }}  # [not win]
     - vs2017_win-64 ==19.15.*  # [win]
     - scons >=3.1
-    - python >=3.5
+    - python >=3.7
     - numpy
     - pywin32  # [win]
   host:
     - libboost
+    - openblas  # [osx]
     - mkl  # [linux]
 
 build:
@@ -44,17 +45,23 @@ outputs:
         - vs2017_win-64 ==19.15.*  # [win64]
         - vs2017_win-32 ==19.15.*  # [win32]
         - scons >=3.1
-        - python >=3.5
+        - python >=3.7
         - numpy
         - pywin32  # [win]
       host:
         - libboost
+        - openblas  # [osx]
         - mkl  # [linux]
       run:
         - {{ compiler('c') }}  # [win]
         - {{ compiler('cxx') }}  # [win]
         - vs2017_win-64 ==19.15.*  # [win]
         - libboost
+        - mkl  # [linux]
+        - vs2015_runtime  # [win]
+        - libblas * *openblas  # [osx]
+        - openblas  # osx
+        - libblas * *mkl  # [linux]
         - mkl  # [linux]
         - vs2015_runtime  # [win]
     build:
@@ -77,11 +84,12 @@ outputs:
         - vs2017_win-64 ==19.15.*  # [win64]
         - vs2017_win-32 ==19.15.*  # [win32]
         - scons >=3.1
-        - python >=3.5
+        - python >=3.7
         - pywin32  # [win]
       host:
         - python {{ python }}
         - libboost
+        - openblas  # [osx]
         - mkl  # [linux]
         - numpy
         - cython
@@ -91,6 +99,9 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - h5py
         - ruamel.yaml
+        - libblas * *openblas  # [osx]
+        - openblas  # osx
+        - libblas * *mkl  # [linux]
         - mkl  # [linux]
         - vs2015_runtime  # [win]
     build:

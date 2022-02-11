@@ -27,6 +27,8 @@ else
     # but it might need to be an x86 machine.
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
+    echo "blas_lapack_libs = 'openblas'" >> cantera.conf
+    echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
     echo "cxx_flags = '${CXXFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
