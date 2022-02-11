@@ -10,6 +10,8 @@ fi
 
 cp cantera.conf cantera.conf.pre-py
 scons build python_package='y' python_cmd="${PYTHON}"
+cp cantera.conf cantera.conf.post-py
+mv cantera.conf.pre-py cantera.conf
 
 echo "****************************"
 echo "PYTHON ${PY_VER} BUILD COMPLETED SUCCESSFULLY"
