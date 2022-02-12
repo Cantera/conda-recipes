@@ -8,8 +8,11 @@ if [ -d "build/python" ]; then
     rm -r build/temp-py
 fi
 
-scons build python_package='y' python_cmd="${PYTHON}"
-cp cantera.conf cantera.conf.post-py
+if [[ $PY_VER == "3.7" ]]; then
+    scons build --debug=explain python_package='y' python_cmd="${PYTHON}"
+else
+    scons build python_package='y' python_cmd="${PYTHON}"
+fi
 
 echo "****************************"
 echo "PYTHON ${PY_VER} BUILD COMPLETED SUCCESSFULLY"
