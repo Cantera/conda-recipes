@@ -17,6 +17,5 @@ echo ****************************
 echo PYTHON %PYTHON% BUILD COMPLETED SUCCESSFULLY
 echo ****************************
 
-cd interfaces/cython
-"%PYTHON%" -m pip install --no-deps build/python/dist/*.whl
+"%PYTHON%" -m pip install --no-deps --find-links=build\python\dist\ cantera
 IF ERRORLEVEL 1 EXIT 1
