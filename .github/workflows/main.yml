@@ -76,10 +76,7 @@ jobs:
         known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1
-      run: git clone ssh://ctdeploy@cantera.org/mw_headers.git "${MW_HEADERS_DIR}"
-      env:
-        GIT_PW: ${{ secrets.GIT_PW }}
-      shell: bash -l {0}
+      run: git clone ctdeploy@cantera.org:mw_headers.git "${MW_HEADERS_DIR}"
     - name: Build the MATLAB recipe
       shell: bash -l {0}
       run: conda build ./cantera-matlab -m ./.ci_support/conda_build_config.yaml
