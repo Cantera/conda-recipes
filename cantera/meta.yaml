@@ -15,13 +15,14 @@ requirements:
     - {{ compiler('cxx') }}  # [not win]
     - vs2017_win-64 ==19.15.*  # [win]
     - scons >=3.1
-    - python >=3.7
-    - numpy
-    - pywin32  # [win]
+    - setuptools
   host:
+    - python >=3.7
     - libboost
     - openblas  # [osx]
     - mkl  # [linux]
+    - numpy
+    - pywin32  # [win]
 
 build:
   number: 0
@@ -35,7 +36,7 @@ outputs:
     build:
       ignore_run_exports_from:
         # only the header part of these libraries are used
-        - boost-cpp
+        - libboost
         - fmt
         - python
     requirements:
@@ -45,13 +46,14 @@ outputs:
         - vs2017_win-64 ==19.15.*  # [win64]
         - vs2017_win-32 ==19.15.*  # [win32]
         - scons >=3.1
-        - python >=3.7
-        - numpy
-        - pywin32  # [win]
+        - setuptools
       host:
+        - python >=3.7
         - libboost
         - openblas  # [osx]
         - mkl  # [linux]
+        - numpy
+        - pywin32  # [win]
       run:
         - {{ compiler('c') }}  # [win]
         - {{ compiler('cxx') }}  # [win]
@@ -62,43 +64,37 @@ outputs:
         - openblas  # [osx]
         - mkl  # [linux]
         - vs2015_runtime  # [win]
-    build:
-      include_recipe: True
-      ignore_run_exports:
-        - libboost
+    test:
+      commands:
+        - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]
 
   - name: cantera
     script: build_py.sh  # [not win]
-    build:
-      ignore_run_exports_from:
-        # only the header part of these libraries are used
-        - libboost
-        - fmt
     script: build_py.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
         - {{ compiler('cxx') }}  # [not win]
         - vs2017_win-64 ==19.15.*  # [win64]
-        - vs2017_win-32 ==19.15.*  # [win32]
         - scons >=3.1
-        - python >=3.7
-        - pywin32  # [win]
+        - setuptools
       host:
         - python {{ python }}
+        - setuptools
         - libboost
+        - numpy
         - openblas  # [osx]
         - mkl  # [linux]
-        - numpy
         - cython
-        - numpy
+        - pywin32  # [win]
+        # This is added here so conda-build doesn't package it
+        - libcantera-devel {{ data.group(1) }}
       run:
         - python
+        - setuptools
         - {{ pin_compatible('numpy') }}
         - h5py
         - ruamel.yaml
-        - openblas  # [osx]
-        - mkl  # [linux]
         - vs2015_runtime  # [win]
     build:
       entry_points:
@@ -108,11 +104,17 @@ outputs:
         - cti2yaml = cantera.cti2yaml:main
         - ctml2yaml = cantera.ctml2yaml:main
       include_recipe: True
+      ignore_run_exports_from:
+        # only the header part of these libraries are used
+        - libboost
+        - fmt
     test:
+      requires:
+        - pytest
       imports:
         - cantera
       commands:
-        - python -m unittest -v cantera.test
+        - pytest -vv --pyargs cantera.test
         - ck2cti --help
         - cti2yaml --help
         - ck2yaml --help
