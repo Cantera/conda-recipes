@@ -90,7 +90,7 @@ jobs:
             PurePosixPath(*mw_headers_dir.parts[1:])
         )
         with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
-            gh_env.write(f"MW_HEADERS_DIR={mw_headers_dir}")
+            gh_env.write(f"CYG_MW_HEADERS_DIR={mw_headers_dir}")
       shell: python
       if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
@@ -98,7 +98,7 @@ jobs:
       run: |
         rsync -azvP -e `
         'C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free\bin\ssh.exe -i C:\Users\runneradmin\.ssh\id_rsa -o UserKnownHostsFile=C:\Users\runneradmin\.ssh\known_hosts' `
-        ctdeploy@cantera.org:. $Env:MW_HEADERS_DIR
+        ctdeploy@cantera.org:. $Env:CYG_MW_HEADERS_DIR
       shell: powershell
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1 && runner.os != 'Windows'
