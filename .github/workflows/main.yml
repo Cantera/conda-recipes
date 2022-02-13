@@ -76,7 +76,7 @@ jobs:
         known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
     - name: Install rsync on Windows
       if: matrix.MATLAB == 1 && runner.os == 'Windows'
-      run: choco install rsync
+      run: choco install rsync --version 6.2.4
     - name: Display the path
       run: |
         import os
@@ -91,15 +91,15 @@ jobs:
         with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
             gh_env.write(f"MW_HEADERS_DIR={mw_headers_dir}")
         print(mw_headers_dir)
-        print(os.listdir(r"C:\ProgramData\chocolatey\lib\rsync\tools"))
+        print(os.listdir(r"C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free"))
       shell: python
       if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1 && runner.os == 'Windows'
       run: |
-        rsync -azvP -e "C:\ProgramData\chocolatey\lib\rsync\tools\ssh.exe `
-        -i c:\users\runneradmin\.ssh\id_rsa `
-        -o UserKnownHostsFile=c:\users\runneradmin\.ssh\known_hosts" `
+        rsync -azvP -e "C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free\ssh.exe `
+        -i C:\Users\runneradmin\.ssh\id_rsa `
+        -o UserKnownHostsFile=C:\Users\runneradmin\.ssh\known_hosts" `
         ctdeploy@cantera.org:. $Env:MW_HEADERS_DIR
       shell: powershell
     - name: Get the MATLAB headers
