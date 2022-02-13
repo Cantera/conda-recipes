@@ -91,13 +91,13 @@ jobs:
         with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
             gh_env.write(f"MW_HEADERS_DIR={mw_headers_dir}")
         print(mw_headers_dir)
-        print(os.listdir(r"C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free"))
+        print(os.listdir(r"C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free\bin"))
       shell: python
       if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1 && runner.os == 'Windows'
       run: |
-        rsync -azvP -e "C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free\ssh.exe `
+        rsync -azvP -e "C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free\bin\ssh.exe `
         -i C:\Users\runneradmin\.ssh\id_rsa `
         -o UserKnownHostsFile=C:\Users\runneradmin\.ssh\known_hosts" `
         ctdeploy@cantera.org:. $Env:MW_HEADERS_DIR
