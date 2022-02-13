@@ -80,10 +80,17 @@ jobs:
     - name: Display the path
       run: |
         import os
-        from pathlib import Path
+        from pathlib import Path, PurePosixPath
         print(os.environ["MW_HEADERS_DIR"])
         mw_headers_dir = Path(os.environ["MW_HEADERS_DIR"])
-        print(Path(mw_headers_dir.parts[1:]))
+        mw_headers_dir = PurePosixPath(
+            "/cygdrive",
+            mw_headers_dir.drive[0],
+            PurePosixPath(*mw_headers_dir.parts[1:])
+        )
+        with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
+            gh_env.write(str(mw_headers_dir))
+        print(mw_headers_dir)
       shell: python
       if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
