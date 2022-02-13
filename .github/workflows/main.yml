@@ -74,6 +74,10 @@ jobs:
       with:
         key: ${{ secrets.CTDEPLOY_SSH_KEY }}
         known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
+    - name: Install rsync on Windows
+      if: matrix.MATLAB == 1 && runner.os == 'Windows'
+      run: conda install -c conda-forge rsync
+      shell: bash -l {0}
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1
       run: "rsync -azvP ctdeploy@cantera.org: ${MW_HEADERS_DIR}"
