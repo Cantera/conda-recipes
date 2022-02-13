@@ -115,7 +115,7 @@ outputs:
       imports:
         - cantera
       commands:
-        - pytest -vv --pyargs cantera.test
+        - pytest -vv --pyargs cantera.test  # [not py==310]
         - ck2cti --help
         - cti2yaml --help
         - ck2yaml --help
