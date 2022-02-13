@@ -12,8 +12,9 @@ SET /A CPU_USE=%CPU_COUNT% / 2
 IF %CPU_USE% EQU 0 SET CPU_USE=1
 
 SET "ESC_PREFIX=%PREFIX:\=/%"
-ECHO prefix="%ESC_PREFIX%" >> cantera.conf
+ECHO prefix="%ESC_PREFIX%/Library" >> cantera.conf
 ECHO boost_inc_dir="%ESC_PREFIX%/Library/include" >> cantera.conf
+ECHO renamed_shared_libraries="False" >> cantera.conf
 
 CALL scons build -j%CPU_USE%
 IF ERRORLEVEL 1 EXIT 1

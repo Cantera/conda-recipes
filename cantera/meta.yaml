@@ -118,6 +118,8 @@ outputs:
         - ruamel.yaml
         - vs2015_runtime  # [win]
         - libcantera {{ version }}
+        - openblas  # [osx]
+        - mkl  # [linux]
     build:
       entry_points:
         - ck2cti = cantera.ck2cti:script_entry_point
