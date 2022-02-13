@@ -12,3 +12,7 @@ rm -rf $PREFIX/lib/libcantera.a
 if [[ "$target_platform" == osx-* ]]; then
   ${OTOOL:-otool} -L $PREFIX/lib/libcantera.dylib
 fi
+
+echo "************************"
+echo "DELETING files COMPLETED"
+echo "************************"

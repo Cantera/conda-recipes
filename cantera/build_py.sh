@@ -1,6 +1,6 @@
-echo "****************************"
+echo "******************************"
 echo "PYTHON ${PY_VER} BUILD STARTED"
-echo "****************************"
+echo "******************************"
 
 # Remove old Python build files, if they're present
 if [ -d "build/python" ]; then
@@ -13,11 +13,7 @@ if [ -d "build/python" ]; then
     rm $PREFIX/bin/ctml2yaml || true
 fi
 
-${BUILD_PREFIX}/bin/python `which scons` build --debug=explain python_package='y' python_cmd="${PYTHON}"
-
-echo "****************************"
-echo "PYTHON ${PY_VER} BUILD COMPLETED SUCCESSFULLY"
-echo "****************************"
+${BUILD_PREFIX}/bin/python `which scons` build python_package='y' python_cmd="${PYTHON}"
 
 $PYTHON -m pip install --no-deps build/python/dist/*.whl
 
@@ -27,3 +23,7 @@ if [[ "$target_platform" == osx-* ]]; then
    ${OTOOL:-otool} -L $file_to_fix
    ${INSTALL_NAME_TOOL:-install_name_tool} -change build/lib/libcantera.${VERSION}.dylib "@rpath/libcantera.${VERSION}.dylib" $file_to_fix
 fi
+
+echo "********************************"
+echo "PYTHON ${PY_VER} BUILD COMPLETED"
+echo "********************************"

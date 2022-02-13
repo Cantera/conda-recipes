@@ -1,9 +1,7 @@
 set +x
-echo "****************************"
-echo "LIBRARY BUILD STARTED"
-echo "****************************"
-
-rm -f cantera.conf
+echo "******************"
+echo "MAIN BUILD STARTED"
+echo "******************"
 
 cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
 
@@ -44,6 +42,6 @@ ${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT}
 cp cantera.conf cantera.conf.pre-py
 set +xe
 
-echo "****************************"
-echo "BUILD COMPLETED SUCCESSFULLY"
-echo "****************************"
+echo "********************"
+echo "MAIN BUILD COMPLETED"
+echo "********************"
