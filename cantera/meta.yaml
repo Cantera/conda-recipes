@@ -1,8 +1,9 @@
 {% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\[.cantera_version.\\] = .([\d.abrc]+).") %}
+{% set version = data.group(1) %}
 
 package:
   name: cantera-recipe
-  version: {{ data.group(1) }}
+  version: {{ version }}
 
 source:
   git_url: https://github.com/Cantera/cantera.git
@@ -29,6 +30,31 @@ build:
   include_recipe: True
 
 outputs:
+  - name: libcantera
+    script: build_lib.sh  # [not win]
+    script: build_lib.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # only the header part of these libraries are used
+        - libboost
+        - python
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=3.1
+        - setuptools
+      host:
+        - python >=3.7
+        - libboost
+        - numpy
+        - pywin32  # [win]
+        - openblas  # [osx]
+        - mkl  # [linux]
+    test:
+      commands:
+        - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]
+
   - name: libcantera-devel
     script: build_devel.sh  # [not win]
     script: build_devel.bat  # [win]
@@ -37,7 +63,6 @@ outputs:
       ignore_run_exports_from:
         # only the header part of these libraries are used
         - libboost
-        - fmt
         - python
     requirements:
       build:
@@ -54,19 +79,9 @@ outputs:
         - mkl  # [linux]
         - numpy
         - pywin32  # [win]
+        - libcantera {{ version }}
       run:
-        - {{ compiler('c') }}  # [win]
-        - {{ compiler('cxx') }}  # [win]
-        - vs2017_win-64 ==19.15.*  # [win]
-        - libboost
-        - mkl  # [linux]
-        - vs2015_runtime  # [win]
-        - openblas  # [osx]
-        - mkl  # [linux]
-        - vs2015_runtime  # [win]
-    test:
-      commands:
-        - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]
+        - libcantera {{ version }}
 
   - name: cantera
     script: build_py.sh  # [not win]
@@ -88,7 +103,8 @@ outputs:
         - cython
         - pywin32  # [win]
         # This is added here so conda-build doesn't package it
-        - libcantera-devel {{ data.group(1) }}
+        - libcantera-devel {{ version }}
+        - libcantera {{ version }}
       run:
         - python
         - setuptools
@@ -96,6 +112,7 @@ outputs:
         - h5py
         - ruamel.yaml
         - vs2015_runtime  # [win]
+        - libcantera {{ version }}
     build:
       entry_points:
         - ck2cti = cantera.ck2cti:script_entry_point
@@ -107,7 +124,6 @@ outputs:
       ignore_run_exports_from:
         # only the header part of these libraries are used
         - libboost
-        - fmt
         - python
     test:
       requires:
