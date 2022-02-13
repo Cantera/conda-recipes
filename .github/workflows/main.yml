@@ -68,7 +68,7 @@ jobs:
     # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
     # machine that has previously logged in to cantera.org and trusts
     # that it logged in to the right machine
-    - name: Set up SSH key and host for deploy
+    - name: Set up SSH key and host for cloning MATLAB
       if: matrix.MATLAB == 1
       uses: shimataro/ssh-key-action@v2
       with:
@@ -95,7 +95,7 @@ jobs:
       if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1
-      run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
+      run: "rsync -azvP --relative ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
       shell: bash
     - name: Build the MATLAB recipe
       shell: bash -l {0}
