@@ -77,7 +77,15 @@ jobs:
     - name: Install rsync on Windows
       if: matrix.MATLAB == 1 && runner.os == 'Windows'
       run: choco install rsync
-      shell: bash -l {0}
+    - name: Display the path
+      run: |
+        import os
+        from pathlib import Path
+        print(os.environ["MW_HEADERS_DIR"])
+        mw_headers_dir = Path(os.environ["MW_HEADERS_DIR"])
+        print(Path(mw_headers_dir.parts[1:]))
+      shell: python
+      if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
       if: matrix.MATLAB == 1
       run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
