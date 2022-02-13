@@ -89,7 +89,7 @@ jobs:
             PurePosixPath(*mw_headers_dir.parts[1:])
         )
         with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
-            gh_env.write(str(mw_headers_dir))
+            gh_env.write(f"MW_HEADERS_DIR={mw_headers_dir}")
         print(mw_headers_dir)
       shell: python
       if: runner.os == 'Windows' && matrix.MATLAB == 1
