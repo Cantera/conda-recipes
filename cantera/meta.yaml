@@ -38,6 +38,8 @@ outputs:
         # only the header part of these libraries are used
         - libboost
         - python
+      run_exports:
+        - {{ pin_subpackage('libcantera', max_pin='x.x') }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -51,6 +53,9 @@ outputs:
         - pywin32  # [win]
         - openblas  # [osx]
         - mkl  # [linux]
+      run:
+        - mkl  # [linux]
+        - openblas  # [osx]
     test:
       commands:
         - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]
@@ -113,9 +118,6 @@ outputs:
         - ruamel.yaml
         - vs2015_runtime  # [win]
         - libcantera {{ version }}
-        # These should have run_exports sections but possibly don't
-        - openblas  # [osx]
-        - mkl  # [linux]
     build:
       entry_points:
         - ck2cti = cantera.ck2cti:script_entry_point
