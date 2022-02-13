@@ -37,7 +37,6 @@ outputs:
       ignore_run_exports_from:
         # only the header part of these libraries are used
         - libboost
-        - python
       run_exports:
         - {{ pin_subpackage('libcantera', max_pin='x.x') }}
     requirements:
@@ -45,11 +44,8 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - scons >=3.1
-        - setuptools
       host:
-        - python >=3.7
         - libboost
-        - numpy
         - pywin32  # [win]
         - openblas  # [osx]
         - mkl  # [linux]
@@ -68,7 +64,6 @@ outputs:
       ignore_run_exports_from:
         # only the header part of these libraries are used
         - libboost
-        - python
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
@@ -76,13 +71,10 @@ outputs:
         - vs2017_win-64 ==19.15.*  # [win64]
         - vs2017_win-32 ==19.15.*  # [win32]
         - scons >=3.1
-        - setuptools
       host:
-        - python >=3.7
         - libboost
         - openblas  # [osx]
         - mkl  # [linux]
-        - numpy
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
