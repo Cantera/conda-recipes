@@ -74,14 +74,15 @@ jobs:
       with:
         key: ${{ secrets.CTDEPLOY_SSH_KEY }}
         known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
+    # If the version of rsync is changed, the directories below have to be updated
     - name: Install rsync on Windows
       if: matrix.MATLAB == 1 && runner.os == 'Windows'
       run: choco install rsync --version 6.2.4
+    # This seems like overkill, but rsync on Windows requires a POSIX-style path
     - name: Display the path
       run: |
         import os
         from pathlib import Path, PurePosixPath
-        print(os.environ["MW_HEADERS_DIR"])
         mw_headers_dir = Path(os.environ["MW_HEADERS_DIR"]).resolve()
         mw_headers_dir = PurePosixPath(
             "/cygdrive",
@@ -90,8 +91,6 @@ jobs:
         )
         with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
             gh_env.write(f"MW_HEADERS_DIR={mw_headers_dir}")
-        print(mw_headers_dir)
-        print(os.listdir(r"C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free\bin"))
       shell: python
       if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
@@ -102,7 +101,7 @@ jobs:
         ctdeploy@cantera.org:. $Env:MW_HEADERS_DIR
       shell: powershell
     - name: Get the MATLAB headers
-      if: matrix.MATLAB == 1
+      if: matrix.MATLAB == 1 && runner.os != 'Windows'
       run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
       shell: bash
     - name: Build the MATLAB recipe
