@@ -108,6 +108,7 @@ outputs:
         # only the header part of these libraries are used
         - libboost
         - fmt
+        - python
     test:
       requires:
         - pytest
