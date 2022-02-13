@@ -13,6 +13,8 @@ if [ -d "build/python" ]; then
     rm $PREFIX/bin/ctml2yaml || true
 fi
 
+${BUILD_PREFIX}/bin/python `which scons` build python_package='y' python_cmd="${PYTHON}"
+
 if [[ "$target_platform" == osx-* ]]; then
    VERSION=$(echo $PKG_VERSION | cut -db -f1)
    file_to_fix=$(find $SP_DIR -name "_cantera*.so" | head -n 1)
@@ -20,9 +22,7 @@ if [[ "$target_platform" == osx-* ]]; then
    ${INSTALL_NAME_TOOL:-install_name_tool} -change build/lib/libcantera.${VERSION}.dylib "@rpath/libcantera.${VERSION}.dylib" $file_to_fix
 fi
 
-${BUILD_PREFIX}/bin/python `which scons` build python_package='y' python_cmd="${PYTHON}"
-
-$PYTHON -m pip install --no-deps build/python/dist/*.whl
+$PYTHON -m pip install --no-deps build/python
 
 echo "********************************"
 echo "PYTHON ${PY_VER} BUILD COMPLETED"
