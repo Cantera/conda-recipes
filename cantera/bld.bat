@@ -4,8 +4,6 @@ echo ****************************
 echo BUILD STARTED
 echo ****************************
 
-DEL /F cantera.conf
-
 COPY "%RECIPE_DIR%\..\.ci_support\cantera_base.conf" cantera.conf
 ECHO msvc_version='14.1' >> cantera.conf
 

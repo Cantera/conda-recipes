@@ -3,8 +3,8 @@ echo "****************************"
 echo "DELETING files from devel except shared libraries"
 echo "****************************"
 
-rd /s /q %LIBRARY_PREFIX%/share
-rd /s /q %LIBRARY_PREFIX%/include
-rd /s /q %LIBRARY_PREFIX%/bin
-rd /s /q %LIBRARY_PREFIX%/lib/pkg-config
-rd /s /q %LIBRARY_PREFIX%/lib/libcantera.a
+rd /s /q %PREFIX%/share
+rd /s /q %PREFIX%/include
+rd /s /q %PREFIX%/bin
+rd /s /q %PREFIX%/lib/pkg-config
+rd /s /q %PREFIX%/lib/libcantera.a
