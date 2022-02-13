@@ -91,6 +91,7 @@ jobs:
         with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
             gh_env.write(f"MW_HEADERS_DIR={mw_headers_dir}")
         print(mw_headers_dir)
+        print(os.listdir(r"C:\ProgramData\chocolatey\lib\rsync\tools"))
       shell: python
       if: runner.os == 'Windows' && matrix.MATLAB == 1
     - name: Get the MATLAB headers
