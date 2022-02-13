@@ -16,8 +16,6 @@ echo "stage_dir = '${STAGE_DIR}'" >> cantera.conf
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CC = '${CC}'" >> cantera.conf
     echo "CXX = '${CXX}'" >> cantera.conf
-    echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
-    echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '${CFLAGS}'" >> cantera.conf
     echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
@@ -29,8 +27,6 @@ if [[ "${OSX_ARCH}" == "" ]]; then
 else
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
-    echo "blas_lapack_libs = 'openblas'" >> cantera.conf
-    echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
     echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
