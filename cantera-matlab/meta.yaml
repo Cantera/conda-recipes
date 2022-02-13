@@ -1,4 +1,4 @@
-{% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\['cantera_version'\\] = .([\d.abrc]+).") %}
+{% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\[.cantera_version.\\] = .([\d.abrc]+).") %}
 
 package:
   name: cantera-matlab
