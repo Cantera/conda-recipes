@@ -5,7 +5,7 @@ echo MATLAB BUILD STARTED
 echo ****************************
 
 COPY "%RECIPE_DIR%\..\.ci_support\cantera_base.conf" cantera.conf
-ECHO msvc_version='14.1' >> cantera.conf
+ECHO msvc_version='14.3' >> cantera.conf
 
 SET "STAGE_DIR=stage"
 ECHO stage_dir="%STAGE_DIR%" >> cantera.conf

@@ -5,7 +5,7 @@ echo BUILD STARTED
 echo ****************************
 
 COPY "%RECIPE_DIR%\..\.ci_support\cantera_base.conf" cantera.conf
-ECHO msvc_version='14.1' >> cantera.conf
+ECHO msvc_version='14.3' >> cantera.conf
 
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
