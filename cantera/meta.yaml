@@ -12,10 +12,9 @@ source:
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - vs2017_win-64 ==19.15.*  # [win]
-    - scons >=3.1
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - scons >=4.1
     - setuptools
   host:
     - python >=3.7
@@ -43,7 +42,7 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - scons >=3.1
+        - scons >=4.1
       host:
         - libboost
         - pywin32  # [win]
@@ -66,11 +65,9 @@ outputs:
         - libboost
     requirements:
       build:
-        - {{ compiler('c') }}  # [not win]
-        - {{ compiler('cxx') }}  # [not win]
-        - vs2017_win-64 ==19.15.*  # [win64]
-        - vs2017_win-32 ==19.15.*  # [win32]
-        - scons >=3.1
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=4.1
       host:
         - libboost
         - openblas  # [osx]
@@ -85,11 +82,9 @@ outputs:
     script: build_py.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}  # [not win]
-        - {{ compiler('cxx') }}  # [not win]
-        - vs2017_win-64 ==19.15.*  # [win64]
-        - scons >=3.1
-        - setuptools
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=4.1
       host:
         - python {{ python }}
         - setuptools
@@ -108,7 +103,6 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - h5py
         - ruamel.yaml
-        - vs2015_runtime  # [win]
         - libcantera {{ version }}
         - openblas  # [osx]
         - mkl  # [linux]

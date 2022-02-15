@@ -10,16 +10,15 @@ source:
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - vs2017_win-64 ==19.15.*  # [win64]
-    - vs2017_win-32 ==19.15.*  # [win32]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - scons >=3.1
     - python >=3.7
     - numpy
   host:
     - libboost
   run:
+    # This works even though the VS version is 2019
     - vs2015_runtime  # [win]
 
 build:
