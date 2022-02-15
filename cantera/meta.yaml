@@ -15,13 +15,10 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - scons >=4.1
-    - setuptools
   host:
-    - python >=3.7
     - libboost
     - openblas  # [osx]
     - mkl  # [linux]
-    - numpy
     - pywin32  # [win]
 
 build:
@@ -37,7 +34,7 @@ outputs:
         # only the header part of these libraries are used
         - libboost
       run_exports:
-        - {{ pin_subpackage('libcantera', max_pin='x.x') }}
+        - libcantera
     requirements:
       build:
         - {{ compiler('c') }}
@@ -75,7 +72,7 @@ outputs:
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
-        - libcantera {{ version }}
+        - {{ pin_subpackage('libcantera', exact=True) }}
 
   - name: cantera
     script: build_py.sh  # [not win]
@@ -87,6 +84,7 @@ outputs:
         - scons >=4.1
       host:
         - python {{ python }}
+        - pip
         - setuptools
         - libboost
         - numpy
@@ -103,7 +101,7 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - h5py
         - ruamel.yaml
-        - libcantera {{ version }}
+        - {{ pin_subpackage('libcantera', exact=True) }}
         - openblas  # [osx]
         - mkl  # [linux]
     build:
@@ -124,6 +122,8 @@ outputs:
       imports:
         - cantera
       commands:
+        # The version of pytest available from the default channel does not support
+        # Python 3.10
         - pytest -vv --pyargs cantera.test  # [not py==310]
         - ck2cti --help
         - cti2yaml --help
@@ -137,5 +137,7 @@ about:
   license_family: BSD
   license_file: License.txt
   dev_url: https://github.com/cantera/cantera
-  description: Cantera is an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes
+  description: >
+    Cantera is an open-source suite of tools for problems involving chemical kinetics,
+    thermodynamics, and transport processes
   doc_url: https://cantera.org/documentation

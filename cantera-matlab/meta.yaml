@@ -12,20 +12,19 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - scons >=3.1
-    - python >=3.7
-    - numpy
+    - scons >=4.1
   host:
     - libboost
-  run:
-    # This works even though the VS version is 2019
-    - vs2015_runtime  # [win]
+    - pywin32  # [win]
 
 build:
   number: 0
   include_recipe: True
   script_env:
     - MW_HEADERS_DIR
+  ignore_run_exports_from:
+    # Only the header version of this library is used
+    - libboost
 
 about:
   home: https://cantera.org
