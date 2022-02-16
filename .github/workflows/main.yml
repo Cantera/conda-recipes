@@ -105,7 +105,6 @@ jobs:
     # machine that has previously logged in to cantera.org and trusts
     # that it logged in to the right machine
     - name: Set up SSH key and host for cloning MATLAB
-      if: matrix.MATLAB == 1
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.CTDEPLOY_SSH_KEY }}
