@@ -1,22 +1,29 @@
-echo "****************************"
+echo "******************************"
 echo "PYTHON ${PY_VER} BUILD STARTED"
-echo "****************************"
+echo "******************************"
 
 # Remove old Python build files, if they're present
 if [ -d "build/python" ]; then
     rm -r build/python
     rm -r build/temp-py
-    rm interfaces/cython/setup.py
-    rm -r interfaces/cython/build
-    rm -r interfaces/cython/dist
-    rm -r interfaces/cython/Cantera.egg-info
+    rm $PREFIX/bin/ck2cti || true
+    rm $PREFIX/bin/ck2yaml || true
+    rm $PREFIX/bin/ctml_writer || true
+    rm $PREFIX/bin/cti2yaml || true
+    rm $PREFIX/bin/ctml2yaml || true
 fi
 
-scons build python_package='y' python_cmd="${PYTHON}"
+${BUILD_PREFIX}/bin/python `which scons` build python_package='y' python_cmd="${PYTHON}"
 
-echo "****************************"
-echo "PYTHON ${PY_VER} BUILD COMPLETED SUCCESSFULLY"
-echo "****************************"
+$PYTHON -m pip install --no-deps build/python
 
-cd interfaces/cython
-$PYTHON setup.py build --build-lib=../../build/python install
+if [[ "$target_platform" == osx-* ]]; then
+   VERSION=$(echo $PKG_VERSION | cut -da -f1 | cut -db -f1 | cut -dr -f1)
+   file_to_fix=$(find $SP_DIR -name "_cantera*.so" | head -n 1)
+   ${OTOOL:-otool} -L $file_to_fix
+   ${INSTALL_NAME_TOOL:-install_name_tool} -change build/lib/libcantera.${VERSION}.dylib "@rpath/libcantera.${VERSION}.dylib" $file_to_fix
+fi
+
+echo "********************************"
+echo "PYTHON ${PY_VER} BUILD COMPLETED"
+echo "********************************"

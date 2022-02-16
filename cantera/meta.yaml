@@ -1,85 +1,108 @@
-{% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\['cantera_version'\\] = .([\d.abrc]+).") %}
+{% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\[.cantera_version.\\] = .([\d.abrc]+).") %}
+{% set version = data.group(1) %}
 
 package:
   name: cantera-recipe
-  version: {{ data.group(1) }}
+  version: {{ version }}
 
 source:
   git_url: https://github.com/Cantera/cantera.git
-  git_tag: main
+  git_tag: add-package-workflow
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - vs2017_win-64 ==19.15.*  # [win]
-    - scons >=3.1
-    - python >=3.5
-    - numpy
-    - pywin32  # [win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - scons >=4.1
   host:
     - libboost
+    - openblas  # [osx]
     - mkl  # [linux]
+    - pywin32  # [win]
 
 build:
   number: 0
   include_recipe: True
 
 outputs:
+  - name: libcantera
+    script: build_lib.sh  # [not win]
+    script: build_lib.bat  # [win]
+    build:
+      ignore_run_exports_from:
+        # only the header part of these libraries are used
+        - libboost
+      run_exports:
+        - libcantera
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=4.1
+      host:
+        - libboost
+        - pywin32  # [win]
+        - openblas  # [osx]
+        - mkl  # [linux]
+      run:
+        - mkl  # [linux]
+        - openblas  # [osx]
+    test:
+      commands:
+        - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]
+
   - name: libcantera-devel
     script: build_devel.sh  # [not win]
     script: build_devel.bat  # [win]
+
+    build:
+      ignore_run_exports_from:
+        # only the header part of these libraries are used
+        - libboost
     requirements:
       build:
-        - {{ compiler('c') }}  # [not win]
-        - {{ compiler('cxx') }}  # [not win]
-        - vs2017_win-64 ==19.15.*  # [win64]
-        - vs2017_win-32 ==19.15.*  # [win32]
-        - scons >=3.1
-        - python >=3.5
-        - numpy
-        - pywin32  # [win]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=4.1
       host:
         - libboost
+        - openblas  # [osx]
         - mkl  # [linux]
+        - pywin32  # [win]
+        - libcantera {{ version }}
       run:
-        - {{ compiler('c') }}  # [win]
-        - {{ compiler('cxx') }}  # [win]
-        - vs2017_win-64 ==19.15.*  # [win]
-        - libboost
-        - mkl  # [linux]
-        - vs2015_runtime  # [win]
-    build:
-      include_recipe: True
-      ignore_run_exports:
-        - libboost
+        - {{ pin_subpackage('libcantera', exact=True) }}
 
   - name: cantera
     script: build_py.sh  # [not win]
     script: build_py.bat  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}  # [not win]
-        - {{ compiler('cxx') }}  # [not win]
-        - vs2017_win-64 ==19.15.*  # [win64]
-        - vs2017_win-32 ==19.15.*  # [win32]
-        - scons >=3.1
-        - python >=3.5
-        - pywin32  # [win]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - scons >=4.1
       host:
         - python {{ python }}
+        - pip
+        - setuptools
         - libboost
+        - numpy
+        - openblas  # [osx]
         - mkl  # [linux]
-        - numpy
         - cython
-        - numpy
+        - pywin32  # [win]
+        # This is added here so conda-build doesn't package it
+        - libcantera-devel {{ version }}
+        - libcantera {{ version }}
       run:
         - python
+        - setuptools
         - {{ pin_compatible('numpy') }}
         - h5py
-        - ruamel_yaml
+        - ruamel.yaml
+        - {{ pin_subpackage('libcantera', exact=True) }}
+        - openblas  # [osx]
         - mkl  # [linux]
-        - vs2015_runtime  # [win]
     build:
       entry_points:
         - ck2cti = cantera.ck2cti:script_entry_point
@@ -88,11 +111,19 @@ outputs:
         - cti2yaml = cantera.cti2yaml:main
         - ctml2yaml = cantera.ctml2yaml:main
       include_recipe: True
+      ignore_run_exports_from:
+        # only the header part of these libraries are used
+        - libboost
+        - python
     test:
+      requires:
+        - pytest
       imports:
         - cantera
       commands:
-        - python -m unittest -v cantera.test
+        # The version of pytest available from the default channel does not support
+        # Python 3.10
+        - pytest -vv --pyargs cantera.test  # [not py==310]
         - ck2cti --help
         - cti2yaml --help
         - ck2yaml --help
@@ -105,5 +136,7 @@ about:
   license_family: BSD
   license_file: License.txt
   dev_url: https://github.com/cantera/cantera
-  description: Cantera is an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes
+  description: >
+    Cantera is an open-source suite of tools for problems involving chemical kinetics,
+    thermodynamics, and transport processes
   doc_url: https://cantera.org/documentation

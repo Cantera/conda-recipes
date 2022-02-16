@@ -1,4 +1,4 @@
-{% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\['cantera_version'\\] = .([\d.abrc]+).") %}
+{% set data = load_file_regex(load_file='SConstruct', regex_pattern="env\\[.cantera_version.\\] = .([\d.abrc]+).") %}
 
 package:
   name: cantera-matlab
@@ -6,27 +6,25 @@ package:
 
 source:
   git_url: https://github.com/Cantera/cantera.git
-  git_tag: main
+  git_tag: add-package-workflow
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - vs2017_win-64 ==19.15.*  # [win64]
-    - vs2017_win-32 ==19.15.*  # [win32]
-    - scons >=3.1
-    - python >=3.5
-    - numpy
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - scons >=4.1
   host:
     - libboost
-  run:
-    - vs2015_runtime  # [win]
+    - pywin32  # [win]
 
 build:
   number: 0
   include_recipe: True
   script_env:
     - MW_HEADERS_DIR
+  ignore_run_exports_from:
+    # Only the header version of this library is used
+    - libboost
 
 about:
   home: https://cantera.org

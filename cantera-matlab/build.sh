@@ -4,12 +4,6 @@ echo "****************************"
 echo "MATLAB BUILD STARTED"
 echo "****************************"
 
-if [[ "$DIRTY" != "1" ]]; then
-    scons clean
-fi
-
-rm -f cantera.conf
-
 cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
 
 echo "prefix = ''" >> cantera.conf
@@ -22,10 +16,26 @@ echo "stage_dir = '${STAGE_DIR}'" >> cantera.conf
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CC = '${CC}'" >> cantera.conf
     echo "CXX = '${CXX}'" >> cantera.conf
+    echo "cc_flags = '${CFLAGS}'" >> cantera.conf
+    echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
+    echo "optimize_flags = ''" >> cantera.conf
+    echo "debug = False" >> cantera.conf
+    echo "use_rpath_linkage = False" >> cantera.conf
+    echo "no_debug_linker_flags = '${LDFLAGS}'" >> cantera.conf
+    echo "renamed_shared_libraries = False" >> cantera.conf
+    echo "VERBOSE = True" >> cantera.conf
 else
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
-    echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}'" >> cantera.conf
+    echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
+    echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
+    echo "optimize_flags = ''" >> cantera.conf
+    echo "debug = False" >> cantera.conf
+    echo "no_debug_linker_flags = '${LDFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
+    echo "env_vars = 'LD'" >> cantera.conf
+    echo "VERBOSE = True" >> cantera.conf
+    echo "renamed_shared_libraries = False" >> cantera.conf
+    echo "use_rpath_linkage = False" >> cantera.conf
 fi
 
 echo "matlab_toolbox = 'y'" >> cantera.conf
@@ -33,8 +43,8 @@ echo "matlab_path = '${MW_HEADERS_DIR}'" >> cantera.conf
 
 set -xe
 
-scons build -j${CPU_COUNT}
-scons install
+${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT}
+${BUILD_PREFIX}/bin/python `which scons` install
 
 # "Install" just the Matlab interface. This method should
 # prevent this package from clobbering any existing
