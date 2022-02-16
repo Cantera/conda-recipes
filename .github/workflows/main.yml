@@ -24,16 +24,16 @@ env:
   MACOSX_DEPLOYMENT_TARGET: "10.9"
 
 jobs:
-  build:
-    name: ${{ matrix.os }} with MATLAB=${{ matrix.MATLAB }}
+  build-libcantera-python:
+    name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        MATLAB: [0, 1]
         os: [windows-2019, ubuntu-latest, macos-latest]
       fail-fast: false
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out this repository
+      uses: actions/checkout@v2
     - name: Set Up macOS
       if: runner.os == 'macOS'
       run: echo "CONDA_BUILD_SYSROOT=$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk" >> $GITHUB_ENV
@@ -52,10 +52,6 @@ jobs:
         CONDA_BUILD_SYSROOT:
         - ${CONDA_BUILD_SYSROOT}
         " >> ./.ci_support/conda_build_config.yaml;
-        echo "
-        numpy:
-        - 1.11
-        " >> ${HOME}/conda_build_config.yaml;
     - name: Set Up Conda
       uses: conda-incubator/setup-miniconda@v2
       with:
@@ -69,7 +65,33 @@ jobs:
     - name: Build the Python and libcantera recipe
       shell: bash -l {0}
       run: conda build ./cantera -m ./.ci_support/conda_build_config.yaml
-      if: matrix.MATLAB == 0
+    - name: Upload package to anaconda.org
+      run: |
+        anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
+      shell: bash -l {0}
+      if: github.event.inputs.upload == 'true'
+
+  build-matlab:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2019, ubuntu-latest, macos-latest]
+      fail-fast: false
+    steps:
+    - name: Check out this repository
+      uses: actions/checkout@v2
+    - name: Set Up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        conda-build-version: '3.21'
+        activate-environment: ''
+        auto-activate-base: true
+    - name: Install Conda dependencies
+      shell: bash -l {0}
+      run: conda install -q anaconda-client conda-verify\<4.0 ripgrep
+
     # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
     # machine that has previously logged in to cantera.org and trusts
     # that it logged in to the right machine
@@ -81,10 +103,10 @@ jobs:
         known_hosts: ${{ secrets.CTDEPLOY_KNOWN_HOSTS }}
     # If the version of rsync is changed, the directories below have to be updated
     - name: Install rsync on Windows
-      if: matrix.MATLAB == 1 && runner.os == 'Windows'
+      if: runner.os == 'Windows'
       run: choco install rsync --version 6.2.4
     # This seems like overkill, but rsync on Windows requires a POSIX-style path
-    - name: Display the path
+    - name: Munge the MW_HEADERS_DIR for Windows rsync
       run: |
         import os
         from pathlib import Path, PurePosixPath
@@ -97,22 +119,24 @@ jobs:
         with Path(os.environ["GITHUB_ENV"]).open(mode="a") as gh_env:
             gh_env.write(f"CYG_MW_HEADERS_DIR={mw_headers_dir}")
       shell: python
-      if: runner.os == 'Windows' && matrix.MATLAB == 1
+      if: runner.os == 'Windows'
+    # When I tried this a few times, it only worked when I used powershell and had the
+    # SSH options all in the single line with single quotes. Note that there is a
+    # separate SSH binary pre-installed on the Windows runners that comes before this
+    # one on the PATH, but it is linked with the wrong Cygwin DLL, so it will not work.
     - name: Get the MATLAB headers
-      if: matrix.MATLAB == 1 && runner.os == 'Windows'
+      if: runner.os == 'Windows'
       run: |
         rsync -azvP -e `
         'C:\ProgramData\chocolatey\lib\rsync\tools\cwrsync_6.2.4_x64_free\bin\ssh.exe -i C:\Users\runneradmin\.ssh\id_rsa -o UserKnownHostsFile=C:\Users\runneradmin\.ssh\known_hosts' `
         ctdeploy@cantera.org:. $Env:CYG_MW_HEADERS_DIR
       shell: powershell
     - name: Get the MATLAB headers
-      if: matrix.MATLAB == 1 && runner.os != 'Windows'
+      if: runner.os != 'Windows'
       run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
-      shell: bash
     - name: Build the MATLAB recipe
       shell: bash -l {0}
       run: conda build ./cantera-matlab -m ./.ci_support/conda_build_config.yaml
-      if: matrix.MATLAB == 1
     - name: Upload package to anaconda.org
       run: |
         anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
