@@ -27,10 +27,10 @@ on:
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
-  MACOSX_DEPLOYMENT_TARGET: "10.9"
+  MACOSX_DEPLOYMENT_TARGET: "10.15"
 
 jobs:
-  build-libcantera-python:
+  build-libcantera-and-python:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -50,7 +50,7 @@ jobs:
     - name: Install macOS SDK
       if: runner.os == 'macOS'
       run: |
-        curl -L -O https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz
+        curl -L -O https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz
         tar -xf MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk.tar.xz -C "$(dirname "$CONDA_BUILD_SYSROOT")"
         # set minimum sdk version to our target
         plutil -replace MinimumSDKVersion -string ${MACOSX_DEPLOYMENT_TARGET} $(xcode-select -p)/Platforms/MacOSX.platform/Info.plist
