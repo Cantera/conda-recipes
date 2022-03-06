@@ -17,6 +17,7 @@ on:
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
   MACOSX_DEPLOYMENT_TARGET: "10.9"
+  ACTION_URL: "https://github.com/Cantera/conda-recipes/actions/runs/${{ github.run_id }}"
 
 jobs:
   dump:
@@ -30,6 +31,23 @@ jobs:
           echo "${{ github.event.inputs.incoming_ref }}"
           echo "${{ github.event.inputs.upload }}"
 
+  post-pending-status:
+    name: Post a pending workflow status to Cantera/cantera
+    runs-on: ubuntu-20.04
+    if: github.event.inputs.incoming_ref != 'default'
+    steps:
+      - name: Post the status to the upstream commit
+        run: |
+          gh api repos/cantera/cantera/statuses/${{ github.event.inputs.incoming_ref }} \
+            -H "Accept: application/vnd.github.v3+json" \
+            --field state='pending' \
+            --field target_url=$ACTION_URL \
+            --field context='Conda Package Build' \
+            --field description="Pending build" \
+            --silent
+        env:
+          GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
+
   build-libcantera-and-python:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -37,6 +55,8 @@ jobs:
       matrix:
         os: [windows-2019, ubuntu-latest, macos-latest]
       fail-fast: false
+    outputs:
+      job-status: ${{ job.status }}
     steps:
     - name: Set the INCOMING_REF needed for recipe/meta.yaml
       run: echo "INCOMING_REF=${{ github.event.inputs.incoming_ref }}" >> $GITHUB_ENV
@@ -84,6 +104,8 @@ jobs:
       matrix:
         os: [windows-2019, ubuntu-latest, macos-latest]
       fail-fast: false
+    outputs:
+      job-status: ${{ job.status }}
     steps:
     - name: Set the INCOMING_REF needed for recipe/meta.yaml
       run: echo "INCOMING_REF=${{ github.event.inputs.incoming_ref }}" >> $GITHUB_ENV
@@ -165,3 +187,55 @@ jobs:
         anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
       shell: bash -l {0}
       if: github.event.inputs.upload == 'true'
+
+  send_status_to_cantera:
+    name: Send jobs status to Cantera/cantera
+    runs-on: ubuntu-20.04
+    needs:
+      - "build-libcantera-and-python"
+      - "matlab"
+    if: always() && github.event.inputs.incoming_ref != 'default'
+    steps:
+      - name: Collect statuses
+        run: |
+          from collections import Counter
+          import os
+          statuses = {
+              "python": "${{needs.build-libcantera-and-python.outputs.job-status}}",
+              "matlab": "${{needs.build-matlab.outputs.job-status}}",
+          }
+          if all(v == "success" for v in statuses.values() if v):
+              overall_status = "success"
+          elif any(v in ("cancelled", "") for v in statuses.values()):
+              overall_status = "error"
+          elif any(v == "failure" for v in statuses.values()):
+              overall_status = "failure"
+
+          status_counts = Counter(statuses.values())
+          description = []
+          if overall_status in ("error", "failure"):
+              if status_counts.get("success") is not None:
+                  description.append(f"{status_counts['success']} succeeded")
+              if status_counts.get("cancelled") is not None:
+                  description.append(f"{status_counts['cancelled']} cancelled")
+              if status_counts.get("failure") is not None:
+                  description.append(f"{status_counts['failure']} failed")
+              if status_counts.get("") is not None:
+                  description.append(f"{status_counts['']} skipped")
+              description = ", ".join(description)
+          else:
+              description = "Successfully built Conda packages!"
+          with open(os.environ["GIHUB_ENV"], "a") as gh_env:
+              gh_env.write(f"OVERALL_STATUS={overall_status}\nDESCRIPTION={description}")
+        shell: python
+      - name: Post the status to the upstream commit
+        run: |
+          gh api repos/cantera/cantera/statuses/${{ github.event.inputs.incoming_ref }} \
+            -H "Accept: application/vnd.github.v3+json" \
+            --field state=$OVERALL_STATUS \
+            --field target_url=$ACTION_URL \
+            --field context='Conda Package Build' \
+            --field description=$DESCRIPTION \
+            --silent
+        env:
+          GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
