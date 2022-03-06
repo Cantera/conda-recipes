@@ -235,7 +235,7 @@ jobs:
               description = ", ".join(description)
           else:
               description = "Successfully built Conda packages!"
-          with open(os.environ["GIHUB_ENV"], "a") as gh_env:
+          with open(os.environ["GITHUB_ENV"], "a") as gh_env:
               gh_env.write(f"OVERALL_STATUS={overall_status}\nDESCRIPTION={description}")
         shell: python
       - name: Post the status to the upstream commit
