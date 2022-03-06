@@ -57,6 +57,8 @@ jobs:
   build-libcantera-and-python:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    needs:
+      - "post-pending-status"
     strategy:
       matrix:
         os: [windows-2019, ubuntu-latest, macos-latest]
@@ -106,6 +108,8 @@ jobs:
   build-matlab:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    needs:
+      - "post-pending-status"
     strategy:
       matrix:
         os: [windows-2019, ubuntu-latest, macos-latest]
