@@ -7,7 +7,7 @@ package:
 
 source:
   git_url: https://github.com/Cantera/cantera.git
-  git_tag: {{ environ.get('INCOMING_REF', 'add-package-workflow') }}
+  git_tag: {{ environ.get('INCOMING_REF', 'add-package-workflow').replace('refs/heads/', '') }}
 
 requirements:
   build:

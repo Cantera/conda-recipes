@@ -38,6 +38,10 @@ jobs:
         os: [windows-2019, ubuntu-latest, macos-latest]
       fail-fast: false
     steps:
+    - name: Set the INCOMING_REF
+      if: github.event.inputs.incoming_ref != 'default'
+      run: echo "INCOMING_REF=${{ github.event.inputs.incoming_ref }}" >> $GITHUB_ENV
+      shell: bash
     - name: Check out this repository
       uses: actions/checkout@v2
     - name: Set Up macOS
@@ -68,9 +72,6 @@ jobs:
     - name: Install Conda dependencies
       shell: bash -l {0}
       run: conda install -q anaconda-client conda-verify\<4.0 ripgrep
-    - name: Set the INCOMING_REF
-      if: github.event.inputs.incoming_ref != 'default'
-      run: echo "INCOMING_REF=${{ github.event.inputs.incoming_ref }}" >> $GITHUB_ENV
     - name: Build the Python and libcantera recipe
       shell: bash -l {0}
       run: conda build ./cantera -m ./.ci_support/conda_build_config.yaml
@@ -88,6 +89,10 @@ jobs:
         os: [windows-2019, ubuntu-latest, macos-latest]
       fail-fast: false
     steps:
+    - name: Set the INCOMING_REF
+      if: github.event.inputs.incoming_ref != 'default'
+      run: echo "INCOMING_REF=${{ github.event.inputs.incoming_ref }}" >> $GITHUB_ENV
+      shell: bash
     - name: Check out this repository
       uses: actions/checkout@v2
     - name: Set Up Conda
