@@ -38,7 +38,7 @@ jobs:
       - name: Post the status to the upstream commit
         run: |
           INCOMING_REF="${{ github.event.inputs.incoming_ref }}"
-          if [[ "$INCOMING_REF" == *"refs/"*]]; then
+          if [[ "$INCOMING_REF" == *"refs/"* ]]; then
             INCOMING_REF=${INCOMING_REF/refs\//}
           fi
           REF=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
