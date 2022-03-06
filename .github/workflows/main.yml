@@ -46,6 +46,8 @@ jobs:
     - name: Set up macOS SDK
       id: setup-macos-sdk
       uses: ./.github/actions/setup_macos
+      with:
+        macos-sdk-version: ${{ env.MACOSX_DEPLOYMENT_TARGET }}
       if: runner.os == 'macOS'
     - name: Append to conda build config
       if: runner.os == 'macOS'
@@ -55,7 +57,7 @@ jobs:
         echo "- ${CONDA_BUILD_SYSROOT}" >> ./.ci_support/conda_build_config.yaml
         echo "" >> ./.ci_support/conda_build_config.yaml
       env:
-        CONDA_BUILD_SYSROOT: ${{ steps.setup-macos-sdk.outputs.conda_build_sysroot }}
+        CONDA_BUILD_SYSROOT: ${{ steps.setup-macos-sdk.outputs.conda-build-sysroot }}
     - name: Set Up Conda
       uses: conda-incubator/setup-miniconda@v2
       with:
@@ -91,6 +93,8 @@ jobs:
     - name: Set up macOS SDK
       id: setup-macos-sdk
       uses: ./.github/actions/setup_macos
+      with:
+        macos-sdk-version: ${{ env.MACOSX_DEPLOYMENT_TARGET }}
       if: runner.os == 'macOS'
     - name: Append to conda build config
       if: runner.os == 'macOS'
@@ -100,7 +104,7 @@ jobs:
         echo "- ${CONDA_BUILD_SYSROOT}" >> ./.ci_support/conda_build_config.yaml
         echo "" >> ./.ci_support/conda_build_config.yaml
       env:
-        CONDA_BUILD_SYSROOT: ${{ steps.setup-macos-sdk.outputs.conda_build_sysroot }}
+        CONDA_BUILD_SYSROOT: ${{ steps.setup-macos-sdk.outputs.conda-build-sysroot }}
     - name: Set Up Conda
       uses: conda-incubator/setup-miniconda@v2
       with:
