@@ -14,6 +14,10 @@ on:
         required: true
         default: "false"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
   MACOSX_DEPLOYMENT_TARGET: "10.9"
