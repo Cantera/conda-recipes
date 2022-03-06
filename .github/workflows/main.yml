@@ -34,11 +34,17 @@ jobs:
   post-pending-status:
     name: Post a pending workflow status to Cantera/cantera
     runs-on: ubuntu-20.04
-    if: github.event.inputs.incoming_ref != 'default'
     steps:
       - name: Post the status to the upstream commit
         run: |
-          gh api repos/cantera/cantera/statuses/${{ github.event.inputs.incoming_ref }} \
+          INCOMING_REF="${{ github.event.inputs.incoming_ref }}"
+          if [[ "$INCOMING_REF" == *"refs/"*]]; then
+            INCOMING_REF=${INCOMING_REF/refs\//}
+          fi
+          REF=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
+                -H "Accept: application/vnd.github.v3+json" --jq ".[0].object.sha")
+          echo "REF=${REF}" >> $GITHUB_ENV
+          gh api repos/cantera/cantera/statuses/${REF} \
             -H "Accept: application/vnd.github.v3+json" \
             --field state='pending' \
             --field target_url=$ACTION_URL \
@@ -193,8 +199,8 @@ jobs:
     runs-on: ubuntu-20.04
     needs:
       - "build-libcantera-and-python"
-      - "matlab"
-    if: always() && github.event.inputs.incoming_ref != 'default'
+      - "build-matlab"
+    if: always()
     steps:
       - name: Collect statuses
         run: |
@@ -230,7 +236,7 @@ jobs:
         shell: python
       - name: Post the status to the upstream commit
         run: |
-          gh api repos/cantera/cantera/statuses/${{ github.event.inputs.incoming_ref }} \
+          gh api repos/cantera/cantera/statuses/${REF} \
             -H "Accept: application/vnd.github.v3+json" \
             --field state=$OVERALL_STATUS \
             --field target_url=$ACTION_URL \
