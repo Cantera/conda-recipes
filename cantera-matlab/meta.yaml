@@ -10,8 +10,6 @@ source:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
     - scons >=4.1
   host:
     - libboost
