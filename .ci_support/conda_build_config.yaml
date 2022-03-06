@@ -11,7 +11,3 @@ numpy:
 zip_keys:
 - - python
   - numpy
-macos_machine:                 # [osx]
-  - x86_64-apple-darwin13.4.0  # [osx]
-MACOSX_DEPLOYMENT_TARGET:      # [osx]
-  - '10.15'                    # [osx]

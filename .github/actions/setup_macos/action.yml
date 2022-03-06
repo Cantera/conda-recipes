@@ -1,0 +1,39 @@
+name: Set up macOS SDK
+description: Download and set up the macOS SDK for conda builds
+author: Bryan Weber
+inputs:
+  macos_sdk_version:
+    description: The version of the SDK to download
+    required: true
+outputs:
+  conda_build_sysroot:
+    description: The system root for use with conda build
+    value: ${{ steps.set-conda-build-sysroot.outputs.conda_build_sysroot }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Crash out if this isn't macOS
+      if: runner.os != 'macOS'
+      run: exit 1
+      shell: bash
+    - name: Set CONDA_BUILD_SYSROOT
+      id: set-conda-build-sysroot
+      run: |
+        OSX_SDK_DIR="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs"
+        CONDA_BUILD_SYSROOT=${OSX_SDK_DIR}/MacOSX{{ inputs.macos_sdk_version }}.sdk
+        echo "CONDA_BUILD_SYSROOT=${CONDA_BUILD_SYSROOT}" >> $GITHUB_ENV
+        echo "::set-output name=conda_build_sysroot::${CONDA_BUILD_SYSROOT}"
+      shell: bash
+    - name: Install macOS SDK
+      run: |
+        if [[ ! -d ${CONDA_BUILD_SYSROOT} ]]; then
+          echo "Downloading macOS SDK"
+          curl -L -O https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX${{ inputs.macos_sdk_version }}.sdk.tar.xz
+          mkdir -p "$(dirname "$CONDA_BUILD_SYSROOT")"
+          tar -xf MacOSX${{ inputs.macos_sdk_version }}.sdk.tar.xz -C "$(dirname "$CONDA_BUILD_SYSROOT")"
+        fi
+        # set minimum sdk version to our target
+        plutil -replace MinimumSDKVersion -string ${{ inputs.macos_sdk_version }} $(xcode-select -p)/Platforms/MacOSX.platform/Info.plist
+        plutil -replace DTSDKName -string macosx${{ inputs.macos_sdk_version }}internal $(xcode-select -p)/Platforms/MacOSX.platform/Info.plist
+      shell: bash
