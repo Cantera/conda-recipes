@@ -13,12 +13,25 @@ echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 STAGE_DIR="stage"
 echo "stage_dir = '${STAGE_DIR}'" >> cantera.conf
 
+if [[ "${OSX_ARCH}" == "" ]]; then
+    echo "optimize_flags = ''" >> cantera.conf
+    echo "debug = False" >> cantera.conf
+    echo "VERBOSE = True" >> cantera.conf
+else
+    echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
+    echo "optimize_flags = ''" >> cantera.conf
+    echo "debug = False" >> cantera.conf
+    echo "no_debug_linker_flags = '-isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
+    echo "use_rpath_linkage = False" >> cantera.conf
+    echo "VERBOSE = True" >> cantera.conf
+fi
+
 echo "matlab_toolbox = 'y'" >> cantera.conf
 echo "matlab_path = '${MW_HEADERS_DIR}'" >> cantera.conf
 
 set -xe
 
-${BUILD_PREFIX}/bin/python `which scons` build VERBOSE=True -j${CPU_COUNT}
+${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT}
 ${BUILD_PREFIX}/bin/python `which scons` install
 
 # "Install" just the Matlab interface. This method should
