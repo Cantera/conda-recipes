@@ -22,6 +22,7 @@ env:
   MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
   MACOSX_DEPLOYMENT_TARGET: "10.9"
   ACTION_URL: "https://github.com/Cantera/conda-recipes/actions/runs/${{ github.run_id }}"
+  INCOMING_REF: ${{ github.event.inputs.incoming_ref }}
 
 jobs:
   dump:
@@ -73,10 +74,10 @@ jobs:
       fail-fast: false
     outputs:
       job-status: ${{ job.status }}
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
-    - name: Set the INCOMING_REF needed for recipe/meta.yaml
-      run: echo "INCOMING_REF=${{ github.event.inputs.incoming_ref }}" >> $GITHUB_ENV
-      shell: bash
     - name: Check out this repository
       uses: actions/checkout@v2
     - name: Set up macOS SDK
@@ -102,16 +103,14 @@ jobs:
         activate-environment: ''
         auto-activate-base: true
     - name: Install Conda dependencies
-      shell: bash -l {0}
-      run: conda install -q anaconda-client conda-verify\<4.0 ripgrep
+      run: conda install -q conda-verify\<4.0 ripgrep
     - name: Build the Python and libcantera recipe
-      shell: bash -l {0}
       run: conda build ./cantera -m ./.ci_support/conda_build_config.yaml
-    - name: Upload package to anaconda.org
-      run: |
-        anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
-      shell: bash -l {0}
-      if: github.event.inputs.upload == 'true'
+    - name: Archive the built packages
+      uses: actions/upload-artifact@v2
+      with:
+        path: $CONDA/conda-bld/*/*cantera*.tar.bz2
+        name: conda-packages
 
   build-matlab:
     name: ${{ matrix.os }}
@@ -124,10 +123,10 @@ jobs:
       fail-fast: false
     outputs:
       job-status: ${{ job.status }}
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
-    - name: Set the INCOMING_REF needed for recipe/meta.yaml
-      run: echo "INCOMING_REF=${{ github.event.inputs.incoming_ref }}" >> $GITHUB_ENV
-      shell: bash
     - name: Check out this repository
       uses: actions/checkout@v2
     - name: Set up macOS SDK
@@ -153,8 +152,7 @@ jobs:
         activate-environment: ''
         auto-activate-base: true
     - name: Install Conda dependencies
-      shell: bash -l {0}
-      run: conda install -q anaconda-client conda-verify\<4.0 ripgrep
+      run: conda install -q conda-verify\<4.0 ripgrep
 
     # The known_hosts key is generated with `ssh-keygen -F cantera.org` from a
     # machine that has previously logged in to cantera.org and trusts
@@ -198,13 +196,42 @@ jobs:
       if: runner.os != 'Windows'
       run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
     - name: Build the MATLAB recipe
-      shell: bash -l {0}
       run: conda build ./cantera-matlab -m ./.ci_support/conda_build_config.yaml
-    - name: Upload package to anaconda.org
-      run: |
-        anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev $CONDA/conda-bld/*/*cantera*.tar.bz2
-      shell: bash -l {0}
-      if: github.event.inputs.upload == 'true'
+    - name: Archive the built packages
+      uses: actions/upload-artifact@v2
+      with:
+        path: $CONDA/conda-bld/*/*cantera*.tar.bz2
+        name: conda-packages
+
+  publish-files-to-anaconda:
+    name: Publish to the Anaconda channel
+    runs-on: ubuntu-20.04
+    outputs:
+      job-status: ${{ job.status }}
+    needs:
+      - "build-libcantera-and-python"
+      - "build-matlab"
+    defaults:
+      run:
+        shell: bash -l {0}
+    if: github.event.inputs.upload == 'true'
+    steps:
+      - name: Download pre-built packages
+        uses: actions/download-artifact@v2
+        with:
+          path: dist/
+          name: conda-packages
+      - name: Set Up Conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          activate-environment: ''
+          auto-activate-base: true
+      - name: Install Conda dependencies
+        run: conda install -q anaconda-client
+      - name: Upload package to anaconda.org
+        run: |
+          anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev dist/*.tar.bz2
 
   send_status_to_cantera:
     name: Send jobs status to Cantera/cantera
@@ -213,6 +240,7 @@ jobs:
       - "post-pending-status"
       - "build-libcantera-and-python"
       - "build-matlab"
+      - "publish-files-to-anaconda"
     if: always()
     steps:
       - name: Collect statuses
@@ -220,10 +248,14 @@ jobs:
           from collections import Counter
           import os
           statuses = {
-              "python": "${{needs.build-libcantera-and-python.outputs.job-status}}",
-              "matlab": "${{needs.build-matlab.outputs.job-status}}",
+              "python": "${{ needs.build-libcantera-and-python.outputs.job-status }}",
+              "matlab": "${{ needs.build-matlab.outputs.job-status }}",
+              "publish": "${{ needs.publish-files-to-anaconda.outputs.job-status }}",
           }
-          if all(v == "success" for v in statuses.values() if v):
+          # This is a deliberate comparison to the empty string.
+          if statuses["publish"] == "" and "${{ github.event.inputs.upload }}" == "false":
+              publish = statuses.pop("publish")
+          if all(v == "success" for v in statuses.values()):
               overall_status = "success"
           elif any(v in ("cancelled", "") for v in statuses.values()):
               overall_status = "error"
