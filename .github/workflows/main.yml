@@ -284,10 +284,10 @@ jobs:
           INCOMING_SHA=${{ needs.post-pending-status.outputs.incoming-sha }}
           gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
             -H "Accept: application/vnd.github.v3+json" \
-            --field state=$OVERALL_STATUS \
+            --field state="${OVERALL_STATUS}" \
             --field target_url=$ACTION_URL \
             --field context='Conda Package Build' \
-            --field description=$DESCRIPTION \
+            --field description="${DESCRIPTION}" \
             --silent
         env:
           GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
