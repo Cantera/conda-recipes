@@ -38,10 +38,14 @@ jobs:
   post-pending-status:
     name: Post a pending workflow status to Cantera/cantera
     runs-on: ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
+    outputs:
+      incoming-sha: ${{ steps.set-the-status.outputs.incoming-sha }}
     steps:
       - name: Post the status to the upstream commit
+        id: set-the-status
         run: |
-          echo '::echo::on'
           INCOMING_REF="${{ github.event.inputs.incoming_ref }}"
           if [[ "$INCOMING_REF" == *"refs/"* ]]; then
             INCOMING_REF=${INCOMING_REF/refs\//}
@@ -56,8 +60,7 @@ jobs:
             --field context='Conda Package Build' \
             --field description="Pending build" \
             --silent
-        env:
-          GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
+          echo "::set-output name=incoming-sha::${INCOMING_SHA}"
 
   build-libcantera-and-python:
     name: ${{ matrix.os }}
@@ -207,6 +210,7 @@ jobs:
     name: Send jobs status to Cantera/cantera
     runs-on: ubuntu-20.04
     needs:
+      - "post-pending-status"
       - "build-libcantera-and-python"
       - "build-matlab"
     if: always()
@@ -245,7 +249,7 @@ jobs:
         shell: python
       - name: Post the status to the upstream commit
         run: |
-          echo '::echo::on'
+          INCOMING_SHA=${{ needs.post-pending-status.outputs.incoming-sha }}
           gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
             -H "Accept: application/vnd.github.v3+json" \
             --field state=$OVERALL_STATUS \
