@@ -15,7 +15,7 @@ on:
         default: "false"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.ref }}-${{ github.event.inputs.incoming_ref }}
   cancel-in-progress: true
 
 env:
@@ -42,26 +42,52 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
     outputs:
-      incoming-sha: ${{ steps.set-the-status.outputs.incoming-sha }}
+      incoming-sha: ${{ steps.get-incoming-sha.outputs.incoming-sha }}
+      tag-ref: ${{ steps.munge-incoming-ref.outputs.tag-ref }}
     steps:
+      - name: Munge the incoming ref
+        id: munge-incoming-ref
+        run: |
+          import os
+          import re
+          from pathlib import Path
+
+          INCOMING_REF = "${{ github.event.inputs.incoming_ref }}"
+          if INCOMING_REF.startswith("refs/"):
+              INCOMING_REF = INCOMING_REF.replace("refs/", "")
+          elif re.match(r"^v\d\.\d\.\d.*$", INCOMING_REF) is not None:
+              INCOMING_REF = f"tags/{INCOMING_REF}"
+          else:
+              INCOMING_REF = f"heads/{INCOMING_REF}"
+
+          TAG_REF = "false"
+          if INCOMING_REF.startswith("tags"):
+              TAG_REF = "true"
+
+          Path(os.environ["GITHUB_ENV"]).write_text(
+              f"INCOMING_REF={INCOMING_REF}\n"
+              f"TAG_REF={TAG_REF}"
+          )
+          print(f"::set-output name=tag-ref::{TAG_REF}")
+        shell: python
+      - name: Get the SHA associated with the incoming ref
+        id: get-incoming-sha
+        run: |
+          INCOMING_SHA=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
+            -H "Accept: application/vnd.github.v3+json" --jq ".[0].object.sha")
+          echo "INCOMING_SHA=${INCOMING_SHA}" >> $GITHUB_ENV
+          echo "::set-output name=incoming-sha::${INCOMING_SHA}"
       - name: Post the status to the upstream commit
         id: set-the-status
+        if: env.TAG_REF == 'false'
         run: |
-          INCOMING_REF="${{ github.event.inputs.incoming_ref }}"
-          if [[ "$INCOMING_REF" == *"refs/"* ]]; then
-            INCOMING_REF=${INCOMING_REF/refs\//}
-          fi
-          INCOMING_SHA=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
-                -H "Accept: application/vnd.github.v3+json" --jq ".[0].object.sha")
-          echo "INCOMING_SHA=${INCOMING_SHA}" >> $GITHUB_ENV
           gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
             -H "Accept: application/vnd.github.v3+json" \
             --field state='pending' \
             --field target_url=$ACTION_URL \
-            --field context='Conda Package Build' \
+            --field context='PyPI Package Build' \
             --field description="Pending build" \
             --silent
-          echo "::set-output name=incoming-sha::${INCOMING_SHA}"
 
   build-libcantera-and-python:
     name: ${{ matrix.os }}
@@ -280,6 +306,7 @@ jobs:
               gh_env.write(f"OVERALL_STATUS={overall_status}\nDESCRIPTION={description}")
         shell: python
       - name: Post the status to the upstream commit
+        if: needs.post-pending-status.outputs.tag-ref == 'false'
         run: |
           INCOMING_SHA=${{ needs.post-pending-status.outputs.incoming-sha }}
           gh api repos/cantera/cantera/statuses/${INCOMING_SHA} \
