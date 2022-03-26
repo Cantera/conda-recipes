@@ -85,7 +85,7 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             --field state='pending' \
             --field target_url=$ACTION_URL \
-            --field context='PyPI Package Build' \
+            --field context='Conda Package Build' \
             --field description="Pending build" \
             --silent
 
