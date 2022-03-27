@@ -35,8 +35,6 @@ jobs:
         run: |
           echo "${{ github.event.inputs.incoming_ref }}"
           echo "${{ github.event.inputs.upload }}"
-      - name: Find Conda
-        run: echo ${CONDA}
 
   post-pending-status:
     name: Post a pending workflow status to Cantera/cantera
@@ -143,7 +141,7 @@ jobs:
     - name: Archive the built packages
       uses: actions/upload-artifact@v2
       with:
-        path: $CONDA/conda-bld/*/*cantera*.tar.bz2
+        path: ${{ env.CONDA }}/conda-bld/*/*cantera*.tar.bz2
         name: conda-packages
 
   build-matlab:
@@ -234,7 +232,7 @@ jobs:
     - name: Archive the built packages
       uses: actions/upload-artifact@v2
       with:
-        path: $CONDA/conda-bld/*/*cantera*.tar.bz2
+        path: ${{ env.CONDA }}/conda-bld/*/*cantera*.tar.bz2
         name: conda-packages
 
   publish-files-to-anaconda:
