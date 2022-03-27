@@ -77,6 +77,12 @@ jobs:
         run: |
           INCOMING_SHA=$(gh api repos/cantera/cantera/git/matching-refs/${INCOMING_REF} \
             -H "Accept: application/vnd.github.v3+json" --jq ".[0].object.sha")
+          # Check if the INCOMING_REF is a full or partial commit hash if we couldn't
+          # find it by matching-refs
+          if [[ "$INCOMING_SHA" == "" ]]; then
+            INCOMING_SHA=$(gh api repos/cantera/cantera/git/commits/${INCOMING_REF/heads\//} \
+              -H "Accept: application/vnd.github.v3+json" --jq ".sha")
+          fi
           echo "INCOMING_SHA=${INCOMING_SHA}" >> $GITHUB_ENV
           echo "::set-output name=incoming-sha::${INCOMING_SHA}"
       - name: Post the status to the upstream commit
