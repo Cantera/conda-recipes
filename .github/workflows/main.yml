@@ -35,6 +35,8 @@ jobs:
         run: |
           echo "${{ github.event.inputs.incoming_ref }}"
           echo "${{ github.event.inputs.upload }}"
+      - name: Find Conda
+        run: echo ${CONDA}
 
   post-pending-status:
     name: Post a pending workflow status to Cantera/cantera
