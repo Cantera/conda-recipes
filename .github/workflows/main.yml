@@ -136,7 +136,7 @@ jobs:
         activate-environment: ''
         auto-activate-base: true
         # Released 2022-02-15
-        miniconda-version: '4.11.0'
+        miniconda-version: 'py39_4.11.0'
     - name: Install Conda dependencies
       run: conda install -q conda-verify\<4.0 ripgrep
     - name: Build the Python and libcantera recipe
@@ -187,7 +187,7 @@ jobs:
         activate-environment: ''
         auto-activate-base: true
         # Released 2022-02-15
-        miniconda-version: '4.11.0'
+        miniconda-version: 'py39_4.11.0'
     - name: Install Conda dependencies
       run: conda install -q conda-verify\<4.0 ripgrep
 
