@@ -9,7 +9,8 @@ ECHO msvc_version='14.2' >> cantera.conf
 
 SET "STAGE_DIR=stage"
 ECHO stage_dir="%STAGE_DIR%" >> cantera.conf
-ECHO prefix="" >> cantera.conf
+SET "PREFIX_DIR=some_random_prefix"
+ECHO prefix="%PREFIX_DIR%" >> cantera.conf
 
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
@@ -29,10 +30,10 @@ IF ERRORLEVEL 1 EXIT 1
 :: prevent this package from clobbering any existing
 :: libcantera or Cantera Python interface files, possibly except the
 :: data files and the license file.
-ROBOCOPY "%STAGE_DIR%\samples\matlab" "%LIBRARY_PREFIX%\cantera\samples\matlab" /S /E
-ROBOCOPY "%STAGE_DIR%\matlab" "%LIBRARY_LIB%\cantera\matlab" /S /E
-ROBOCOPY "%STAGE_DIR%\data" "%LIBRARY_PREFIX%\cantera\data" /S /E
-ROBOCOPY "%STAGE_DIR%\doc" "%LIBRARY_PREFIX%\cantera\doc" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\samples\matlab" "%LIBRARY_PREFIX%\cantera\samples\matlab" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\matlab" "%LIBRARY_LIB%\cantera\matlab" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\data" "%LIBRARY_PREFIX%\cantera\data" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\doc" "%LIBRARY_PREFIX%\cantera\doc" /S /E
 
 echo ****************************
 echo MATLAB BUILD COMPLETED SUCCESSFULLY

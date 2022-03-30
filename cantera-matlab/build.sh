@@ -6,7 +6,8 @@ echo "****************************"
 
 cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
 
-echo "prefix = ''" >> cantera.conf
+PREFIX_DIR="some_random_prefix"
+echo "prefix = '${PREFIX_DIR}'" >> cantera.conf
 echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 
 # Stage the files to make copying easier later
@@ -31,7 +32,7 @@ echo "matlab_path = '${MW_HEADERS_DIR}'" >> cantera.conf
 
 set -xe
 
-${BUILD_PREFIX}/bin/python `which scons` install
+${BUILD_PREFIX}/bin/python ${BUILD_PREFIX}/bin/scons install
 
 # "Install" just the Matlab interface. This method should
 # prevent this package from clobbering any existing
@@ -39,16 +40,16 @@ ${BUILD_PREFIX}/bin/python `which scons` install
 # data files and the license file.
 CT_SAMPLES_DIR="share/cantera/samples/matlab"
 mkdir -p "${PREFIX}/${CT_SAMPLES_DIR}"
-cp -R "${STAGE_DIR}/${CT_SAMPLES_DIR}/" "${PREFIX}/${CT_SAMPLES_DIR}"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_SAMPLES_DIR}/" "${PREFIX}/${CT_SAMPLES_DIR}"
 CT_DATA_DIR="share/cantera/data"
 mkdir -p "${PREFIX}/${CT_DATA_DIR}"
-cp -R "${STAGE_DIR}/${CT_DATA_DIR}/" "${PREFIX}/${CT_DATA_DIR}"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_DATA_DIR}/" "${PREFIX}/${CT_DATA_DIR}"
 CT_DOC_DIR="share/cantera/doc"
 mkdir -p "${PREFIX}/${CT_DOC_DIR}"
-cp -R "${STAGE_DIR}/${CT_DOC_DIR}/" "${PREFIX}/${CT_DOC_DIR}"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_DOC_DIR}/" "${PREFIX}/${CT_DOC_DIR}"
 CT_LIB_DIR="lib/cantera/matlab"
 mkdir -p "${PREFIX}/${CT_LIB_DIR}"
-cp -R "${STAGE_DIR}/${CT_LIB_DIR}/" "${PREFIX}/${CT_LIB_DIR}"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_LIB_DIR}/" "${PREFIX}/${CT_LIB_DIR}"
 
 set +xe
 
