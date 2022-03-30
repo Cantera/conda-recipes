@@ -31,7 +31,6 @@ echo "matlab_path = '${MW_HEADERS_DIR}'" >> cantera.conf
 
 set -xe
 
-# ${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT}
 ${BUILD_PREFIX}/bin/python `which scons` install
 
 # "Install" just the Matlab interface. This method should
