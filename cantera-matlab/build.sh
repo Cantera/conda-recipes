@@ -6,7 +6,7 @@ echo "****************************"
 
 cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
 
-echo "prefix = ''" >> cantera.conf
+# echo "prefix = ''" >> cantera.conf
 echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 
 # Stage the files to make copying easier later
@@ -31,7 +31,7 @@ echo "matlab_path = '${MW_HEADERS_DIR}'" >> cantera.conf
 
 set -xe
 
-${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT}
+# ${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT}
 ${BUILD_PREFIX}/bin/python `which scons` install
 
 # "Install" just the Matlab interface. This method should
