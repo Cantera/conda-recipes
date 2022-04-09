@@ -5,8 +5,7 @@ REM edit any files outside the install prefix. This seems like the
 REM easiest way to set these variables though; the alternative is
 REM to make people type/add these lines themselves. /shrug
 @ECHO off
-FOR /F %%G IN ('powershell -ExecutionPolicy Bypass -Command "[Environment]::GetFolderPath('MyDocuments')"') DO SET MATLAB_STARTUP=%%G\MATLAB\startup.m
-
+FOR /F "usebackq tokens=* delims=" %%A in (`powershell -ExecutionPolicy Bypass -Command "[Environment]::GetFolderPath('MyDocuments')"`) do @set "MATLAB_STARTUP=%%A\MATLAB\startup.m"
 REM Set a variable with the name of the conda environment
 for %%A in ("%PREFIX%\") do set CONDA_ENV=%%~nxA
 
