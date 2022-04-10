@@ -268,7 +268,7 @@ jobs:
         run: conda install -q anaconda-client
       - name: Upload package to anaconda.org
         run: |
-          anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev dist/*.tar.bz2
+          anaconda --token ${{ secrets.ANACONDA_TOKEN }} upload --force --label dev dist/*/*.tar.bz2
 
   send_status_to_cantera:
     name: Send jobs status to Cantera/cantera
