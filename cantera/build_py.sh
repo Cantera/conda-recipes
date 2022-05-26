@@ -6,16 +6,14 @@ echo "******************************"
 if [ -d "build/python" ]; then
     rm -r build/python
     rm -r build/temp-py
-    rm $PREFIX/bin/ck2cti || true
     rm $PREFIX/bin/ck2yaml || true
-    rm $PREFIX/bin/ctml_writer || true
     rm $PREFIX/bin/cti2yaml || true
     rm $PREFIX/bin/ctml2yaml || true
 fi
 
 ${BUILD_PREFIX}/bin/python `which scons` build python_package='y' python_cmd="${PYTHON}"
 
-$PYTHON -m pip install --no-deps build/python
+$PYTHON -m pip install --no-deps --find-links=build/python/dist cantera
 
 if [[ "$target_platform" == osx-* ]]; then
    VERSION=$(echo $PKG_VERSION | cut -da -f1 | cut -db -f1 | cut -dr -f1)
