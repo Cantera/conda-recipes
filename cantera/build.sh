@@ -21,7 +21,7 @@ if [[ "${OSX_ARCH}" == "" ]]; then
     echo "use_rpath_linkage = False" >> cantera.conf
     echo "no_debug_linker_flags = '${LDFLAGS}'" >> cantera.conf
     echo "renamed_shared_libraries = False" >> cantera.conf
-    echo "VERBOSE = True" >> cantera.conf
+    echo "logging = 'debug'" >> cantera.conf
 else
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
@@ -32,7 +32,7 @@ else
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
     echo "no_debug_linker_flags = '${LDFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
-    echo "VERBOSE = True" >> cantera.conf
+    echo "logging = 'debug'" >> cantera.conf
     echo "renamed_shared_libraries = False" >> cantera.conf
     echo "use_rpath_linkage = False" >> cantera.conf
 fi
