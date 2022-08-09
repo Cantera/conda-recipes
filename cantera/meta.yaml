@@ -119,11 +119,12 @@ outputs:
         - pytest
       imports:
         - cantera
+      source_files:
+        - test/python
+        - test/data
+        - data
       commands:
-        # The version of pytest available from the default channel does not support
-        # Python 3.10
-        # todo: update, as tests are not packaged with Python module
-        # - pytest -vv --pyargs cantera.test  # [not py==310]
+        - pytest -vv test/python
         - cti2yaml --help
         - ck2yaml --help
         - ctml2yaml --help
