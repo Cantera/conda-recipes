@@ -11,7 +11,8 @@ echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CC = '${CC}'" >> cantera.conf
     echo "CXX = '${CXX}'" >> cantera.conf
-    echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
+    # TODO: reactivate MKL; it is disabled as a temporary fix of #29 to resolve #31
+    # echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
     echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '${CFLAGS}'" >> cantera.conf
     echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
