@@ -1,9 +1,11 @@
 source $RECIPE_DIR/build_devel.sh
 echo "****************************"
-echo "DELETING files from devel except shared libraries"
+echo "DELETING files from devel except shared libraries and data"
 echo "****************************"
 
-rm -rf $PREFIX/share
+rm -rf $PREFIX/share/cantera/doc
+rm -rf $PREFIX/share/cantera/samples
+rm -rf $PREFIX/share/man
 rm -rf $PREFIX/include/cantera
 rm -rf $PREFIX/bin
 rm -rf $PREFIX/lib/pkg-config
