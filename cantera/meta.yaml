@@ -121,7 +121,8 @@ outputs:
       commands:
         # The version of pytest available from the default channel does not support
         # Python 3.10
-        - pytest -vv --pyargs cantera.test  # [not py==310]
+        # todo: update, as tests are not packaged with Python module
+        # - pytest -vv --pyargs cantera.test  # [not py==310]
         - cti2yaml --help
         - ck2yaml --help
         - ctml2yaml --help

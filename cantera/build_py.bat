@@ -17,5 +17,5 @@ echo ****************************
 echo PYTHON %PYTHON% BUILD COMPLETED SUCCESSFULLY
 echo ****************************
 
-"%PYTHON%" -m pip install --no-deps --find-links=build\python\dist\ cantera
+"%PYTHON%" -m pip install --no-deps --no-index --find-links=build\python\dist\ cantera
 IF ERRORLEVEL 1 EXIT 1
