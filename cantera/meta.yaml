@@ -17,7 +17,7 @@ requirements:
   host:
     - libboost
     - openblas  # [osx]
-    - mkl  # [linux]
+    # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
     - pywin32  # [win]
 
 build:
@@ -43,9 +43,9 @@ outputs:
         - libboost
         - pywin32  # [win]
         - openblas  # [osx]
-        - mkl  # [linux]
+        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
       run:
-        - mkl  # [linux]
+        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
         - openblas  # [osx]
     test:
       commands:
@@ -67,7 +67,7 @@ outputs:
       host:
         - libboost
         - openblas  # [osx]
-        - mkl  # [linux]
+        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
@@ -88,7 +88,7 @@ outputs:
         - libboost
         - numpy
         - openblas  # [osx]
-        - mkl  # [linux]
+        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
         - cython
         - pywin32  # [win]
         # This is added here so conda-build doesn't package it
@@ -102,12 +102,13 @@ outputs:
         - ruamel.yaml
         - {{ pin_subpackage('libcantera', exact=True) }}
         - openblas  # [osx]
-        - mkl  # [linux]
+        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
     build:
       entry_points:
         - ck2yaml = cantera.ck2yaml:script_entry_point
         - cti2yaml = cantera.cti2yaml:main
         - ctml2yaml = cantera.ctml2yaml:main
+        - yaml2ck = cantera.yaml2ck:main
       include_recipe: True
       ignore_run_exports_from:
         # only the header part of these libraries are used
@@ -118,13 +119,16 @@ outputs:
         - pytest
       imports:
         - cantera
+      source_files:
+        - test/python
+        - test/data
+        - data
       commands:
-        # The version of pytest available from the default channel does not support
-        # Python 3.10
-        - pytest -vv --pyargs cantera.test  # [not py==310]
+        - pytest -vv test/python
         - cti2yaml --help
         - ck2yaml --help
         - ctml2yaml --help
+        - yaml2ck --help
 
 about:
   home: https://cantera.org

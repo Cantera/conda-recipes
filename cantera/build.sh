@@ -11,7 +11,8 @@ echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CC = '${CC}'" >> cantera.conf
     echo "CXX = '${CXX}'" >> cantera.conf
-    echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
+    # TODO: reactivate MKL; it is disabled as a temporary fix of #29 to resolve #31
+    # echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
     echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '${CFLAGS}'" >> cantera.conf
     echo "cxx_flags = '${CPPFLAGS}'" >> cantera.conf
@@ -20,7 +21,7 @@ if [[ "${OSX_ARCH}" == "" ]]; then
     echo "use_rpath_linkage = False" >> cantera.conf
     echo "no_debug_linker_flags = '${LDFLAGS}'" >> cantera.conf
     echo "renamed_shared_libraries = False" >> cantera.conf
-    echo "VERBOSE = True" >> cantera.conf
+    echo "logging = 'debug'" >> cantera.conf
 else
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
@@ -31,7 +32,7 @@ else
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
     echo "no_debug_linker_flags = '${LDFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
-    echo "VERBOSE = True" >> cantera.conf
+    echo "logging = 'debug'" >> cantera.conf
     echo "renamed_shared_libraries = False" >> cantera.conf
     echo "use_rpath_linkage = False" >> cantera.conf
 fi

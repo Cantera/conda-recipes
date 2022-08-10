@@ -17,14 +17,14 @@ echo "stage_dir = '${STAGE_DIR}'" >> cantera.conf
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
-    echo "VERBOSE = True" >> cantera.conf
+    echo "logging = 'debug'" >> cantera.conf
 else
     echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
     echo "no_debug_linker_flags = '-isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
     echo "use_rpath_linkage = False" >> cantera.conf
-    echo "VERBOSE = True" >> cantera.conf
+    echo "logging = 'debug'" >> cantera.conf
 fi
 
 echo "matlab_toolbox = 'y'" >> cantera.conf
