@@ -15,5 +15,5 @@ IF EXIST "%MATLAB_STARTUP%.cantera.bak" FINDSTR /V "%% added by Cantera Conda In
 
 REM Add Cantera lines to the startup.m script
 ECHO. >> "%MATLAB_STARTUP%"
-ECHO setenv('CANTERA_DATA', '%PREFIX%\Library\cantera\data') %% added by Cantera Conda Installer for %CONDA_ENV% environment>> "%MATLAB_STARTUP%"
-ECHO addpath(genpath('%PREFIX%\Library\lib\cantera\matlab')) %% added by Cantera Conda Installer for %CONDA_ENV% environment>> "%MATLAB_STARTUP%"
+ECHO setenv('CANTERA_DATA', '%PREFIX%\share\cantera\data') %% added by Cantera Conda Installer for %CONDA_ENV% environment>> "%MATLAB_STARTUP%"
+ECHO addpath(genpath('%PREFIX%\share\cantera\matlab')) %% added by Cantera Conda Installer for %CONDA_ENV% environment>> "%MATLAB_STARTUP%"

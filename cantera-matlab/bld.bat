@@ -30,10 +30,10 @@ IF ERRORLEVEL 1 EXIT 1
 :: prevent this package from clobbering any existing
 :: libcantera or Cantera Python interface files, possibly except the
 :: data files and the license file.
-ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\samples\matlab" "%LIBRARY_PREFIX%\cantera\samples\matlab" /S /E
-ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\matlab" "%LIBRARY_LIB%\cantera\matlab" /S /E
-ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\data" "%LIBRARY_PREFIX%\cantera\data" /S /E
-ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\doc" "%LIBRARY_PREFIX%\cantera\doc" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\share\cantera\samples\matlab" "%PREFIX%\share\cantera\samples\matlab" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\share\cantera\matlab" "%PREFIX%\share\cantera\matlab" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\share\cantera\data" "%PREFIX%\share\cantera\data" /S /E
+ROBOCOPY "%STAGE_DIR%\%PREFIX_DIR%\share\cantera\doc" "%PREFIX%\share\cantera\doc" /S /E
 
 echo ****************************
 echo MATLAB BUILD COMPLETED SUCCESSFULLY

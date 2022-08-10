@@ -47,7 +47,7 @@ cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_DATA_DIR}/" "${PREFIX}/${CT_DATA_DIR}"
 CT_DOC_DIR="share/cantera/doc"
 mkdir -p "${PREFIX}/${CT_DOC_DIR}"
 cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_DOC_DIR}/" "${PREFIX}/${CT_DOC_DIR}"
-CT_LIB_DIR="lib/cantera/matlab"
+CT_LIB_DIR="share/cantera/matlab"
 mkdir -p "${PREFIX}/${CT_LIB_DIR}"
 cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_LIB_DIR}/" "${PREFIX}/${CT_LIB_DIR}"
 
