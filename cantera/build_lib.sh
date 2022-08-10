@@ -8,7 +8,7 @@ rm -rf $PREFIX/share/cantera/samples
 rm -rf $PREFIX/share/man
 rm -rf $PREFIX/include/cantera
 rm -rf $PREFIX/bin
-rm -rf $PREFIX/lib/pkg-config
+rm -rf $PREFIX/lib/pkgconfig
 rm -rf $PREFIX/lib/libcantera.a
 
 if [[ "$target_platform" == osx-* ]]; then
