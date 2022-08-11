@@ -32,6 +32,7 @@ outputs:
       ignore_run_exports_from:
         # only the header part of these libraries are used
         - libboost
+        - {{ compiler('fortran') }}  # [not win]
       run_exports:
         - libcantera
     requirements:
@@ -59,6 +60,8 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        # At the moment, the toolchain does not provide Fortran for Windows
+        - {{ compiler('fortran') }}  # [not win]
         - scons >=4.1
       host:
         - libboost
