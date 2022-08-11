@@ -129,6 +129,10 @@ outputs:
         - ck2yaml --help
         - ctml2yaml --help
         - yaml2ck --help
+        - man ck2yaml  # [not win]
+        - man cti2yaml  # [not win]
+        - man ctml2yaml  # [not win]
+        - man yaml2ck  # [not win]
 
 about:
   home: https://cantera.org

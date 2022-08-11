@@ -5,7 +5,6 @@ echo "****************************"
 
 rm -rf $PREFIX/share/cantera/doc
 rm -rf $PREFIX/share/cantera/samples
-rm -rf $PREFIX/share/man
 rm -rf $PREFIX/include/cantera
 rm -rf $PREFIX/bin
 rm -rf $PREFIX/lib/pkgconfig
