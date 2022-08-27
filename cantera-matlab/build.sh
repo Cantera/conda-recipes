@@ -38,18 +38,13 @@ ${BUILD_PREFIX}/bin/python ${BUILD_PREFIX}/bin/scons install
 # prevent this package from clobbering any existing
 # libcantera or Cantera Python interface files, except the
 # data files and the license file.
-CT_SAMPLES_DIR="share/cantera/samples/matlab"
+CT_SAMPLES_DIR="share/cantera/samples"
 mkdir -p "${PREFIX}/${CT_SAMPLES_DIR}"
-cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_SAMPLES_DIR}/" "${PREFIX}/${CT_SAMPLES_DIR}"
-CT_DATA_DIR="share/cantera/data"
-mkdir -p "${PREFIX}/${CT_DATA_DIR}"
-cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_DATA_DIR}/" "${PREFIX}/${CT_DATA_DIR}"
-CT_DOC_DIR="share/cantera/doc"
-mkdir -p "${PREFIX}/${CT_DOC_DIR}"
-cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_DOC_DIR}/" "${PREFIX}/${CT_DOC_DIR}"
-CT_LIB_DIR="share/cantera/matlab"
-mkdir -p "${PREFIX}/${CT_LIB_DIR}"
-cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_LIB_DIR}/" "${PREFIX}/${CT_LIB_DIR}"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_SAMPLES_DIR}/matlab" "${PREFIX}/${CT_SAMPLES_DIR}/"
+CT_SHARED_DIR="share/cantera"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_SHARED_DIR}/data" "${PREFIX}/${CT_SHARED_DIR}/"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_SHARED_DIR}/doc" "${PREFIX}/${CT_SHARED_DIR}/"
+cp -R "${STAGE_DIR}/${PREFIX_DIR}/${CT_SHARED_DIR}/matlab" "${PREFIX}/${CT_SHARED_DIR}/"
 
 set +xe
 

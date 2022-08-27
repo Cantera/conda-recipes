@@ -32,6 +32,7 @@ outputs:
       ignore_run_exports_from:
         # only the header part of these libraries are used
         - libboost
+        - {{ compiler('fortran') }}  # [not win]
       run_exports:
         - libcantera
     requirements:
@@ -55,14 +56,12 @@ outputs:
     script: build_devel.sh  # [not win]
     script: build_devel.bat  # [win]
 
-    build:
-      ignore_run_exports_from:
-        # only the header part of these libraries are used
-        - libboost
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        # At the moment, the toolchain does not provide Fortran for Windows
+        - {{ compiler('fortran') }}  # [not win]
         - scons >=4.1
       host:
         - libboost
@@ -71,6 +70,7 @@ outputs:
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
+        - libboost
         - {{ pin_subpackage('libcantera', exact=True) }}
 
   - name: cantera
@@ -129,6 +129,10 @@ outputs:
         - ck2yaml --help
         - ctml2yaml --help
         - yaml2ck --help
+        - man ck2yaml  # [not win]
+        - man cti2yaml  # [not win]
+        - man ctml2yaml  # [not win]
+        - man yaml2ck  # [not win]
 
 about:
   home: https://cantera.org
