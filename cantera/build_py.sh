@@ -12,7 +12,7 @@ if [ -d "build/python" ]; then
     rm $PREFIX/bin/yaml2ck || true
 fi
 
-${BUILD_PREFIX}/bin/python `which scons` build python_package='y' python_cmd="${PYTHON}"
+${BUILD_PREFIX}/bin/python `which scons` build python_cmd="${PYTHON}"
 
 $PYTHON -m pip install --no-deps --no-index --find-links=build/python/dist cantera
 

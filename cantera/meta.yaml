@@ -25,33 +25,6 @@ build:
   include_recipe: True
 
 outputs:
-  - name: libcantera
-    script: build_lib.sh  # [not win]
-    script: build_lib.bat  # [win]
-    build:
-      ignore_run_exports_from:
-        # only the header part of these libraries are used
-        - libboost
-        - {{ compiler('fortran') }}  # [not win]
-      run_exports:
-        - libcantera
-    requirements:
-      build:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - scons >=4.1
-      host:
-        - libboost
-        - pywin32  # [win]
-        - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
-      run:
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
-        - openblas  # [osx]
-    test:
-      commands:
-        - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]
-
   - name: libcantera-devel
     script: build_devel.sh  # [not win]
     script: build_devel.bat  # [win]
@@ -63,15 +36,16 @@ outputs:
         # At the moment, the toolchain does not provide Fortran for Windows
         - {{ compiler('fortran') }}  # [not win]
         - scons >=4.1
+        - cython
       host:
+        - python {{ python }}
         - libboost
         - openblas  # [osx]
         # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        - numpy
         - pywin32  # [win]
-        - libcantera {{ version }}
       run:
         - libboost
-        - {{ pin_subpackage('libcantera', exact=True) }}
 
   - name: cantera
     script: build_py.sh  # [not win]
@@ -82,25 +56,20 @@ outputs:
         - {{ compiler('cxx') }}
         - scons >=4.1
       host:
-        - python {{ python }}
         - pip
         - setuptools
         - libboost
-        - numpy
         - openblas  # [osx]
         # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
-        - cython
         - pywin32  # [win]
         # This is added here so conda-build doesn't package it
         - libcantera-devel {{ version }}
-        - libcantera {{ version }}
       run:
         - python
         - setuptools
         - {{ pin_compatible('numpy') }}
         - h5py
         - ruamel.yaml
-        - {{ pin_subpackage('libcantera', exact=True) }}
         - openblas  # [osx]
         # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
     build:

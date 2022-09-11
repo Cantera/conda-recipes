@@ -39,7 +39,7 @@ fi
 
 set -xe
 
-${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT}
+${BUILD_PREFIX}/bin/python `which scons` build -j${CPU_COUNT} python_cmd="${PYTHON}"
 cp cantera.conf cantera.conf.pre-py
 set +xe
 
