@@ -16,7 +16,7 @@ requirements:
     - pywin32  # [win]
 
 build:
-  number: 0
+  number: {{ environ.get('BUILD_NUMBER', 0) }}
   include_recipe: True
   script_env:
     - MW_HEADERS_DIR

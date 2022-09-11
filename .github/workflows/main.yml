@@ -9,6 +9,10 @@ on:
           or branch name.
         required: true
         default: "main"
+      build_number:
+        description: Build number used for recipe
+        required: true
+        default: 0
       upload:
         description: Attempt to upload to Anaconda
         required: true
@@ -23,6 +27,7 @@ env:
   MACOSX_DEPLOYMENT_TARGET: "10.9"
   ACTION_URL: "https://github.com/Cantera/conda-recipes/actions/runs/${{ github.run_id }}"
   INCOMING_REF: ${{ github.event.inputs.incoming_ref }}
+  BUILD_NUMBER: ${{ github.event.inputs.build_number }}
 
 jobs:
   dump:
