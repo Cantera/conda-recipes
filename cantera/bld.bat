@@ -14,7 +14,7 @@ IF %CPU_USE% EQU 0 SET CPU_USE=1
 SET "ESC_PREFIX=%PREFIX:\=/%"
 ECHO prefix="%ESC_PREFIX%" >> cantera.conf
 ECHO boost_inc_dir="%ESC_PREFIX%/Library/include" >> cantera.conf
-
+ECHO blas_lapack_libs="mkl_rt" >> cantera.conf
 CALL scons build -j%CPU_USE%
 IF ERRORLEVEL 1 EXIT 1
 

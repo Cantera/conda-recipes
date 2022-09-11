@@ -17,7 +17,8 @@ requirements:
   host:
     - libboost
     - openblas  # [osx]
-    # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+    # Pin mkl to match version required by NumPy 1.22
+    - mkl >=2021.4.0,<2022.0a0  # [not osx]
     - pywin32  # [win]
 
 build:
@@ -44,9 +45,11 @@ outputs:
         - libboost
         - pywin32  # [win]
         - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        # Pin mkl to match version required by NumPy 1.22
+        - mkl >=2021.4.0,<2022.0a0  # [not osx]
       run:
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        # Pin mkl to match version required by NumPy 1.22
+        - mkl >=2021.4.0,<2022.0a0  # [not osx]
         - openblas  # [osx]
     test:
       commands:
@@ -66,7 +69,8 @@ outputs:
       host:
         - libboost
         - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        # Pin mkl to match version required by NumPy 1.22
+        - mkl >=2021.4.0,<2022.0a0  # [not osx]
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
@@ -86,9 +90,10 @@ outputs:
         - pip
         - setuptools
         - libboost
-        - numpy
+        - numpy {{ numpy }}
         - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        # Pin mkl to match version required by NumPy 1.22
+        - mkl >=2021.4.0,<2022.0a0  # [not osx]
         - cython
         - pywin32  # [win]
         # This is added here so conda-build doesn't package it
@@ -102,7 +107,8 @@ outputs:
         - ruamel.yaml
         - {{ pin_subpackage('libcantera', exact=True) }}
         - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        # Pin mkl to match version required by NumPy 1.22
+        - mkl >=2021.4.0,<2022.0a0  # [not osx]
     build:
       entry_points:
         - ck2yaml = cantera.ck2yaml:script_entry_point
