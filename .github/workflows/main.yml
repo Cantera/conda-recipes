@@ -129,7 +129,7 @@ jobs:
       env:
         CONDA_BUILD_SYSROOT: ${{ steps.setup-macos-sdk.outputs.conda-build-sysroot }}
     - name: Set Up Conda
-      uses: conda-incubator/setup-miniconda@v2
+      uses: conda-incubator/setup-miniconda@v2.1.1
       with:
         auto-update-conda: true
         conda-build-version: '3.21'
@@ -180,7 +180,7 @@ jobs:
       env:
         CONDA_BUILD_SYSROOT: ${{ steps.setup-macos-sdk.outputs.conda-build-sysroot }}
     - name: Set Up Conda
-      uses: conda-incubator/setup-miniconda@v2
+      uses: conda-incubator/setup-miniconda@v2.1.1
       with:
         auto-update-conda: true
         conda-build-version: '3.21'
@@ -259,7 +259,7 @@ jobs:
           path: dist/
           name: conda-packages
       - name: Set Up Conda
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v2.1.1
         with:
           auto-update-conda: true
           activate-environment: ''
