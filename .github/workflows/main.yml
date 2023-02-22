@@ -104,7 +104,7 @@ jobs:
       - "post-pending-status"
     strategy:
       matrix:
-        os: [windows-2019, ubuntu-latest, macos-latest]
+        os: [windows-2019, ubuntu-20.04, macos-11]
       fail-fast: false
     outputs:
       job-status: ${{ job.status }}
@@ -155,7 +155,7 @@ jobs:
       - "post-pending-status"
     strategy:
       matrix:
-        os: [windows-2019, ubuntu-latest, macos-latest]
+        os: [windows-2019, ubuntu-20.04, macos-11]
       fail-fast: false
     outputs:
       job-status: ${{ job.status }}
