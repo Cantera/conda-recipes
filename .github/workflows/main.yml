@@ -20,7 +20,7 @@ concurrency:
 
 env:
   MW_HEADERS_DIR: ${{ github.workspace }}/../mw_headers
-  MACOSX_DEPLOYMENT_TARGET: "10.9"
+  MACOSX_DEPLOYMENT_TARGET: "10.15"
   ACTION_URL: "https://github.com/Cantera/conda-recipes/actions/runs/${{ github.run_id }}"
   INCOMING_REF: ${{ github.event.inputs.incoming_ref }}
 
