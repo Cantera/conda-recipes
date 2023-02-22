@@ -72,7 +72,8 @@ jobs:
               f"TAG_REF={TAG_REF}\n"
               f"INCOMING_SHA={INCOMING_SHA}"
           )
-          print(f"::set-output name=tag-ref::{TAG_REF}")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
+              gh_out.write(f"tag-ref={TAG_REF}\n")
         shell: python
       - name: Get the SHA associated with the incoming ref
         id: get-incoming-sha
@@ -83,7 +84,7 @@ jobs:
             echo "INCOMING_SHA=${INCOMING_SHA}" >> $GITHUB_ENV
           fi
           # This needs to be in this step to be output to other jobs.
-          echo "::set-output name=incoming-sha::${INCOMING_SHA}"
+          echo "incoming-sha=${INCOMING_SHA}" >> $GITHUB_OUTPUT
       - name: Post the status to the upstream commit
         id: set-the-status
         if: env.TAG_REF == 'false'

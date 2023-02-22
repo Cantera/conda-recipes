@@ -23,7 +23,7 @@ runs:
         OSX_SDK_DIR="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs"
         CONDA_BUILD_SYSROOT=${OSX_SDK_DIR}/MacOSX${{ inputs.macos-sdk-version }}.sdk
         echo "CONDA_BUILD_SYSROOT=${CONDA_BUILD_SYSROOT}" >> $GITHUB_ENV
-        echo "::set-output name=conda-build-sysroot::${CONDA_BUILD_SYSROOT}"
+        echo "conda-build-sysroot=${CONDA_BUILD_SYSROOT}" >> $GITHUB_OUTPUT
       shell: bash
     - name: Install macOS SDK
       run: |
