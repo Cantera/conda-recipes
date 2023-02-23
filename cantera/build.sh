@@ -6,14 +6,12 @@ echo "******************"
 cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
 
 echo "prefix = '${PREFIX}'" >> cantera.conf
-echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
 
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CC = '${CC}'" >> cantera.conf
     echo "CXX = '${CXX}'" >> cantera.conf
     # TODO: reactivate MKL; it is disabled as a temporary fix of #29 to resolve #31
     # echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
-    echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '${CFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
@@ -25,7 +23,6 @@ else
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
     echo "blas_lapack_libs = 'openblas'" >> cantera.conf
-    echo "blas_lapack_dir = '${PREFIX}/lib'" >> cantera.conf
     echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
@@ -34,6 +31,9 @@ else
     echo "renamed_shared_libraries = False" >> cantera.conf
     echo "use_rpath_linkage = False" >> cantera.conf
 fi
+
+echo "extra_inc_dirs = '${PREFIX}/include'" >> cantera.conf
+echo "extra_lib_dirs = '${PREFIX}/lib'" >> cantera.conf
 
 set -xe
 

@@ -8,7 +8,8 @@ cp "${RECIPE_DIR}/../.ci_support/cantera_base.conf" cantera.conf
 
 PREFIX_DIR="some_random_prefix"
 echo "prefix = '${PREFIX_DIR}'" >> cantera.conf
-echo "boost_inc_dir = '${PREFIX}/include'" >> cantera.conf
+echo "extra_inc_dirs = '${PREFIX}/include'" >> cantera.conf
+echo "extra_lib_dirs = '${PREFIX}/lib'" >> cantera.conf
 
 # Stage the files to make copying easier later
 STAGE_DIR="stage"
