@@ -12,6 +12,10 @@ ECHO stage_dir="%STAGE_DIR%" >> cantera.conf
 SET "PREFIX_DIR=some_random_prefix"
 ECHO prefix="%PREFIX_DIR%" >> cantera.conf
 
+SET "ESC_PREFIX=%PREFIX:\=/%"
+ECHO extra_inc_dirs="%ESC_PREFIX%/Library/include" >> cantera.conf
+ECHO extra_lib_dirs="%ESC_PREFIX%/Library/lib" >> cantera.conf
+
 :: Set the number of CPUs to use in building
 SET /A CPU_USE=%CPU_COUNT% / 2
 IF %CPU_USE% EQU 0 SET CPU_USE=1

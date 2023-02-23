@@ -19,6 +19,7 @@ requirements:
     - openblas  # [osx]
     # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
     - pywin32  # [win]
+    - hdf5
 
 build:
   number: 0
@@ -44,10 +45,12 @@ outputs:
         - libboost
         - pywin32  # [win]
         - openblas  # [osx]
+        - hdf5
         # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
       run:
         # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
         - openblas  # [osx]
+        - hdf5
     test:
       commands:
         - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]
@@ -98,7 +101,6 @@ outputs:
         - python
         - setuptools
         - {{ pin_compatible('numpy') }}
-        - h5py
         - ruamel.yaml
         - {{ pin_subpackage('libcantera', exact=True) }}
         - openblas  # [osx]
