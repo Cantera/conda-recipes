@@ -117,6 +117,7 @@ outputs:
     test:
       requires:
         - pytest
+        - pint
       imports:
         - cantera
       source_files:
