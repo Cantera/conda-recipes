@@ -117,7 +117,6 @@ outputs:
     test:
       requires:
         - pytest
-        - pint
       imports:
         - cantera
       source_files:
@@ -125,6 +124,8 @@ outputs:
         - test/data
         - data
       commands:
+        # Pint is not available in the 'defaults' channel, so install it from PyPI
+        - python -m pip install pint
         - pytest -vv test/python
         - cti2yaml --help
         - ck2yaml --help
