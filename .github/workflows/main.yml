@@ -98,19 +98,13 @@ jobs:
             --silent
 
   build-libcantera-and-python:
-    name: Lib and Python for ${{ matrix.os }} ${{ matrix.arch }}
+    name: Lib and Python for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     needs:
       - "post-pending-status"
     strategy:
       matrix:
-        include:
-        - os: windows-2019
-        - os: ubuntu-20.04
-        - os: macos-11
-          arch: x86_64
-        - os: macos-11
-          arch: arm64
+        os: [windows-2019, ubuntu-20.04, macos-11]
       fail-fast: false
     outputs:
       job-status: ${{ job.status }}
