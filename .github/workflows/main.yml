@@ -98,7 +98,7 @@ jobs:
             --silent
 
   build-libcantera-and-python:
-    name: ${{ matrix.os }}
+    name: Lib and Python for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     needs:
       - "post-pending-status"
@@ -149,7 +149,7 @@ jobs:
         name: conda-packages
 
   build-matlab:
-    name: ${{ matrix.os }}
+    name: Matlab toolbox for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     needs:
       - "post-pending-status"
