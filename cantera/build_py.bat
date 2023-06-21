@@ -19,6 +19,9 @@ IF ERRORLEVEL 1 EXIT 1
 "%PYTHON%" -m pip install --no-deps --no-index --find-links=build\python\dist\ cantera
 IF ERRORLEVEL 1 EXIT 1
 
+:: Plugin library for loading Cantera Python extensions from C++
+copy "%SRC_DIR%\build\lib\cantera_python*.dll" "%PREFIX%\Library\bin\"
+
 ROBOCOPY "%SRC_DIR%\samples\python" "%PREFIX%\share\cantera\samples\python" /S /E
 
 echo ****************************
