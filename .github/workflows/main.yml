@@ -39,6 +39,7 @@ jobs:
   post-pending-status:
     name: Post a pending workflow status to Cantera/cantera
     runs-on: ubuntu-20.04
+    if: github.repository == 'Cantera/conda-recipes'
     env:
       GITHUB_TOKEN: ${{ secrets.CANTERA_REPO_STATUS }}
     outputs:
@@ -100,6 +101,8 @@ jobs:
   build-libcantera-and-python:
     name: Lib and Python for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    # Run this job even if post-pending-status was skipped
+    if: always()
     needs:
       - "post-pending-status"
     strategy:
@@ -151,6 +154,8 @@ jobs:
   build-matlab:
     name: Matlab toolbox for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    # Run this job even if post-pending-status was skipped
+    if: always()
     needs:
       - "post-pending-status"
     strategy:
@@ -252,7 +257,7 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-    if: github.event.inputs.upload == 'true'
+    if: github.repository == 'Cantera/conda-recipes' && github.event.inputs.upload == 'true'
     steps:
       - name: Download pre-built packages
         uses: actions/download-artifact@v2
@@ -279,7 +284,7 @@ jobs:
       - "build-libcantera-and-python"
       - "build-matlab"
       - "publish-files-to-anaconda"
-    if: always()
+    if: always() && github.repository == 'Cantera/conda-recipes'
     steps:
       - name: Collect statuses
         run: |
