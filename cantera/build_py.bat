@@ -13,7 +13,11 @@ IF EXIST "%PREFIX%/bin/yaml2ck" DEL /F "%PREFIX%/bin/yaml2ck"
 SET "ESC_PYTHON=%PYTHON:\=/%"
 ECHO python_cmd="%ESC_PYTHON%" >> cantera.conf
 
-CALL scons build python_package=y
+:: Set the number of CPUs to use in building
+SET /A CPU_USE=%CPU_COUNT% / 2
+IF %CPU_USE% EQU 0 SET CPU_USE=1
+
+CALL scons build -j%CPU_USE% python_package=y
 IF ERRORLEVEL 1 EXIT 1
 
 "%PYTHON%" -m pip install --no-deps --no-index --find-links=build\python\dist\ cantera
