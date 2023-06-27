@@ -136,11 +136,11 @@ jobs:
       uses: conda-incubator/setup-miniconda@v2.1.1
       with:
         auto-update-conda: true
-        conda-build-version: '3.21'
+        conda-build-version: '3.25'
         activate-environment: ''
         auto-activate-base: true
-        # Released 2022-02-15
-        miniconda-version: 'py39_4.11.0'
+        # Released 2023-04-24
+        miniconda-version: 'py310_23.3.1-0'
     - name: Install Conda dependencies
       run: conda install -q conda-verify\<4.0 ripgrep
     - name: Build the Python and libcantera recipe
@@ -189,11 +189,11 @@ jobs:
       uses: conda-incubator/setup-miniconda@v2.1.1
       with:
         auto-update-conda: true
-        conda-build-version: '3.21'
+        conda-build-version: '3.25'
         activate-environment: ''
         auto-activate-base: true
-        # Released 2022-02-15
-        miniconda-version: 'py39_4.11.0'
+        # Released 2023-04-24
+        miniconda-version: 'py310_23.3.1-0'
     - name: Install Conda dependencies
       run: conda install -q conda-verify\<4.0 ripgrep
 
