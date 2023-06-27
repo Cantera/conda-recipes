@@ -9,6 +9,8 @@ IF EXIST "%PREFIX%/bin/ck2yaml" DEL /F "%PREFIX%/bin/ck2yaml"
 IF EXIST "%PREFIX%/bin/cti2yaml" DEL /F "%PREFIX%/bin/cti2yaml"
 IF EXIST "%PREFIX%/bin/ctml2yaml" DEL /F "%PREFIX%/bin/ctml2yaml"
 IF EXIST "%PREFIX%/bin/yaml2ck" DEL /F "%PREFIX%/bin/yaml2ck"
+IF EXIST "%PREFIX%/Lib/site-packages/cantera" DEL /F "%PREFIX%/Lib/site-packages/cantera"
+IF EXIST "%PREFIX%/Library/bin/cantera_python3_*.dll" DEL /F "%PREFIX%/Library/bin/cantera_python3_*.dll"
 
 SET "ESC_PYTHON=%PYTHON:\=/%"
 ECHO python_cmd="%ESC_PYTHON%" >> cantera.conf
