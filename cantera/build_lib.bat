@@ -10,6 +10,7 @@ del /f %PREFIX%\Scripts\*2yaml.*
 del /f %PREFIX%\Scripts\yaml2*
 del /f %PREFIX%\Library\lib\cantera.lib
 del /f %PREFIX%\Library\lib\cantera_shared.lib
+del /f %PREFIX%\Library\lib\cantera_shared.exp
 
 echo "****************************"
 echo "DELETING files COMPLETED"
