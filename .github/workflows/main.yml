@@ -144,7 +144,7 @@ jobs:
     - name: Install Conda dependencies
       run: conda install -q conda-verify\<4.0 ripgrep
     - name: Build the Python and libcantera recipe
-      run: conda build ./cantera -m ./.ci_support/conda_build_config.yaml
+      run: conda build --debug ./cantera -m ./.ci_support/conda_build_config.yaml
     - name: Archive the built packages
       uses: actions/upload-artifact@v3
       with:
