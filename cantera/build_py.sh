@@ -3,14 +3,14 @@ echo "PYTHON ${PY_VER} BUILD STARTED"
 echo "******************************"
 
 # Remove old Python build files, if they're present
-if [ -d "build/python" ]; then
-    rm -r build/python
-    rm -r build/temp-py
-    rm $PREFIX/bin/ck2yaml || true
-    rm $PREFIX/bin/cti2yaml || true
-    rm $PREFIX/bin/ctml2yaml || true
-    rm $PREFIX/bin/yaml2ck || true
-fi
+rm -rf build/python
+rm -rf build/temp-py
+rm -f $PREFIX/bin/ck2yaml
+rm -f $PREFIX/bin/cti2yaml
+rm -f $PREFIX/bin/ctml2yaml
+rm -f $PREFIX/bin/yaml2ck
+rm -f $PREFIX/lib/libcantera_python*
+rm -rf $PREFIX/lib/python3.*/site-packages/cantera
 
 ${BUILD_PREFIX}/bin/python `which scons` build python_package='y' python_cmd="${PYTHON}" -j${CPU_COUNT}
 
