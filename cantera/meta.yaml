@@ -36,6 +36,8 @@ outputs:
         - {{ compiler('fortran') }}  # [not win]
       run_exports:
         - libcantera
+      detect_binary_files_with_prefix: False   # [win]
+
     requirements:
       build:
         - {{ compiler('c') }}
@@ -58,7 +60,8 @@ outputs:
   - name: libcantera-devel
     script: build_devel.sh  # [not win]
     script: build_devel.bat  # [win]
-
+    build:
+      detect_binary_files_with_prefix: False   # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -79,6 +82,8 @@ outputs:
   - name: cantera
     script: build_py.sh  # [not win]
     script: build_py.bat  # [win]
+    build:
+      detect_binary_files_with_prefix: False   # [win]
     requirements:
       build:
         - {{ compiler('c') }}
