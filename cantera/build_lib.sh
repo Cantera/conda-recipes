@@ -3,7 +3,6 @@ echo "****************************"
 echo "DELETING files from devel except shared libraries and data"
 echo "****************************"
 
-rm -rf $PREFIX/share/cantera/doc
 rm -rf $PREFIX/share/cantera/samples
 rm -rf $PREFIX/include/cantera
 rm -f $PREFIX/bin/yaml2*
