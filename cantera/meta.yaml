@@ -37,6 +37,8 @@ outputs:
       run_exports:
         - libcantera
       detect_binary_files_with_prefix: False   # [win]
+      skip_compile_pyc:
+        - "*/*.py"  # Not needed for C++ library build
 
     requirements:
       build:
@@ -62,6 +64,8 @@ outputs:
     script: build_devel.bat  # [win]
     build:
       detect_binary_files_with_prefix: False   # [win]
+      skip_compile_pyc:
+        - "*/*.py"  # Not needed for C++ library build
     requirements:
       build:
         - {{ compiler('c') }}
