@@ -84,6 +84,8 @@ outputs:
     script: build_py.bat  # [win]
     build:
       detect_binary_files_with_prefix: False   # [win]
+      skip_compile_pyc:
+        - "*/samples/*.py"  # Not useful for the samples
     requirements:
       build:
         - {{ compiler('c') }}
