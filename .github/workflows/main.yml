@@ -145,6 +145,15 @@ jobs:
       run: conda install -q conda-verify\<4.0 ripgrep
     - name: Build the Python and libcantera recipe
       run: conda build --debug ./cantera -m ./.ci_support/conda_build_config.yaml
+    - name: List package contents
+      run: |
+        find '${{ runner.os == 'Windows' && '/c/Miniconda3' || env.CONDA }}/conda-bld' -name \*cantera\*.tar.bz2 | while read -r file; do
+          echo '*********************************************'
+          echo Contents of $file:
+          echo '*********************************************'
+          tar -tvf $file || true
+        done
+      shell: bash
     - name: Archive the built packages
       uses: actions/upload-artifact@v3
       with:
@@ -240,6 +249,15 @@ jobs:
       run: "rsync -azvP ctdeploy@cantera.org:. ${MW_HEADERS_DIR}"
     - name: Build the MATLAB recipe
       run: conda build ./cantera-matlab -m ./.ci_support/conda_build_config.yaml
+    - name: List package contents
+      run: |
+        find '${{ runner.os == 'Windows' && '/c/Miniconda3' || env.CONDA }}/conda-bld' -name \*cantera\*.tar.bz2 | while read -r file; do
+          echo '*********************************************'
+          echo Contents of $file:
+          echo '*********************************************'
+          tar -tvf $file || true
+        done
+      shell: bash
     - name: Archive the built packages
       uses: actions/upload-artifact@v3
       with:
