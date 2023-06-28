@@ -5,6 +5,7 @@ echo "******************************"
 # Remove old Python build files, if they're present
 rm -rf build/python
 rm -rf build/temp-py
+rm -rf build/lib/libcantera_python*
 rm -f $PREFIX/bin/ck2yaml
 rm -f $PREFIX/bin/cti2yaml
 rm -f $PREFIX/bin/ctml2yaml
