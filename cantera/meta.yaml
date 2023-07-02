@@ -148,10 +148,10 @@ outputs:
         - ck2yaml --help
         - ctml2yaml --help
         - yaml2ck --help
-        - man ck2yaml  # [not win]
-        - man cti2yaml  # [not win]
-        - man ctml2yaml  # [not win]
-        - man yaml2ck  # [not win]
+        - man ck2yaml  # [linux]
+        - man cti2yaml  # [linux]
+        - man ctml2yaml  # [linux]
+        - man yaml2ck  # [linux]
 
 about:
   home: https://cantera.org
