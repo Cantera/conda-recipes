@@ -13,7 +13,8 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - scons >=4.1
+    - scons >=3.1  # [not win]
+    - scons >=4.1  # [win]
   host:
     - libboost
     - openblas  # [osx]
@@ -44,7 +45,8 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - scons >=4.1
+        - scons >=3.1  # [not win]
+        - scons >=4.1  # [win]
       host:
         - libboost
         - pywin32  # [win]
@@ -72,7 +74,8 @@ outputs:
         - {{ compiler('cxx') }}
         # At the moment, the toolchain does not provide Fortran for Windows
         - {{ compiler('fortran') }}  # [not win]
-        - scons >=4.1
+        - scons >=3.1  # [not win]
+        - scons >=4.1  # [win]
       host:
         - libboost
         - openblas  # [osx]
@@ -94,7 +97,8 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - scons >=4.1
+        - scons >=3.1  # [not win]
+        - scons >=4.1  # [win]
       host:
         - python {{ python }}
         - pip

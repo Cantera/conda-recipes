@@ -10,7 +10,8 @@ source:
 
 requirements:
   build:
-    - scons >=4.1
+    - scons >=3.1  # [not win]
+    - scons >=4.1  # [win]
   host:
     - libboost
     - pywin32  # [win]
