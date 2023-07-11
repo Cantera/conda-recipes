@@ -12,3 +12,8 @@ export INCOMING_REF=branch-name-or-commit-hash
 conda build ./cantera
 conda build ./cantera-matlab
 ```
+
+- To build the MATLAB toolbox, you should set something like:
+```
+export MW_HEADERS_DIR=/Applications/MATLAB_R2023a.app
+```
