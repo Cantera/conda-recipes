@@ -23,10 +23,16 @@ else
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
     echo "blas_lapack_libs = 'openblas'" >> cantera.conf
-    echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
+    if [[ "${CONDA_BUILD_SYSROOT}" != "" ]]; then
+        echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
+        echo "no_debug_linker_flags = '${LDFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
+    else
+        echo "cc_flags = '${CFLAGS}'" >> cantera.conf
+        echo "no_debug_linker_flags = '${LDFLAGS}'" >> cantera.conf
+    fi
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
-    echo "no_debug_linker_flags = '${LDFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
+
     echo "logging = 'debug'" >> cantera.conf
     echo "renamed_shared_libraries = False" >> cantera.conf
     echo "use_rpath_linkage = False" >> cantera.conf
