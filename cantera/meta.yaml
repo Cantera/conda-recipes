@@ -17,8 +17,7 @@ requirements:
     - scons >=4.1  # [win]
   host:
     - libboost
-    - openblas  # [osx]
-    # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+    - openblas  # [not osx]
     - pywin32  # [win]
     - hdf5
 
@@ -50,12 +49,10 @@ outputs:
       host:
         - libboost
         - pywin32  # [win]
-        - openblas  # [osx]
         - hdf5
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        - openblas  # [not osx]
       run:
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
-        - openblas  # [osx]
+        - openblas  # [not osx]
         - hdf5
     test:
       commands:
@@ -78,8 +75,7 @@ outputs:
         - scons >=4.1  # [win]
       host:
         - libboost
-        - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        - openblas  # [not osx]
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
@@ -105,8 +101,7 @@ outputs:
         - setuptools
         - libboost
         - numpy
-        - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        - openblas  # [not osx]
         - cython
         - pywin32  # [win]
         # This is added here so conda-build doesn't package it
@@ -118,8 +113,7 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - ruamel.yaml
         - {{ pin_subpackage('libcantera', exact=True) }}
-        - openblas  # [osx]
-        # - mkl  # [linux] # TODO: reactivate MKL in permanent fix of #29
+        - openblas  # [not osx]
     build:
       entry_points:
         - ck2yaml = cantera.ck2yaml:script_entry_point
