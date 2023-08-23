@@ -22,7 +22,7 @@ requirements:
     - hdf5
 
 build:
-  number: 0
+  number: 1
   include_recipe: True
 
 outputs:
