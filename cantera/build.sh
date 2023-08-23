@@ -10,8 +10,7 @@ echo "prefix = '${PREFIX}'" >> cantera.conf
 if [[ "${OSX_ARCH}" == "" ]]; then
     echo "CC = '${CC}'" >> cantera.conf
     echo "CXX = '${CXX}'" >> cantera.conf
-    # TODO: reactivate MKL; it is disabled as a temporary fix of #29 to resolve #31
-    # echo "blas_lapack_libs = 'mkl_rt,dl'" >> cantera.conf
+    echo "blas_lapack_libs = 'openblas'" >> cantera.conf
     echo "cc_flags = '${CFLAGS}'" >> cantera.conf
     echo "optimize_flags = ''" >> cantera.conf
     echo "debug = False" >> cantera.conf
@@ -22,7 +21,6 @@ if [[ "${OSX_ARCH}" == "" ]]; then
 else
     echo "CC = '${CLANG}'" >> cantera.conf
     echo "CXX = '${CLANGXX}'" >> cantera.conf
-    echo "blas_lapack_libs = 'openblas'" >> cantera.conf
     if [[ "${CONDA_BUILD_SYSROOT}" != "" ]]; then
         echo "cc_flags = '-isysroot ${CONDA_BUILD_SYSROOT} ${CFLAGS}'" >> cantera.conf
         echo "no_debug_linker_flags = '${LDFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}'" >> cantera.conf
