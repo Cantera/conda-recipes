@@ -53,6 +53,7 @@ outputs:
         - hdf5
         - openblas  # [linux]
         - mkl  # [win]
+        - mkl-devel  # [win]
       run:
         - openblas  # [linux]
         - mkl  # [win]
@@ -80,6 +81,7 @@ outputs:
         - libboost
         - openblas  # [linux]
         - mkl  # [win]
+        - mkl-devel  # [win]
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
@@ -107,6 +109,7 @@ outputs:
         - numpy
         - openblas  # [linux]
         - mkl  # [win]
+        - mkl-devel  # [win]
         - cython
         - pywin32  # [win]
         # This is added here so conda-build doesn't package it
