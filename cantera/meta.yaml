@@ -91,7 +91,7 @@ outputs:
       run:
         - libboost
         - {{ pin_subpackage('libcantera', exact=True) }}
-        - mkl-devel
+        - mkl-devel  # [win]
 
   - name: cantera
     script: build_py.sh  # [not win]
