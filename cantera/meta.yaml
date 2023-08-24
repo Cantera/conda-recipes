@@ -17,8 +17,8 @@ requirements:
     - scons >=4.1  # [win]
   host:
     - libboost
-        - openblas  # [linux]
-        - mkl  # [win]
+    - openblas  # [linux]
+    - mkl  # [win]
     - pywin32  # [win]
     - hdf5
 
