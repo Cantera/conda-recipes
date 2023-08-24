@@ -36,6 +36,7 @@ outputs:
         # only the header part of these libraries are used
         - libboost
         - {{ compiler('fortran') }}  # [not win]
+        - mkl-devel  # [win]
       run_exports:
         - libcantera
       detect_binary_files_with_prefix: False   # [win]
@@ -70,6 +71,8 @@ outputs:
       detect_binary_files_with_prefix: False   # [win]
       skip_compile_pyc:
         - "*/*.py"  # Not needed for C++ library build
+      ignore_run_exports_from:
+        - mkl-devel  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -88,6 +91,7 @@ outputs:
       run:
         - libboost
         - {{ pin_subpackage('libcantera', exact=True) }}
+        - mkl-devel
 
   - name: cantera
     script: build_py.sh  # [not win]
@@ -135,6 +139,7 @@ outputs:
         # only the header part of these libraries are used
         - libboost
         - python
+        - mkl-devel  # [win]
     test:
       requires:
         - pytest
