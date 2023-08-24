@@ -17,7 +17,8 @@ requirements:
     - scons >=4.1  # [win]
   host:
     - libboost
-    - openblas  # [not osx]
+        - openblas  # [linux]
+        - mkl  # [win]
     - pywin32  # [win]
     - hdf5
 
@@ -50,9 +51,11 @@ outputs:
         - libboost
         - pywin32  # [win]
         - hdf5
-        - openblas  # [not osx]
+        - openblas  # [linux]
+        - mkl  # [win]
       run:
-        - openblas  # [not osx]
+        - openblas  # [linux]
+        - mkl  # [win]
         - hdf5
     test:
       commands:
@@ -75,7 +78,8 @@ outputs:
         - scons >=4.1  # [win]
       host:
         - libboost
-        - openblas  # [not osx]
+        - openblas  # [linux]
+        - mkl  # [win]
         - pywin32  # [win]
         - libcantera {{ version }}
       run:
@@ -101,7 +105,8 @@ outputs:
         - setuptools
         - libboost
         - numpy
-        - openblas  # [not osx]
+        - openblas  # [linux]
+        - mkl  # [win]
         - cython
         - pywin32  # [win]
         # This is added here so conda-build doesn't package it
@@ -113,7 +118,8 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - ruamel.yaml
         - {{ pin_subpackage('libcantera', exact=True) }}
-        - openblas  # [not osx]
+        - openblas  # [linux]
+        - mkl  # [win]
     build:
       entry_points:
         - ck2yaml = cantera.ck2yaml:script_entry_point
